@@ -25,7 +25,7 @@ public class MazeTest {
   }
 
   @Test
-  public void testMazeConstructor() {
+  public void testMazeConstructorValid() {
     maze1 = new Maze(4, 3, 11, true, false,
             0, 1);
     maze2 = new Maze(4, 3, 11, true, true,
@@ -101,5 +101,6 @@ public class MazeTest {
     assertEquals(maze1.getPlayerPosX(), 0);
     assertEquals(maze1.getPlayerPosY(), 1);
   }
+
 
 }

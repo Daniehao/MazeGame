@@ -43,6 +43,7 @@ public class CellTest {
 
   @Test
   public void testGetGold() {
+    assertEquals(true, cell1.hasGold());
     assertEquals(10, cell1.getGoldNum());
     assertEquals(0, cell2.getGoldNum());
   }

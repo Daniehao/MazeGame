@@ -18,6 +18,7 @@ public class Maze implements MazeGame {
   private int playerGold;
   private int playerPosX;
   private int playerPosY;
+  private boolean isPerfect;
 
   /**
    * Constructor for Maze class.
@@ -36,6 +37,7 @@ public class Maze implements MazeGame {
     this.cols = cols;
     this.remains = remains;
     this.isWrapping = isWrapping;
+    this.isPerfect = isPerfect;
     this.playerPosX = playerPosX;
     this.playerPosY = playerPosY;
     playerGold = 0;
@@ -380,5 +382,23 @@ public class Maze implements MazeGame {
     if (maze[playerPosX][playerPosY].hasThief()) {
       playerGold -= (int) (0.1 * playerGold);
     }
+  }
+
+  @Override
+  public String toString() {
+    String s = "";
+    if (isPerfect && isWrapping) {
+      s += String.format("The maze is %d * %d, and it is a wrapping perfect maze.", rows, cols);
+    }
+    if (isPerfect && !isWrapping) {
+      s += String.format("The maze is %d * %d, and it is non-wrapping perfect maze.", rows, cols);
+    }
+    if (!isPerfect && isWrapping) {
+      s += String.format("The maze is %d * %d, and it is wrapping room maze.", rows, cols);
+    }
+    if (!isPerfect && !isWrapping) {
+      s += String.format("The maze is %d * %d, and it is non- wrapping room maze.", rows, cols);
+    }
+    return s;
   }
 }
