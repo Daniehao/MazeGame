@@ -29,9 +29,9 @@ public class Main {
     boolean isPerfect = true;
     boolean isWrapping = false;
     int startX = 0;
-    int startY = 2;
+    int startY = 1;
     int targetX = 2;
-    int targetY = 1;
+    int targetY = 3;
 
     if (startX < 0 || startX >= rows || startY < 0 || startY >= cols) {
       throw new IllegalArgumentException("The start point is invalid!");
@@ -49,19 +49,15 @@ public class Main {
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goRight();
-      System.out.println(String.format("Player's current location: (%d, %d)",
-              maze.getPlayerPosX(), maze.getPlayerPosY()));
-      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
       maze.goDown();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goLeft();
+      maze.goRight();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goLeft();
+      maze.goRight();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
@@ -71,14 +67,14 @@ public class Main {
 
     //Sample 2
     int rows2 = 3;
-    int cols2 = 4;
+    int cols2 = 3;
     int remains2 = 3;
-    boolean isPerfect2 = true;
-    boolean isWrapping2 = false;
+    boolean isPerfect2 = false;
+    boolean isWrapping2 = true;
     int startX2 = 0;
     int startY2 = 2;
     int targetX2 = 2;
-    int targetY2 = 1;
+    int targetY2 = 0;
 
     if (startX2 < 0 || startX2 >= rows2 || startY2 < 0 || startY2 >= cols2) {
       throw new IllegalArgumentException("The start point is invalid!");
@@ -92,7 +88,19 @@ public class Main {
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
+      maze.goLeft();
+      System.out.println(String.format("Player's current location: (%d, %d)",
+              maze.getPlayerPosX(), maze.getPlayerPosY()));
+      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
+      maze.goLeft();
+      System.out.println(String.format("Player's current location: (%d, %d)",
+              maze.getPlayerPosX(), maze.getPlayerPosY()));
+      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
       maze.goDown();
+      System.out.println(String.format("Player's current location: (%d, %d)",
+              maze.getPlayerPosX(), maze.getPlayerPosY()));
+      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
+      maze.goRight();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
@@ -120,5 +128,4 @@ public class Main {
   public static boolean checkReachToTarget(int playerX, int playerY, int targetX, int targetY) {
     return targetX == playerX && targetY == playerY;
   }
-
 }

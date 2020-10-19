@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * The Maze class that implements the MazeGame, and which could generate wrapping or non-wrapping
+ * perfect maze, wrapping or non-wrapping room maze.
+ */
 public class Maze implements MazeGame {
   List<Integer> savedWall;
   private int rows;
@@ -15,6 +19,17 @@ public class Maze implements MazeGame {
   private int playerPosX;
   private int playerPosY;
 
+  /**
+   * Constructor for Maze class.
+   *
+   * @param rows       The number of rows in the maze.
+   * @param cols       The number of columns in the maze.
+   * @param remains    The number of walls that should remain.
+   * @param isPerfect  The maze is perfect or not.
+   * @param isWrapping The maze is wrapping or not.
+   * @param playerPosX The horizontal location of the player.
+   * @param playerPosY The vertical location of the player.
+   */
   public Maze(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
               int playerPosX, int playerPosY) {
     this.rows = rows;
@@ -42,6 +57,11 @@ public class Maze implements MazeGame {
     }
   }
 
+  /**
+   * Generate a Wrapping or a Non- wrapping perfect maze.
+   *
+   * @param isWrapping The maze is wrapping or not.
+   */
   private void generatePerfectMaze(boolean isWrapping) {
     int[][] cellToUnion = new int[rows][cols];
     List<Integer> walls = new ArrayList<>();
@@ -76,7 +96,14 @@ public class Maze implements MazeGame {
     }
   }
 
-  private void setUnionCellRelationship(int[][] cellToUnion, Map<Integer, List<Integer>> unionToCells) {
+  /**
+   * Assign the union number for each cell as well as the cells included for each union.
+   *
+   * @param cellToUnion The union number of the cell.
+   * @param unionToCells The cells in a union.
+   */
+  private void setUnionCellRelationship(int[][] cellToUnion, Map<Integer,
+          List<Integer>> unionToCells) {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         cellToUnion[i][j] = i * cols + j;
@@ -87,8 +114,19 @@ public class Maze implements MazeGame {
     }
   }
 
-  private int kruskalOnWalls(int[][] cellToUnion, List<Integer> walls, Map<Integer, List<Integer>> unionToCells, int totalWalls) {
+  /**
+   * Use the Kruskal Algorithm to implement the wall removal process.
+   *
+   * @param cellToUnion The union number of the cell.
+   * @param walls The walls that still remains in the maze.
+   * @param unionToCells The cells in a union.
+   * @param totalWalls The initial nubmer of walls at the beginning.
+   * @return The number of walls that has been removed.
+   */
+  private int kruskalOnWalls(int[][] cellToUnion, List<Integer> walls, Map<Integer,
+          List<Integer>> unionToCells, int totalWalls) {
     Random random = new Random();
+    random.setSeed(1000);
     int removedCount = 0;
     while (removedCount < rows * cols - 1 && savedWall.size() < totalWalls - rows * cols + 1) {
       int randomInt = random.nextInt(walls.size());
@@ -111,6 +149,14 @@ public class Maze implements MazeGame {
     return removedCount;
   }
 
+  /**
+   * Combine the two unions into one.
+   *
+   * @param unionToCells The cells in a union.
+   * @param cellToUnion The union number of the cell.
+   * @param unionNum1 The index of the one cell by the wall.
+   * @param unionNum2 The index of the other cell by the wall.
+   */
   private void setUnionNum(Map<Integer, List<Integer>> unionToCells, int[][] cellToUnion,
                            int unionNum1, int unionNum2) {
     for (int cellIndex : unionToCells.get(unionNum1)) {
@@ -120,6 +166,14 @@ public class Maze implements MazeGame {
     unionToCells.remove(unionNum1);
   }
 
+  /**
+   * Link two cells by their locations.
+   *
+   * @param cell1X The horizontal index of cell 1.
+   * @param cell1Y The vertical index of cell 1.
+   * @param cell2X The horizontal index of cell 2.
+   * @param cell2Y The vertical index of cell 2.
+   */
   private void linkCells(int cell1X, int cell1Y, int cell2X, int cell2Y) {
     Cell cell1 = maze[cell1X][cell1Y];
     Cell cell2 = maze[cell2X][cell2Y];
@@ -132,11 +186,18 @@ public class Maze implements MazeGame {
     }
   }
 
+  /**
+   * Initialize the maze by generating m * n empty cells.
+   *
+   * @param rows The number of rows in the maze.
+   * @param cols The number of columns in the maze.
+   */
   private void generateCells(int rows, int cols) {
     maze = new Cell[rows][cols];
     int goldTotal = (int) (rows * cols * .2);
     int thiefTotal = (int) (rows * cols * .1);
     Random random = new Random();
+    random.setSeed(1000);
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         maze[i][j] = new Cell();
@@ -156,6 +217,12 @@ public class Maze implements MazeGame {
     }
   }
 
+  /**
+   * Get the location of the two cells by a input wall index.
+   *
+   * @param wallIndex The wall index.
+   * @return The location array of the two cells.
+   */
   private int[][] getCellsPositionByWall(int wallIndex) {
     if (wallIndex < rows * (cols - 1)) {
       int colIndex = wallIndex % (cols - 1);
@@ -169,9 +236,21 @@ public class Maze implements MazeGame {
     }
   }
 
+  /**
+   * @param wallIndex The wall index.
+   * @return The location array of the two cells.
+   */
+  private int[][] getRoomCellsPositionByWall(int wallIndex) {
+
+  }
+
+  /**
+   * Generate a Non-wrapping room maze.
+   */
   private void generateRoomMaze() {
     int numToDelete = savedWall.size() - remains;
     Random random = new Random();
+    random.setSeed(1000);
     for (int i = 0; i < numToDelete; i++) {
       int randomInt = random.nextInt(savedWall.size());
       int[][] cellsPositions = getCellsPositionByWall(randomInt);
@@ -183,6 +262,9 @@ public class Maze implements MazeGame {
     }
   }
 
+  /**
+   * Convert the Non-wrapping maze to a wrapping maze.
+   */
   private void changeToWrappingMaze() {
     for (int j = 0; j < cols; j++) {
       linkCells(0, j, rows - 1, j);
@@ -192,6 +274,7 @@ public class Maze implements MazeGame {
     }
   }
 
+  @Override
   public void goLeft() {
     if (!checkOutOfBound()) {
       throw new IllegalArgumentException("You cannot go this direction!");
@@ -204,6 +287,7 @@ public class Maze implements MazeGame {
     }
   }
 
+  @Override
   public void goRight() {
     if (!checkOutOfBound()) {
       throw new IllegalArgumentException("You cannot go this direction!");
@@ -216,6 +300,7 @@ public class Maze implements MazeGame {
     }
   }
 
+  @Override
   public void goUp() {
     if (!checkOutOfBound()) {
       throw new IllegalArgumentException("You cannot go this direction!");
@@ -228,6 +313,7 @@ public class Maze implements MazeGame {
     }
   }
 
+  @Override
   public void goDown() {
     if (!checkOutOfBound()) {
       throw new IllegalArgumentException("You cannot go this direction!");
@@ -240,6 +326,38 @@ public class Maze implements MazeGame {
     }
   }
 
+  @Override
+  public int getPlayerPosX() {
+    return playerPosX;
+  }
+
+  @Override
+  public int getPlayerPosY() {
+    return playerPosY;
+  }
+
+  @Override
+  public int getPlayerGold() {
+    return playerGold;
+  }
+
+  /**
+   * Check if the location of the player is out of bound.
+   *
+   * @return True/False.
+   */
+  public boolean checkOutOfBound() {
+    if (playerPosX < 0 || playerPosY < 0 || playerPosX >= rows || playerPosY >= cols) {
+      return false;
+    }
+    return true;
+  }
+
+
+  /**
+   * Update the gold amount of player as well as update the gold amount after the player take the
+   * gold in the current location.
+   */
   private void checkGoldThief() {
     if (maze[playerPosX][playerPosY].hasGold()) {
       playerGold++;
@@ -248,24 +366,5 @@ public class Maze implements MazeGame {
     if (maze[playerPosX][playerPosY].hasThief()) {
       playerGold -= (int) (0.1 * playerGold);
     }
-  }
-
-  public int getPlayerPosX() {
-    return playerPosX;
-  }
-
-  public int getPlayerPosY() {
-    return playerPosY;
-  }
-
-  public int getPlayerGold() {
-    return playerGold;
-  }
-
-  public boolean checkOutOfBound() {
-    if (playerPosX < 0 || playerPosY < 0 || playerPosX >= rows || playerPosY >= cols) {
-      return false;
-    }
-    return true;
   }
 }
