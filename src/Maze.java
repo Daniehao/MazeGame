@@ -104,7 +104,7 @@ public class Maze implements MazeGame {
   /**
    * Assign the union number for each cell as well as the cells included for each union.
    *
-   * @param cellToUnion The union number of the cell.
+   * @param cellToUnion  The union number of the cell.
    * @param unionToCells The cells in a union.
    */
   private void setUnionCellRelationship(int[][] cellToUnion, Map<Integer,
@@ -122,10 +122,10 @@ public class Maze implements MazeGame {
   /**
    * Use the Kruskal Algorithm to implement the wall removal process.
    *
-   * @param cellToUnion The union number of the cell.
-   * @param walls The walls that still remains in the maze.
+   * @param cellToUnion  The union number of the cell.
+   * @param walls        The walls that still remains in the maze.
    * @param unionToCells The cells in a union.
-   * @param totalWalls The initial nubmer of walls at the beginning.
+   * @param totalWalls   The initial nubmer of walls at the beginning.
    * @return The number of walls that has been removed.
    */
   private int kruskalOnWalls(int[][] cellToUnion, List<Integer> walls, Map<Integer,
@@ -163,9 +163,9 @@ public class Maze implements MazeGame {
    * Combine the two unions into one.
    *
    * @param unionToCells The cells in a union.
-   * @param cellToUnion The union number of the cell.
-   * @param unionNum1 The index of the one cell by the wall.
-   * @param unionNum2 The index of the other cell by the wall.
+   * @param cellToUnion  The union number of the cell.
+   * @param unionNum1    The index of the one cell by the wall.
+   * @param unionNum2    The index of the other cell by the wall.
    */
   private void setUnionNum(Map<Integer, List<Integer>> unionToCells, int[][] cellToUnion,
                            int unionNum1, int unionNum2) {
@@ -255,7 +255,7 @@ public class Maze implements MazeGame {
       int colIndex = wallIndex % cols;
       int rowIndex = wallIndex / cols;
       if (colIndex == 0) {
-        return new int[][] {{rowIndex, colIndex}, {rowIndex, cols - 1}};
+        return new int[][]{{rowIndex, colIndex}, {rowIndex, cols - 1}};
       } else {
         return new int[][]{{rowIndex, colIndex - 1}, {rowIndex, colIndex}};
       }
@@ -264,7 +264,7 @@ public class Maze implements MazeGame {
       int colIndex = wallIndex % cols;
       int rowIndex = wallIndex / cols;
       if (rowIndex == 0) {
-        return new int[][] {{rowIndex, colIndex}, {rows - 1, colIndex}};
+        return new int[][]{{rowIndex, colIndex}, {rows - 1, colIndex}};
       } else {
         return new int[][]{{rowIndex - 1, colIndex}, {rowIndex, colIndex}};
       }

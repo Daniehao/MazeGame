@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
   /**
    * main method to print gold numbers, player's location and whether he/she has reached goal.
+   *
    * @param args
    */
   public static void main(String[] args) {
