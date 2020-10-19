@@ -397,7 +397,7 @@ public class Maze implements MazeGame {
       s += String.format("The maze is %d * %d, and it is wrapping room maze.", rows, cols);
     }
     if (!isPerfect && !isWrapping) {
-      s += String.format("The maze is %d * %d, and it is non- wrapping room maze.", rows, cols);
+      s += String.format("The maze is %d * %d, and it is non-wrapping room maze.", rows, cols);
     }
     return s;
   }

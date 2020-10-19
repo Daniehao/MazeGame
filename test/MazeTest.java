@@ -34,6 +34,17 @@ public class MazeTest {
             0, 1);
     maze4 = new Maze(4, 3, 3, false, true,
             0, 1);
+    assertEquals("The maze is 4 * 3, and it is non-wrapping perfect maze.",
+            maze1.toString());
+    assertEquals("The maze is 4 * 3, and it is a wrapping perfect maze.",
+            maze2.toString());
+    assertEquals("The maze is 4 * 3, and it is non-wrapping room maze.",
+            maze3.toString());
+    assertEquals("The maze is 4 * 3, and it is wrapping room maze.", maze4.toString());
+  }
+
+  @Test
+  public void getLocationTest() {
     assertEquals(maze1.getPlayerPosX(), 0);
     assertEquals(maze1.getPlayerPosY(), 1);
     assertEquals(maze2.getPlayerPosX(), 0);
@@ -102,5 +113,12 @@ public class MazeTest {
     assertEquals(maze1.getPlayerPosY(), 1);
   }
 
+  @Test
+  public void checkNonWrapPerfectMaze() {
+    maze1.goDown();
+    maze1.goDown();
+    maze1.goRight();
+    maze1.goRight();
+  }
 
 }
