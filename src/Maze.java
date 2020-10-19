@@ -69,7 +69,7 @@ public class Maze implements MazeGame {
     generateCells(rows, cols);
     int totalWalls = 0;
     if (isWrapping) {
-      totalWalls = (cols + 1) * rows + (rows + 1) * cols;
+      totalWalls = cols * rows + rows * cols;
     } else {
       totalWalls = (cols - 1) * rows + (rows - 1) * cols;
     }
@@ -79,12 +79,17 @@ public class Maze implements MazeGame {
     for (int i = 0; i < totalWalls; i++) {
       walls.add(i);
     }
-    int removedCount = kruskalOnWalls(cellToUnion, walls, unionToCells, totalWalls);
+    int removedCount = kruskalOnWalls(cellToUnion, walls, unionToCells, totalWalls, isWrapping);
     if (removedCount == rows * cols - 1) {
       savedWall.addAll(walls);
     } else {
       for (int wall : walls) {
-        int[][] cellsPositions = getCellsPositionByWall(wall);
+        int[][] cellsPositions = new int[2][2];
+        if (!isWrapping) {
+          cellsPositions = getCellsPositionByWall(wall);
+        } else {
+          cellsPositions = getCellsPositionByWallWrapping(wall);
+        }
         int cell1X = cellsPositions[0][0];
         int cell1Y = cellsPositions[0][1];
         int cell2X = cellsPositions[1][0];
@@ -124,13 +129,18 @@ public class Maze implements MazeGame {
    * @return The number of walls that has been removed.
    */
   private int kruskalOnWalls(int[][] cellToUnion, List<Integer> walls, Map<Integer,
-          List<Integer>> unionToCells, int totalWalls) {
+          List<Integer>> unionToCells, int totalWalls, boolean isWrapping) {
     Random random = new Random();
     random.setSeed(1000);
     int removedCount = 0;
     while (removedCount < rows * cols - 1 && savedWall.size() < totalWalls - rows * cols + 1) {
       int randomInt = random.nextInt(walls.size());
-      int[][] cellsPositions = getCellsPositionByWall(walls.get(randomInt));
+      int[][] cellsPositions = new int[2][2];
+      if (isWrapping) {
+        cellsPositions = getCellsPositionByWallWrapping(walls.get(randomInt));
+      } else {
+        cellsPositions = getCellsPositionByWall(walls.get(randomInt));
+      }
       int cell1X = cellsPositions[0][0];
       int cell1Y = cellsPositions[0][1];
       int cell2X = cellsPositions[1][0];
@@ -218,7 +228,7 @@ public class Maze implements MazeGame {
   }
 
   /**
-   * Get the location of the two cells by a input wall index.
+   * Get the location of the two cells by a input wall index for non wrapping maze.
    *
    * @param wallIndex The wall index.
    * @return The location array of the two cells.
@@ -240,8 +250,25 @@ public class Maze implements MazeGame {
    * @param wallIndex The wall index.
    * @return The location array of the two cells.
    */
-  private int[][] getRoomCellsPositionByWall(int wallIndex) {
-
+  private int[][] getCellsPositionByWallWrapping(int wallIndex) {
+    if (wallIndex < rows * cols) {
+      int colIndex = wallIndex % cols;
+      int rowIndex = wallIndex / cols;
+      if (colIndex == 0) {
+        return new int[][] {{rowIndex, colIndex}, {rowIndex, cols - 1}};
+      } else {
+        return new int[][]{{rowIndex, colIndex - 1}, {rowIndex, colIndex}};
+      }
+    } else {
+      wallIndex -= rows * cols;
+      int colIndex = wallIndex % cols;
+      int rowIndex = wallIndex / cols;
+      if (rowIndex == 0) {
+        return new int[][] {{rowIndex, colIndex}, {rows - 1, colIndex}};
+      } else {
+        return new int[][]{{rowIndex - 1, colIndex}, {rowIndex, colIndex}};
+      }
+    }
   }
 
   /**
