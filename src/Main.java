@@ -1,38 +1,45 @@
 import java.util.Scanner;
 
+/**
+ * Main class for generating two samples for Perfect maze and wrapped room maze. The player visits
+ * each location in the room maze and reach to the goal point in both of the examples.
+ */
 public class Main {
+  /**
+   * main method to print gold numbers, player's location and whether he/she has reached goal.
+   * @param args
+   */
   public static void main(String[] args) {
-//    Scanner sc = new Scanner(System.in);
-//    System.out.println("Enter rows: ");
-//    int rows = Integer.valueOf(sc.nextLine());
-//    System.out.println("Enter columns: ");
-//    int cols = Integer.valueOf(sc.nextLine());
-//    System.out.println("Enter remains wall number: ");
-//    int remains = Integer.valueOf(sc.nextLine());
-//    System.out.println("Enter whether it is a perfect maze: ");
-//    boolean isPerfect = sc.nextLine() == "true" ? true : false;
-//    System.out.println("Enter whether it is a wrapping maze: ");
-//    boolean isWrapping = sc.nextLine() == "true" ? true : false;
-//    System.out.println("Enter the x of the start point: ");
-//    int startX = Integer.valueOf(sc.nextLine());
-//    System.out.println("Enter the y of the start point: ");
-//    int startY = Integer.valueOf(sc.nextLine());
-//    System.out.println("Enter the x of the target point: ");
-//    int targetX = Integer.valueOf(sc.nextLine());
-//    System.out.println("Enter the y of the target point: ");
-//    int targetY = Integer.valueOf(sc.nextLine());
+//    int rows = 3;
+//    int cols = 4;
+//    int remains = 6;
+//    boolean isPerfect = true;
+//    boolean isWrapping = false;
+//    int startX = 0;
+//    int startY = 1;
+//    int targetX = 2;
+//    int targetY = 3;
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter rows: ");
+    int rows = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter columns: ");
+    int cols = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter remains wall number: ");
+    int remains = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter whether it is a perfect maze: ");
+    boolean isPerfect = sc.nextLine() == "true" ? true : false;
+    System.out.println("Enter whether it is a wrapping maze: ");
+    boolean isWrapping = sc.nextLine() == "true" ? true : false;
+    System.out.println("Enter the x of the start point: ");
+    int startX = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter the y of the start point: ");
+    int startY = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter the x of the target point: ");
+    int targetX = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter the y of the target point: ");
+    int targetY = Integer.valueOf(sc.nextLine());
 
-    //Sample 1
-    int rows = 3;
-    int cols = 4;
-    int remains = 6;
-    boolean isPerfect = true;
-    boolean isWrapping = false;
-    int startX = 0;
-    int startY = 1;
-    int targetX = 2;
-    int targetY = 3;
-
+    //Sample 1 : Show a perfect Maze.
     if (startX < 0 || startX >= rows || startY < 0 || startY >= cols) {
       throw new IllegalArgumentException("The start point is invalid!");
     } else if (targetX < 0 || targetX >= rows || targetY < 0 || targetY >= cols) {
@@ -65,16 +72,34 @@ public class Main {
               + checkReachToTarget(maze.getPlayerPosX(), maze.getPlayerPosY(), targetX, targetY));
     }
 
-    //Sample 2
-    int rows2 = 3;
-    int cols2 = 3;
-    int remains2 = 3;
-    boolean isPerfect2 = false;
-    boolean isWrapping2 = true;
-    int startX2 = 0;
-    int startY2 = 2;
-    int targetX2 = 2;
-    int targetY2 = 0;
+    //Sample 2: Show a wrapping room maze.
+//    int rows2 = 3;
+//    int cols2 = 3;
+//    int remains2 = 3;
+//    boolean isPerfect2 = false;
+//    boolean isWrapping2 = true;
+//    int startX2 = 0;
+//    int startY2 = 2;
+//    int targetX2 = 2;
+//    int targetY2 = 0;
+    System.out.println("Enter rows: ");
+    int rows2 = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter columns: ");
+    int cols2 = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter remains wall number: ");
+    int remains2 = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter whether it is a perfect maze: ");
+    boolean isPerfect2 = sc.nextLine() == "true" ? true : false;
+    System.out.println("Enter whether it is a wrapping maze: ");
+    boolean isWrapping2 = sc.nextLine() == "true" ? true : false;
+    System.out.println("Enter the x of the start point: ");
+    int startX2 = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter the y of the start point: ");
+    int startY2 = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter the x of the target point: ");
+    int targetX2 = Integer.valueOf(sc.nextLine());
+    System.out.println("Enter the y of the target point: ");
+    int targetY2 = Integer.valueOf(sc.nextLine());
 
     if (startX2 < 0 || startX2 >= rows2 || startY2 < 0 || startY2 >= cols2) {
       throw new IllegalArgumentException("The start point is invalid!");
