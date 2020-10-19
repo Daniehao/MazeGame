@@ -288,18 +288,6 @@ public class Maze implements MazeGame {
     }
   }
 
-  /**
-   * Convert the Non-wrapping maze to a wrapping maze.
-   */
-  private void changeToWrappingMaze() {
-    for (int j = 0; j < cols; j++) {
-      linkCells(0, j, rows - 1, j);
-    }
-    for (int i = 0; i < rows; i++) {
-      linkCells(i, 0, i, cols - 1);
-    }
-  }
-
   @Override
   public void goLeft() {
     if (!checkOutOfBound()) {
@@ -386,7 +374,7 @@ public class Maze implements MazeGame {
    */
   private void checkGoldThief() {
     if (maze[playerPosX][playerPosY].hasGold()) {
-      playerGold++;
+      playerGold += maze[playerPosX][playerPosY].getGoldNum();
       maze[playerPosX][playerPosY].setGold(false, 0);
     }
     if (maze[playerPosX][playerPosY].hasThief()) {

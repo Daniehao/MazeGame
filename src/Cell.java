@@ -84,4 +84,57 @@ public class Cell {
   public boolean hasThief() {
     return hasThief;
   }
+
+  /**
+   * Get the amount of gold int the cell.
+   *
+   * @return The amout of gold in the cell.
+   */
+  public int getGoldNum() {
+    return goldNum;
+  }
+
+  public String toString() {
+    return String.format("The left cell of current cell is: %s, the right cell of current cell " +
+            "is: %s, the up cell of current cell is: %s, The down cell of current cell is: %s, " +
+            "the total number of gold in the cell: %d, if the cell include a thief: %s",
+            cellMap.get("left"), cellMap.get("right"), cellMap.get("up"), cellMap.get("down"),
+            goldNum, "" + hasThief);
+  }
+
+  /**
+   * Get the cell on the left side of the current cell.
+   *
+   * @return The cell on the left side of current.
+   */
+  public Cell getLeftCell() {
+    return cellMap.get("left");
+  }
+
+  /**
+   * Get the cell on the right side of the current cell.
+   *
+   * @return The cell on the right side of current.
+   */
+  public Cell getRightCell() {
+    return cellMap.get("right");
+  }
+
+  /**
+   * Get the cell on the up side of the current cell.
+   *
+   * @return The cell on the up side of current.
+   */
+  public Cell getUpCell() {
+    return cellMap.get("up");
+  }
+
+  /**
+   * Get the cell on the down side of the current cell.
+   *
+   * @return The cell on the down side of current.
+   */
+  public Cell getDownCell() {
+    return cellMap.get("down");
+  }
 }
