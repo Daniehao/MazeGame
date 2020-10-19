@@ -154,7 +154,6 @@ public class Maze implements MazeGame {
                 cellToUnion[cell2X][cell2Y]);
       }
       walls.remove(randomInt);
-      System.out.println(removedCount + ", " + savedWall.size());
     }
     return removedCount;
   }
