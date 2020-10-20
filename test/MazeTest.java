@@ -1,8 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for the Maze class, which checks if four types of maze works fine with user's input
+ * directions.
+ */
 public class MazeTest {
   private MazeGame maze1;
   private MazeGame maze2;
@@ -132,20 +135,18 @@ public class MazeTest {
   @Test
   public void checkNonWrapPerfectMaze() {
     maze1.goDown();
-    System.out.println(maze1.getPlayerGold());
     maze1.goDown();
-    System.out.println(maze1.getPlayerGold());
     maze1.goRight();
-    System.out.println(maze1.getPlayerGold());
     maze1.goRight();
-    System.out.println(maze1.getPlayerGold());
+    assertEquals(maze1.getPlayerPosX(), 2);
+    assertEquals(maze1.getPlayerPosY(), 3);
   }
 
   @Test
   public void checkWrapPerfectMaze() {
     maze2.goUp();
-    System.out.println(maze2.getPlayerPosX());
-    System.out.println(maze2.getPlayerPosY());
+    assertEquals(maze2.getPlayerPosX(), 2);
+    assertEquals(maze2.getPlayerPosY(), 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -184,6 +185,7 @@ public class MazeTest {
     maze4 = new Maze(3, 4, 3, false, true,
             0, 0);
     maze4.goUp();
+    assertEquals(maze4.getPlayerPosX(), 2);
+    assertEquals(maze4.getPlayerPosY(), 0);
   }
-
 }

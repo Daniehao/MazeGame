@@ -28,9 +28,9 @@ public class Main {
     System.out.println("Enter remains wall number: ");
     int remains = Integer.valueOf(sc.nextLine());
     System.out.println("Enter whether it is a perfect maze: ");
-    boolean isPerfect = sc.nextLine() == "true" ? true : false;
+    boolean isPerfect = sc.nextLine().equals("true")? true : false;
     System.out.println("Enter whether it is a wrapping maze: ");
-    boolean isWrapping = sc.nextLine() == "true" ? true : false;
+    boolean isWrapping = sc.nextLine().equals("true")? true : false;
     System.out.println("Enter the x of the start point: ");
     int startX = Integer.valueOf(sc.nextLine());
     System.out.println("Enter the y of the start point: ");
@@ -90,9 +90,9 @@ public class Main {
     System.out.println("Enter remains wall number: ");
     int remains2 = Integer.valueOf(sc.nextLine());
     System.out.println("Enter whether it is a perfect maze: ");
-    boolean isPerfect2 = sc.nextLine() == "true" ? true : false;
+    boolean isPerfect2 = sc.nextLine().equals("true")? true : false;
     System.out.println("Enter whether it is a wrapping maze: ");
-    boolean isWrapping2 = sc.nextLine() == "true" ? true : false;
+    boolean isWrapping2 = sc.nextLine().equals("true")? true : false;
     System.out.println("Enter the x of the start point: ");
     int startX2 = Integer.valueOf(sc.nextLine());
     System.out.println("Enter the y of the start point: ");

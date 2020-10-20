@@ -3,6 +3,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for the Cell class, which checks if all cell has a correct link with the cell next to it, as
+ * well as the gold amount and thief inside or not.
+ */
 public class CellTest {
   private Cell cell1;
   private Cell cell2;

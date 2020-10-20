@@ -32,7 +32,7 @@ public class Maze implements MazeGame {
    * @param playerPosY The vertical location of the player.
    */
   public Maze(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
-              int playerPosX, int playerPosY) {
+              int playerPosX, int playerPosY) throws IllegalArgumentException {
     this.rows = rows;
     this.cols = cols;
     this.remains = remains;
@@ -390,10 +390,7 @@ public class Maze implements MazeGame {
    * @return True/False.
    */
   public boolean checkOutOfBound() {
-    if (playerPosX < 0 || playerPosY < 0 || playerPosX >= rows || playerPosY >= cols) {
-      return false;
-    }
-    return true;
+    return !(playerPosX < 0 || playerPosY < 0 || playerPosX >= rows || playerPosY >= cols);
   }
 
   /**
