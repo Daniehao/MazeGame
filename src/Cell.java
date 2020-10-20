@@ -46,6 +46,7 @@ public class Cell {
       case "down":
         cellMap.put("down", nextCell);
         break;
+      default:
     }
   }
 

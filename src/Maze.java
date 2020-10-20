@@ -56,7 +56,8 @@ public class Maze implements MazeGame {
       if (remains < rows * cols - 1 && remains >= 0) {
         generateRoomMaze();
       } else {
-        throw new IllegalArgumentException("The remains input is invalid since it needs to be 0 " +
+        throw new IllegalArgumentException("The remains input is invalid since it needs to be 0 "
+                +
                 "to rows*columns - 1");
       }
     }
@@ -207,7 +208,6 @@ public class Maze implements MazeGame {
   private void generateCells(int rows, int cols) {
     maze = new Cell[rows][cols];
     int goldTotal = (int) (rows * cols * .2);
-    int thiefTotal = (int) (rows * cols * .1);
     Random random = new Random();
     random.setSeed(1000);
     for (int i = 0; i < rows; i++) {
@@ -221,7 +221,7 @@ public class Maze implements MazeGame {
       int indexY = random.nextInt(cols);
       maze[indexX][indexY].setGold(true, 50);
     }
-
+    int thiefTotal = (int) (rows * cols * .1);
     for (int i = 0; i < thiefTotal; i++) {
       int indexX = random.nextInt(rows);
       int indexY = random.nextInt(cols);
@@ -249,6 +249,8 @@ public class Maze implements MazeGame {
   }
 
   /**
+   * Get the two cells positions by the wall.
+   *
    * @param wallIndex The wall index.
    * @return The location array of the two cells.
    */
