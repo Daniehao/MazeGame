@@ -14,33 +14,49 @@ public class MazeTest {
    */
   @Before
   public void setup() {
-    maze1 = new Maze(4, 3, 11, true, false,
+    maze1 = new Maze(3, 4, 11, true, false,
             0, 1);
-    maze2 = new Maze(4, 3, 11, true, true,
+    maze2 = new Maze(3, 4, 11, true, true,
             0, 1);
-    maze3 = new Maze(4, 3, 3, false, false,
+    maze3 = new Maze(3, 4, 3, false, false,
             0, 1);
-    maze4 = new Maze(4, 3, 3, false, true,
+    maze4 = new Maze(3, 4, 3, false, true,
             0, 1);
   }
 
   @Test
   public void testMazeConstructorValid() {
-    maze1 = new Maze(4, 3, 11, true, false,
-            0, 1);
-    maze2 = new Maze(4, 3, 11, true, true,
-            0, 1);
-    maze3 = new Maze(4, 3, 3, false, false,
-            0, 1);
-    maze4 = new Maze(4, 3, 3, false, true,
-            0, 1);
-    assertEquals("The maze is 4 * 3, and it is non-wrapping perfect maze.",
+    assertEquals("The maze is 3 * 4, and it is non-wrapping perfect maze.",
             maze1.toString());
-    assertEquals("The maze is 4 * 3, and it is a wrapping perfect maze.",
+    assertEquals("The maze is 3 * 4, and it is a wrapping perfect maze.",
             maze2.toString());
-    assertEquals("The maze is 4 * 3, and it is non-wrapping room maze.",
+    assertEquals("The maze is 3 * 4, and it is non-wrapping room maze.",
             maze3.toString());
-    assertEquals("The maze is 4 * 3, and it is wrapping room maze.", maze4.toString());
+    assertEquals("The maze is 3 * 4, and it is wrapping room maze.", maze4.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMazeConstructorInvalid1() {
+    maze1 = new Maze(-3, 4, 11, true, false,
+            0, 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMazeConstructorInvalid2() {
+    maze1 = new Maze(3, -4, 11, true, false,
+            0, 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMazeConstructorInvalid3() {
+    maze3 = new Maze(3, 4, -3, false, false,
+            0, 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMazeConstructorInvalid4() {
+    maze3 = new Maze(3, 4, 12, false, false,
+            0, 1);
   }
 
   @Test
@@ -116,9 +132,13 @@ public class MazeTest {
   @Test
   public void checkNonWrapPerfectMaze() {
     maze1.goDown();
+    System.out.println(maze1.getPlayerGold());
     maze1.goDown();
+    System.out.println(maze1.getPlayerGold());
     maze1.goRight();
+    System.out.println(maze1.getPlayerGold());
     maze1.goRight();
+    System.out.println(maze1.getPlayerGold());
   }
 
 }
