@@ -48,7 +48,10 @@ public class Maze implements MazeGame {
     if (cols < 0) {
       throw new IllegalArgumentException("columns input cannot be negative!");
     }
-    generatePerfectMaze(isWrapping);
+    if (!checkOutOfBound()) {
+      throw new IllegalArgumentException("The start point is invalid!");
+    }
+    generatePerfectMaze();
     if (!isPerfect) {
       if (remains < rows * cols - 1 && remains >= 0) {
         generateRoomMaze();
@@ -62,9 +65,8 @@ public class Maze implements MazeGame {
   /**
    * Generate a Wrapping or a Non- wrapping perfect maze.
    *
-   * @param isWrapping The maze is wrapping or not.
    */
-  private void generatePerfectMaze(boolean isWrapping) {
+  private void generatePerfectMaze() {
     int[][] cellToUnion = new int[rows][cols];
     List<Integer> walls = new ArrayList<>();
     Map<Integer, List<Integer>> unionToCells = new HashMap<>();
@@ -256,7 +258,7 @@ public class Maze implements MazeGame {
       int colIndex = wallIndex % cols;
       int rowIndex = wallIndex / cols;
       if (colIndex == 0) {
-        return new int[][]{{rowIndex, colIndex}, {rowIndex, cols - 1}};
+        return new int[][]{{rowIndex, cols - 1}, {rowIndex, colIndex}};
       } else {
         return new int[][]{{rowIndex, colIndex - 1}, {rowIndex, colIndex}};
       }
@@ -265,7 +267,7 @@ public class Maze implements MazeGame {
       int colIndex = wallIndex % cols;
       int rowIndex = wallIndex / cols;
       if (rowIndex == 0) {
-        return new int[][]{{rowIndex, colIndex}, {rows - 1, colIndex}};
+        return new int[][]{{rows - 1, colIndex}, {rowIndex, colIndex}};
       } else {
         return new int[][]{{rowIndex - 1, colIndex}, {rowIndex, colIndex}};
       }
@@ -281,64 +283,90 @@ public class Maze implements MazeGame {
     random.setSeed(1000);
     for (int i = 0; i < numToDelete; i++) {
       int randomInt = random.nextInt(savedWall.size());
-      int[][] cellsPositions = getCellsPositionByWall(randomInt);
+      int[][] cellsPositions = new int[2][2];
+      if (isWrapping) {
+        cellsPositions = getCellsPositionByWallWrapping(savedWall.get(randomInt));
+      } else {
+        cellsPositions = getCellsPositionByWall(savedWall.get(randomInt));
+      }
       int cell1X = cellsPositions[0][0];
       int cell1Y = cellsPositions[0][1];
       int cell2X = cellsPositions[1][0];
       int cell2Y = cellsPositions[1][1];
       linkCells(cell1X, cell1Y, cell2X, cell2Y);
+      savedWall.remove(randomInt);
     }
   }
 
   @Override
   public void goLeft() {
-    if (!checkOutOfBound()) {
-      throw new IllegalArgumentException("You cannot go this direction!");
-    }
-    if (playerPosY - 1 >= 0) {
+    if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
       checkGoldThief();
     } else {
-      throw new IllegalArgumentException("Player's move is out of bound!");
+      if (!isWrapping) {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
+      if (playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
+        playerPosY = cols - playerPosY - 1;
+        checkGoldThief();
+      } else {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
     }
   }
 
   @Override
   public void goRight() {
-    if (!checkOutOfBound()) {
-      throw new IllegalArgumentException("You cannot go this direction!");
-    }
-    if (playerPosY + 1 < cols) {
+    if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
       checkGoldThief();
     } else {
-      throw new IllegalArgumentException("Player's move is out of bound!");
+      if (!isWrapping) {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
+      if (playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
+        playerPosY = 0;
+        checkGoldThief();
+      } else {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
     }
   }
 
   @Override
   public void goUp() {
-    if (!checkOutOfBound()) {
-      throw new IllegalArgumentException("You cannot go this direction!");
-    }
-    if (playerPosX - 1 >= 0) {
+    if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
       checkGoldThief();
     } else {
-      throw new IllegalArgumentException("Player's move is out of bound!");
+      if (!isWrapping) {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
+      if (playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
+        playerPosX = rows - 1;
+        checkGoldThief();
+      } else {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
     }
   }
 
   @Override
   public void goDown() {
-    if (!checkOutOfBound()) {
-      throw new IllegalArgumentException("You cannot go this direction!");
-    }
-    if (playerPosX + 1 < rows) {
+    if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
       checkGoldThief();
     } else {
-      throw new IllegalArgumentException("Player's move is out of bound!");
+      if (!isWrapping) {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
+      if (playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
+        playerPosX = 0;
+        checkGoldThief();
+      } else {
+        throw new IllegalArgumentException("Player's move is out of bound!");
+      }
     }
   }
 
@@ -368,7 +396,6 @@ public class Maze implements MazeGame {
     }
     return true;
   }
-
 
   /**
    * Update the gold amount of player as well as update the gold amount after the player take the

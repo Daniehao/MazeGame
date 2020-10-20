@@ -80,9 +80,9 @@ public class Main {
 //    boolean isPerfect2 = false;
 //    boolean isWrapping2 = true;
 //    int startX2 = 0;
-//    int startY2 = 2;
-//    int targetX2 = 2;
-//    int targetY2 = 0;
+//    int startY2 = 0;
+//    int targetX2 = 1;
+//    int targetY2 = 2;
     System.out.println("Enter rows: ");
     int rows2 = Integer.valueOf(sc.nextLine());
     System.out.println("Enter columns: ");
@@ -114,18 +114,6 @@ public class Main {
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goLeft();
-      System.out.println(String.format("Player's current location: (%d, %d)",
-              maze.getPlayerPosX(), maze.getPlayerPosY()));
-      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goLeft();
-      System.out.println(String.format("Player's current location: (%d, %d)",
-              maze.getPlayerPosX(), maze.getPlayerPosY()));
-      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goDown();
-      System.out.println(String.format("Player's current location: (%d, %d)",
-              maze.getPlayerPosX(), maze.getPlayerPosY()));
-      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
       maze.goRight();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
@@ -134,7 +122,7 @@ public class Main {
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
-      maze.goDown();
+      maze.goUp();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
@@ -143,6 +131,18 @@ public class Main {
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
       maze.goLeft();
+      System.out.println(String.format("Player's current location: (%d, %d)",
+              maze.getPlayerPosX(), maze.getPlayerPosY()));
+      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
+      maze.goUp();
+      System.out.println(String.format("Player's current location: (%d, %d)",
+              maze.getPlayerPosX(), maze.getPlayerPosY()));
+      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
+      maze.goRight();
+      System.out.println(String.format("Player's current location: (%d, %d)",
+              maze.getPlayerPosX(), maze.getPlayerPosY()));
+      System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
+      maze.goRight();
       System.out.println(String.format("Player's current location: (%d, %d)",
               maze.getPlayerPosX(), maze.getPlayerPosY()));
       System.out.println(String.format("Player's current gold amount: %d", maze.getPlayerGold()));
