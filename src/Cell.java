@@ -130,13 +130,4 @@ public class Cell {
     return cellMap.get("down");
   }
 
-  @Override
-  public String toString() {
-    return String.format("The left cell of current cell is: %s, the right cell of current cell " +
-                    "is: %s, the up cell of current cell is: %s, The down cell of current cell is: %s, " +
-                    "the total number of gold in the cell: %d, if the cell include a thief: %s",
-            cellMap.get("left"), cellMap.get("right"), cellMap.get("up"), cellMap.get("down"),
-            goldNum, "" + hasThief);
-  }
-
 }

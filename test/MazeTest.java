@@ -141,4 +141,16 @@ public class MazeTest {
     System.out.println(maze1.getPlayerGold());
   }
 
+  @Test
+  public void checkWrapPerfectMaze() {
+    maze1.goDown();
+    System.out.println(maze1.getPlayerGold());
+    maze1.goDown();
+    System.out.println(maze1.getPlayerGold());
+    maze1.goRight();
+    System.out.println(maze1.getPlayerGold());
+    maze1.goRight();
+    System.out.println(maze1.getPlayerGold());
+  }
+
 }
