@@ -64,7 +64,6 @@ public class Maze implements MazeGame {
 
   /**
    * Generate a Wrapping or a Non- wrapping perfect maze.
-   *
    */
   private void generatePerfectMaze() {
     int[][] cellToUnion = new int[rows][cols];
