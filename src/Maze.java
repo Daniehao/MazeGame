@@ -53,7 +53,7 @@ public class Maze implements MazeGame {
     }
     generatePerfectMaze();
     if (!isPerfect) {
-      if (remains < rows * cols - 1 && remains >= 0) {
+      if (remains < (rows + 1) * cols + rows * (cols + 1) && remains >= 0) {
         generateRoomMaze();
       } else {
         throw new IllegalArgumentException("The remains input is invalid since it needs to be 0 "
