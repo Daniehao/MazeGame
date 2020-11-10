@@ -9,7 +9,7 @@ import java.util.Random;
  * perfect maze, wrapping or non-wrapping room maze.
  */
 public class Maze implements MazeGame {
-  List<Integer> savedWall;
+  private List<Integer> savedWall;
   private int rows;
   private int cols;
   private int remains;
@@ -53,9 +53,13 @@ public class Maze implements MazeGame {
     }
     generatePerfectMaze();
     if (!isPerfect) {
-      if (remains < (rows + 1) * cols + rows * (cols + 1) && remains >= 0) {
+      if (isWrapping && remains < (rows + 1) * cols + rows * (cols + 1) && remains >= 0) {
         generateRoomMaze();
-      } else {
+      }
+      else if (!isWrapping && remains < rows * cols + rows * cols && remains >= 0) {
+        generateRoomMaze();
+      }
+      else {
         throw new IllegalArgumentException("The remains input is invalid since it needs to be 0 "
                 +
                 "to rows*columns - 1");
@@ -77,12 +81,13 @@ public class Maze implements MazeGame {
     } else {
       totalWalls = (cols - 1) * rows + (rows - 1) * cols;
     }
-
+    //Initialize the cellToUnion and unionToCells
     setUnionCellRelationship(cellToUnion, unionToCells);
 
     for (int i = 0; i < totalWalls; i++) {
       walls.add(i);
     }
+
     int removedCount = kruskalOnWalls(cellToUnion, walls, unionToCells, totalWalls, isWrapping);
     if (removedCount == rows * cols - 1) {
       savedWall.addAll(walls);
@@ -303,14 +308,14 @@ public class Maze implements MazeGame {
   public void goLeft() {
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
-      checkGoldThief();
+      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
         playerPosY = cols - playerPosY - 1;
-        checkGoldThief();
+        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
@@ -321,14 +326,14 @@ public class Maze implements MazeGame {
   public void goRight() {
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
-      checkGoldThief();
+      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
         playerPosY = 0;
-        checkGoldThief();
+        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
@@ -339,14 +344,14 @@ public class Maze implements MazeGame {
   public void goUp() {
     if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
-      checkGoldThief();
+      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
         playerPosX = rows - 1;
-        checkGoldThief();
+        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
@@ -357,14 +362,14 @@ public class Maze implements MazeGame {
   public void goDown() {
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
-      checkGoldThief();
+      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
         playerPosX = 0;
-        checkGoldThief();
+        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
@@ -399,7 +404,7 @@ public class Maze implements MazeGame {
    * Update the gold amount of player as well as update the gold amount after the player take the
    * gold in the current location.
    */
-  private void checkGoldThief() {
+  private void updateGoldThief() {
     if (maze[playerPosX][playerPosY].hasGold()) {
       playerGold += maze[playerPosX][playerPosY].getGoldNum();
       maze[playerPosX][playerPosY].setGold(false, 0);
