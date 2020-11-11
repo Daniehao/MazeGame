@@ -480,7 +480,6 @@ public class Maze implements MazeGame {
     random.setSeed(1000);
     int index = random.nextInt(caveLst.size());
     int[] WumpusLocation = caveLst.get(index);
-    caveLst.remove(index);
     Cell wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
     wumpus.setIsWumpus();
     if (wumpus.getRightCell() != null) {
@@ -494,6 +493,31 @@ public class Maze implements MazeGame {
     }
     if (wumpus.getDownCell() != null) {
       wumpus.getDownCell().setCloseToWumpus();
+    }
+  }
+
+  public void assignPits(int pitPercent) {
+    int caveNum = caveLst.size();
+    int pitNum = caveNum * pitPercent;
+    Random random = new Random();
+    random.setSeed(1000);
+    for (int i = 0; i < pitNum; i++) {
+      int index = random.nextInt(caveLst.size());
+      int[] pitPos = caveLst.get(index);
+      Cell pit = maze[pitPos[0]][pitPos[1]];
+      pit.setIsPit();
+      if (pit.getRightCell() != null) {
+        pit.getRightCell().setCloseToPit();
+      }
+      if (pit.getLeftCell() != null) {
+        pit.getLeftCell().setCloseToPit();
+      }
+      if (pit.getUpCell() != null) {
+        pit.getUpCell().setCloseToPit();
+      }
+      if (pit.getDownCell() != null) {
+        pit.getDownCell().setCloseToPit();
+      }
     }
   }
 
