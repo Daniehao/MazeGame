@@ -11,6 +11,10 @@ public class Cell {
   boolean hasGold;
   boolean hasThief;
   int goldNum;
+  boolean isTunnel;
+  boolean isRoom;
+  boolean closeToWumpus;
+  boolean isWumpus;
 
   /**
    * Constructor for Cell class.
@@ -24,6 +28,8 @@ public class Cell {
     hasGold = false;
     hasThief = false;
     goldNum = 0;
+    closeToWumpus = false;
+    isWumpus = false;
   }
 
   /**
@@ -131,4 +137,27 @@ public class Cell {
     return cellMap.get("down");
   }
 
+  public void setIsRoom(boolean isRoom) {
+    this.isRoom = isRoom;
+  }
+
+  public void setIsTunnel(boolean tunnel) {
+    this.isTunnel = tunnel;
+  }
+
+  public void setIsWumpus() {
+    this.isWumpus = true;
+  }
+
+  public boolean getIsWumpus() {
+    return isWumpus;
+  }
+
+  public void setCloseToWumpus() {
+    this.closeToWumpus = true;
+  }
+
+  public boolean getCloseToWumpus() {
+    return closeToWumpus;
+  }
 }

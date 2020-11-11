@@ -19,6 +19,7 @@ public class Maze implements MazeGame {
   private int playerPosX;
   private int playerPosY;
   private boolean isPerfect;
+  private List<int[]> caveLst;
 
   /**
    * Constructor for Maze class.
@@ -42,6 +43,7 @@ public class Maze implements MazeGame {
     this.playerPosY = playerPosY;
     playerGold = 0;
     savedWall = new ArrayList<>();
+    caveLst = new ArrayList<>();
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -53,11 +55,11 @@ public class Maze implements MazeGame {
     }
     generatePerfectMaze();
     if (!isPerfect) {
-      if (isWrapping && remains < (rows + 1) * cols + rows * (cols + 1) - rows * cols + 1 &&
+      if (isWrapping && remains < cols * rows + rows * cols - rows * cols + 1 &&
               remains >= 0) {
         generateRoomMaze();
       }
-      else if (!isWrapping && remains < rows * cols + rows * cols - rows * cols + 1 &&
+      else if (!isWrapping && remains < (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1 &&
               remains >= 0) {
         generateRoomMaze();
       }
@@ -67,6 +69,8 @@ public class Maze implements MazeGame {
                 "to rows*columns - 1");
       }
     }
+
+    assignCaveTunnel();
   }
 
   /**
@@ -433,4 +437,64 @@ public class Maze implements MazeGame {
     }
     return s;
   }
+
+  private void assignCaveTunnel() {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        Cell curr = maze[i][j];
+        if (getWallNums(curr) == 2) {
+          curr.setIsRoom(false);
+          curr.setIsTunnel(true);
+        } else {
+          curr.setIsRoom(true);
+          curr.setIsTunnel(false);
+          int[] temp = new int[2];
+          temp[0] = i;
+          temp[1] = j;
+          caveLst.add(temp);
+        }
+      }
+    }
+  }
+
+  private int getWallNums(Cell curr) {
+    int count = 0;
+    if (curr.getDownCell() == null) {
+      count++;
+
+    }
+    if (curr.getUpCell() == null) {
+      count++;
+    }
+    if (curr.getLeftCell() == null) {
+      count++;
+    }
+    if (curr.getRightCell() == null) {
+      count++;
+    }
+    return count;
+  }
+
+  private void assignWumpus() {
+    Random random = new Random();
+    random.setSeed(1000);
+    int index = random.nextInt(caveLst.size());
+    int[] WumpusLocation = caveLst.get(index);
+    caveLst.remove(index);
+    Cell wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
+    wumpus.setIsWumpus();
+    if (wumpus.getRightCell() != null) {
+      (wumpus.getRightCell().setCloseToWumpus();
+    }
+    if (wumpus.getLeftCell() != null) {
+      (wumpus.getLeftCell().setCloseToWumpus();
+    }
+    if (wumpus.getUpCell() != null) {
+      (wumpus.getUpCell().setCloseToWumpus();
+    }
+    if (wumpus.getDownCell() != null) {
+      (wumpus.getDownCell().setCloseToWumpus();
+    }
+  }
+
 }
