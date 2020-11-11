@@ -56,7 +56,7 @@ public class MazeTest {
             0, 1);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testMazeConstructorInvalid4() {
     maze3 = new Maze(3, 4, 12, false, false,
             0, 1);

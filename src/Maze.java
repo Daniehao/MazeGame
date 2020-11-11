@@ -53,10 +53,12 @@ public class Maze implements MazeGame {
     }
     generatePerfectMaze();
     if (!isPerfect) {
-      if (isWrapping && remains < (rows + 1) * cols + rows * (cols + 1) && remains >= 0) {
+      if (isWrapping && remains < (rows + 1) * cols + rows * (cols + 1) - rows * cols + 1 &&
+              remains >= 0) {
         generateRoomMaze();
       }
-      else if (!isWrapping && remains < rows * cols + rows * cols && remains >= 0) {
+      else if (!isWrapping && remains < rows * cols + rows * cols - rows * cols + 1 &&
+              remains >= 0) {
         generateRoomMaze();
       }
       else {
