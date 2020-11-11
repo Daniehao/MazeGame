@@ -484,16 +484,16 @@ public class Maze implements MazeGame {
     Cell wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
     wumpus.setIsWumpus();
     if (wumpus.getRightCell() != null) {
-      (wumpus.getRightCell().setCloseToWumpus();
+      wumpus.getRightCell().setCloseToWumpus();
     }
     if (wumpus.getLeftCell() != null) {
-      (wumpus.getLeftCell().setCloseToWumpus();
+      wumpus.getLeftCell().setCloseToWumpus();
     }
     if (wumpus.getUpCell() != null) {
-      (wumpus.getUpCell().setCloseToWumpus();
+      wumpus.getUpCell().setCloseToWumpus();
     }
     if (wumpus.getDownCell() != null) {
-      (wumpus.getDownCell().setCloseToWumpus();
+      wumpus.getDownCell().setCloseToWumpus();
     }
   }
 
