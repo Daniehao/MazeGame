@@ -20,6 +20,7 @@ public class Maze implements MazeGame {
   private int playerPosY;
   private boolean isPerfect;
   private List<int[]> caveLst;
+  private boolean gameOver;
 
   /**
    * Constructor for Maze class.
@@ -44,6 +45,7 @@ public class Maze implements MazeGame {
     playerGold = 0;
     savedWall = new ArrayList<>();
     caveLst = new ArrayList<>();
+    gameOver = false;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -58,12 +60,10 @@ public class Maze implements MazeGame {
       if (isWrapping && remains < cols * rows + rows * cols - rows * cols + 1 &&
               remains >= 0) {
         generateRoomMaze();
-      }
-      else if (!isWrapping && remains < (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1 &&
+      } else if (!isWrapping && remains < (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1 &&
               remains >= 0) {
         generateRoomMaze();
-      }
-      else {
+      } else {
         throw new IllegalArgumentException("The remains input is invalid since it needs to be 0 "
                 +
                 "to rows*columns - 1");
@@ -518,6 +518,123 @@ public class Maze implements MazeGame {
       if (pit.getDownCell() != null) {
         pit.getDownCell().setCloseToPit();
       }
+    }
+  }
+
+  public void assignSuperBats(int batPercent) {
+    int caveNum = caveLst.size();
+    int batNum = caveNum * batPercent;
+    Random random = new Random();
+    random.setSeed(1000);
+    for (int i = 0; i < batNum; i++) {
+      int index = random.nextInt(caveLst.size());
+      int[] batPos = caveLst.get(index);
+      Cell bat = maze[batPos[0]][batPos[1]];
+      bat.setHasBat();
+      if (bat.getRightCell() != null) {
+        bat.getRightCell().setCloseToBat();
+      }
+      if (bat.getLeftCell() != null) {
+        bat.getLeftCell().setCloseToBat();
+      }
+      if (bat.getUpCell() != null) {
+        bat.getUpCell().setCloseToBat();
+      }
+      if (bat.getDownCell() != null) {
+        bat.getDownCell().setCloseToBat();
+      }
+    }
+  }
+
+  public void getInBats() {
+    Random random = new Random();
+    random.setSeed(1000);
+    int num = random.nextInt(2);
+    if (maze[playerPosX][playerPosY].getIsPit()) {
+      if (num == 0) {
+        //die
+        gameOver = true;
+      }
+    } else {
+      if (num == 1) {
+        int index = random.nextInt(caveLst.size());
+        playerPosX = caveLst.get(index)[0];
+        playerPosY = caveLst.get(index)[1];
+      }
+    }
+  }
+
+  public void move(String direction) {
+    Cell curr = maze[playerPosX][playerPosY];
+    int flag = 0;
+    Cell next = null;
+    if (direction == "N") {
+      goUp();
+      next = curr.getUpCell();
+    } else if (direction == "S") {
+      goDown();
+      next = curr.getDownCell();
+      flag = 1;
+    } else if (direction == "W") {
+      goLeft();
+      next = curr.getLeftCell();
+      flag = 2;
+    } else {
+      goRight();
+      next = curr.getRightCell();
+      flag = 3;
+    }
+
+    while (next.isTunnel) {
+      curr = next;
+      if (curr.getDownCell().isTunnel && flag != 0) {
+        goDown();
+        next = curr.getDownCell();
+        flag = 1;
+      }
+      else if (curr.getUpCell().isTunnel && flag != 1) {
+        goUp();
+        next = curr.getUpCell();
+        flag = 0;
+      }
+      else if (curr.getLeftCell().isTunnel && flag != 3) {
+        goLeft();
+        next = curr.getLeftCell();
+        flag = 2;
+      }
+      else if (curr.getRightCell().isTunnel && flag != 2) {
+        goRight();
+        next = curr.getRightCell();
+        flag = 3;
+      }
+    }
+    curr = next;
+    if (flag == 0) {
+      goUp();
+    }
+    else if (flag == 1) {
+      goDown();
+    }
+    else if (flag == 2) {
+      goLeft();
+    }
+    else if (flag == 3) {
+      goRight();
+    }
+  }
+
+  public void shoot(String direction, int distance) {
+    int originX = playerPosX;
+    int originY = playerPosY;
+    for (int i = 0; i < distance; i++) {
+      move(direction);
+    }
+    if (maze[playerPosX][playerPosY].isWumpus) {
+      System.out.println("Win!");
+      gameOver = true;
+    } else {
+      playerPosX = originX;
+      playerPosY = originY;
     }
   }
 

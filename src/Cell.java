@@ -17,6 +17,8 @@ public class Cell {
   boolean isWumpus;
   boolean isPit;
   boolean closeToPit;
+  boolean hasBat;
+  boolean closeToBat;
 
   /**
    * Constructor for Cell class.
@@ -34,6 +36,8 @@ public class Cell {
     isWumpus = false;
     isPit = false;
     closeToPit = false;
+    hasBat = false;
+    closeToBat = false;
   }
 
   /**
@@ -163,6 +167,22 @@ public class Cell {
 
   public boolean getCloseToWumpus() {
     return closeToWumpus;
+  }
+
+  public void setHasBat() {
+    hasBat = true;
+  }
+
+  public void setCloseToBat() {
+    closeToBat = true;
+  }
+
+  public boolean getHasBat() {
+    return hasBat;
+  }
+
+  public boolean getCloseToBat() {
+    return closeToBat;
   }
 
   public void setIsPit() {
