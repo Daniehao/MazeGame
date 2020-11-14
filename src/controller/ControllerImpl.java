@@ -16,6 +16,11 @@ public class ControllerImpl implements Controller {
   private final Appendable out;
   MazeGame game;
 
+  /**
+   * Constructor for the ControllerImpl class.
+   * @param in The input stream.
+   * @param out The output strem.
+   */
   public ControllerImpl(Readable in, Appendable out) {
     this.in = in;
     this.out = out;
