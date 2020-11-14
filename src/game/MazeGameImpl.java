@@ -33,19 +33,15 @@ public class MazeGameImpl implements MazeGame {
    * @param remains    The number of walls that should remain.
    * @param isPerfect  The maze is perfect or not.
    * @param isWrapping The maze is wrapping or not.
-   * @param playerPosX The horizontal location of the player.
-   * @param playerPosY The vertical location of the player.
    */
   public MazeGameImpl(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
-                      int playerPosX, int playerPosY, double batPercent, double pitPercent)
+                      double batPercent, double pitPercent, int arrows)
           throws IllegalArgumentException {
     this.rows = rows;
     this.cols = cols;
     this.remains = remains;
     this.isWrapping = isWrapping;
     this.isPerfect = isPerfect;
-    this.playerPosX = playerPosX;
-    this.playerPosY = playerPosY;
     savedWall = new ArrayList<>();
     caveLst = new ArrayList<>();
     this.batPercent = batPercent;
@@ -79,6 +75,11 @@ public class MazeGameImpl implements MazeGame {
     assignWumpus();
     assignPits();
     assignSuperBats();
+    Random random = new Random();
+    random.setSeed(1000);
+    int randomInt = random.nextInt(caveLst.size());
+    this.playerPosX = caveLst.get(randomInt)[0];
+    this.playerPosY = caveLst.get(randomInt)[1];
   }
 
   /**
@@ -379,13 +380,8 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
-  public int getPlayerPosX() {
-    return playerPosX;
-  }
-
-  @Override
-  public int getPlayerPosY() {
-    return playerPosY;
+  public int[] getPlayerLocation() {
+    return new int[]{playerPosX, playerPosY};
   }
 
   /**
@@ -517,25 +513,28 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  public void move(String direction) {
+  @Override
+  public void move(String direction) throws IllegalArgumentException {
     Cell curr = maze[playerPosX][playerPosY];
     int flag = 0;
     Cell next = null;
-    if (direction == "N") {
+    if (direction == "N" || direction == "North") {
       goUp();
       next = curr.getUpCell();
-    } else if (direction == "S") {
+    } else if (direction == "S" || direction == "South") {
       goDown();
       next = curr.getDownCell();
       flag = 1;
-    } else if (direction == "W") {
+    } else if (direction == "W" || direction == "West") {
       goLeft();
       next = curr.getLeftCell();
       flag = 2;
-    } else {
+    } else if (direction == "E" || direction == "East") {
       goRight();
       next = curr.getRightCell();
       flag = 3;
+    } else {
+      throw new IllegalArgumentException("The direction input is invalid!");
     }
 
     while (next.isTunnel) {
@@ -570,6 +569,7 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  @Override
   public void shoot(String direction, int distance) {
     int originX = playerPosX;
     int originY = playerPosY;

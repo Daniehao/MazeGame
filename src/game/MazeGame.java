@@ -7,14 +7,9 @@ package game;
 public interface MazeGame {
 
   /**
-   * Get the horizontal location of the player.
+   * Get the current location of the player.
    */
-  public int getPlayerPosX();
-
-  /**
-   * Get the vertical location of the player.
-   */
-  public int getPlayerPosY();
+  public int[] getPlayerLocation();
 
   public void shoot(String direction, int distance);
 

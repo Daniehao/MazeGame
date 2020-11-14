@@ -34,12 +34,11 @@ public class Main {
     int remains = scan.nextInt();
     boolean isPerfect = scan.next() == "true"? true: false;
     boolean isWrapping = scan.next() == "true"?true: false;
-    int playerPosX = scan.nextInt();
-    int playerPosY = scan.nextInt();
     double batPercent = Double.parseDouble(scan.next());
     double pitPercent = Double.parseDouble(scan.next());
-    MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping,
-            playerPosX, playerPosY, batPercent, pitPercent);
+    int arrows = scan.nextInt();
+    MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping, batPercent,
+            pitPercent, arrows);
     return game;
   }
 }
