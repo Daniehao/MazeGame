@@ -53,9 +53,6 @@ public class MazeGameImpl implements MazeGame {
     if (cols < 0) {
       throw new IllegalArgumentException("columns input cannot be negative!");
     }
-    if (!checkOutOfBound()) {
-      throw new IllegalArgumentException("The start point is invalid!");
-    }
     generatePerfectMaze();
     if (!isPerfect) {
       if (isWrapping && remains < cols * rows + rows * cols - rows * cols + 1 &&
@@ -309,7 +306,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn left operation.
    */
-  public void goLeft() {
+  public void goLeft() throws IllegalArgumentException {
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
     } else {
@@ -327,7 +324,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn right operation.
    */
-  public void goRight() {
+  public void goRight() throws IllegalArgumentException {
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
       ;
@@ -346,7 +343,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn up operation.
    */
-  public void goUp() {
+  public void goUp() throws IllegalArgumentException {
     if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
     } else {
@@ -364,7 +361,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn down operation.
    */
-  public void goDown() {
+  public void goDown() throws IllegalArgumentException {
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
     } else {
@@ -382,15 +379,6 @@ public class MazeGameImpl implements MazeGame {
   @Override
   public int[] getPlayerLocation() {
     return new int[]{playerPosX, playerPosY};
-  }
-
-  /**
-   * Check if the location of the player is out of bound.
-   *
-   * @return True/False.
-   */
-  public boolean checkOutOfBound() {
-    return !(playerPosX < 0 || playerPosY < 0 || playerPosX >= rows || playerPosY >= cols);
   }
 
   @Override
@@ -411,7 +399,11 @@ public class MazeGameImpl implements MazeGame {
     return s;
   }
 
+  /**
+   * Traverse the whole maze, and assign each cell as a cave or a tunnel.
+   */
   private void assignCaveTunnel() {
+    int caveNum = 1;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Cell curr = maze[i][j];
@@ -421,6 +413,7 @@ public class MazeGameImpl implements MazeGame {
         } else {
           curr.setIsRoom(true);
           curr.setIsTunnel(false);
+          curr.setCaveNum(caveNum++);
           int[] temp = new int[2];
           temp[0] = i;
           temp[1] = j;
@@ -430,11 +423,16 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  /**
+   * Get the number of walls surrounded by the current cell.
+   *
+   * @param curr The current cell.
+   * @return The number of walls that the current cell has.
+   */
   private int getWallNums(Cell curr) {
     int count = 0;
     if (curr.getDownCell() == null) {
       count++;
-
     }
     if (curr.getUpCell() == null) {
       count++;
@@ -448,6 +446,9 @@ public class MazeGameImpl implements MazeGame {
     return count;
   }
 
+  /**
+   * Assign a random cave to have the wumpus. There is only one wumpus in the game.
+   */
   private void assignWumpus() {
     Random random = new Random();
     random.setSeed(1000);
@@ -469,6 +470,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  /**
+   * Assign some random caves as bottomless pits.
+   */
   public void assignPits() {
     int caveNum = caveLst.size();
     int pitNum = (int) (caveNum * pitPercent);
@@ -482,6 +486,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  /**
+   * Assign some random caves to have superbats.
+   */
   public void assignSuperBats() {
     int caveNum = caveLst.size();
     int batNum = (int) (caveNum * batPercent);
@@ -495,22 +502,57 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  public void getInBats() {
+  /**
+   * Get into the cave that have superbats.
+   */
+  private void getInBats() {
     Random random = new Random();
     random.setSeed(1000);
     int num = random.nextInt(2);
+    //both bats and pits
     if (maze[playerPosX][playerPosY].getIsPit()) {
       if (num == 0) {
-        //die
-        gameOver = true;
+        getInPits();
+      } else {
+        dropToRandomCave();
       }
     } else {
       if (num == 1) {
-        int index = random.nextInt(caveLst.size());
-        playerPosX = caveLst.get(index)[0];
-        playerPosY = caveLst.get(index)[1];
+        dropToRandomCave();
       }
     }
+  }
+
+  /**
+   * The superbats drop the player to a random cave.
+   */
+  private void dropToRandomCave() {
+    Random random = new Random();
+    random.setSeed(1000);
+    int index = random.nextInt(caveLst.size());
+    playerPosX = caveLst.get(index)[0];
+    playerPosY = caveLst.get(index)[1];
+    if (maze[playerPosX][playerPosY].isWumpus) {
+      getInWumpus();
+    }
+    else if (maze[playerPosX][playerPosY].isPit) {
+      getInPits();
+    }
+  }
+
+  /**
+   * The player get into the cave that has wumpus.
+   */
+  private void getInWumpus() {
+    System.out.println("Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next " +
+              "time.");
+  }
+
+  /**
+   * The player get into the cave that is a bottomless pit.
+   */
+  private void getInPits() {
+    System.out.println("You fell into the bottomless pit!");
   }
 
   @Override

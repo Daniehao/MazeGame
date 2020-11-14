@@ -19,6 +19,7 @@ public class Cell {
   boolean closeToPit;
   boolean hasBat;
   boolean closeToBat;
+  int caveNum;
 
   /**
    * The constructor for Cell class.
@@ -35,6 +36,7 @@ public class Cell {
     closeToPit = false;
     hasBat = false;
     closeToBat = false;
+    caveNum = -1;
   }
 
   /**
@@ -187,5 +189,13 @@ public class Cell {
    */
   public boolean getCloseToPit() {
     return closeToPit;
+  }
+
+  public void setCaveNum(int caveNum) {
+    this.caveNum = caveNum;
+  }
+
+  public int getCaveNum() {
+    return caveNum;
   }
 }
