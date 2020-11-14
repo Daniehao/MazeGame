@@ -4,15 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Game.Cell class to store the pointer as well as the gold number, and whether tbere is a thief inside
- * the cell.
+ * The cell class store all of the information about each cell, which includes whether the cell is
+ * closing to a wumpus, whether it has wumpus, whether it has a pit, whether it is closing to a pit,
+ * whether it has a bat, whether it is closing to a bat in the cell.
  */
 public class Cell {
   //string is the direction, cell is the next cell.
   Map<String, Cell> cellMap;
-  boolean hasGold;
-  boolean hasThief;
-  int goldNum;
   boolean isTunnel;
   boolean isRoom;
   boolean closeToWumpus;
@@ -31,9 +29,6 @@ public class Cell {
     cellMap.put("right", null);
     cellMap.put("up", null);
     cellMap.put("down", null);
-    hasGold = false;
-    hasThief = false;
-    goldNum = 0;
     closeToWumpus = false;
     isWumpus = false;
     isPit = false;
@@ -64,51 +59,6 @@ public class Cell {
         break;
       default:
     }
-  }
-
-  /**
-   * Set if the current cell has gold and the count of the gold.
-   *
-   * @param hasGold Whether the current cell has gold.
-   * @param goldNum The count of gold in the cell.
-   */
-  public void setGold(boolean hasGold, int goldNum) {
-    this.hasGold = hasGold;
-    this.goldNum = goldNum;
-  }
-
-  /**
-   * Set the hasThief value to true.
-   */
-  public void setThief() {
-    hasThief = true;
-  }
-
-  /**
-   * Set the hasGold value for the cell.
-   *
-   * @return If the cell has gold.
-   */
-  public boolean hasGold() {
-    return hasGold;
-  }
-
-  /**
-   * Set the hasThief value for the cell.
-   *
-   * @return If the cell has thief.
-   */
-  public boolean hasThief() {
-    return hasThief;
-  }
-
-  /**
-   * Get the amount of gold int the cell.
-   *
-   * @return The amout of gold in the cell.
-   */
-  public int getGoldNum() {
-    return goldNum;
   }
 
   /**
@@ -147,58 +97,108 @@ public class Cell {
     return cellMap.get("down");
   }
 
+  /**
+   * Set the room status for the cell.
+   * @param isRoom Whether the cell is a room/cave.
+   */
   public void setIsRoom(boolean isRoom) {
     this.isRoom = isRoom;
   }
 
-  public void setIsTunnel(boolean tunnel) {
-    this.isTunnel = tunnel;
+  /**
+   * Set the tunnel status for the cell.
+   * @param isTunnel Whether the cell is a tunnel or not.
+   */
+  public void setIsTunnel(boolean isTunnel) {
+    this.isTunnel = isTunnel;
   }
 
+  /**
+   * Set the wumpus status as true for the cell.
+   */
   public void setIsWumpus() {
     this.isWumpus = true;
   }
 
+  /**
+   * Get the wumpus status for the cell.
+   */
   public boolean getIsWumpus() {
     return isWumpus;
   }
 
+  /**
+   * Set the close to wumpus status as true for the cell.
+   */
   public void setCloseToWumpus() {
     this.closeToWumpus = true;
   }
 
+  /**
+   * Get if the cell is close to wumpus.
+   *
+   * @return True/False.
+   */
   public boolean getCloseToWumpus() {
     return closeToWumpus;
   }
 
+  /**
+   * Set the cell has bats as true.
+   */
   public void setHasBat() {
     hasBat = true;
   }
 
+  /**
+   * Set the cell close to bats as true.
+   */
   public void setCloseToBat() {
     closeToBat = true;
   }
 
+  /**
+   * Get if the cell has bats.
+   */
   public boolean getHasBat() {
     return hasBat;
   }
 
+  /**
+   * Get if the cell is close to bats.
+   */
   public boolean getCloseToBat() {
     return closeToBat;
   }
 
+  /**
+   * Set the cell as a pit.
+   */
   public void setIsPit() {
     isPit = true;
   }
 
+  /**
+   * Set the cell if it is close to a pit.
+   */
   public void setCloseToPit() {
     closeToPit = true;
   }
 
+  /**
+   * Get if the cell is a pit.
+   *
+   * @return True/False.
+   */
   public boolean getIsPit() {
     return isPit;
   }
 
+  /**
+   * Get if the cell is close to a pit.
+   *
+   * @return True/False.
+   */
   public boolean getCloseToPit() {
     return closeToPit;
   }
