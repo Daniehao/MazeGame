@@ -17,7 +17,6 @@ public class MazeGameImpl implements MazeGame {
   private int remains;
   private Cell[][] maze;
   private boolean isWrapping;
-  private int playerGold;
   private int playerPosX;
   private int playerPosY;
   private boolean isPerfect;
@@ -44,7 +43,6 @@ public class MazeGameImpl implements MazeGame {
     this.isPerfect = isPerfect;
     this.playerPosX = playerPosX;
     this.playerPosY = playerPosY;
-    playerGold = 0;
     savedWall = new ArrayList<>();
     caveLst = new ArrayList<>();
     gameOver = false;
@@ -220,25 +218,12 @@ public class MazeGameImpl implements MazeGame {
    */
   private void generateCells(int rows, int cols) {
     maze = new Cell[rows][cols];
-    int goldTotal = (int) (rows * cols * .2);
     Random random = new Random();
     random.setSeed(1000);
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         maze[i][j] = new Cell();
       }
-    }
-
-    for (int i = 0; i < goldTotal; i++) {
-      int indexX = random.nextInt(rows);
-      int indexY = random.nextInt(cols);
-      maze[indexX][indexY].setGold(true, 50);
-    }
-    int thiefTotal = (int) (rows * cols * .1);
-    for (int i = 0; i < thiefTotal; i++) {
-      int indexX = random.nextInt(rows);
-      int indexY = random.nextInt(cols);
-      maze[indexX][indexY].setThief();
     }
   }
 
@@ -312,72 +297,72 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  @Override
+  /**
+   * Turn left operation.
+   */
   public void goLeft() {
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
-      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
         playerPosY = cols - playerPosY - 1;
-        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
     }
   }
 
-  @Override
+  /**
+   * Turn right operation.
+   */
   public void goRight() {
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
-      playerPosY++;
-      updateGoldThief();
+      playerPosY++;;
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
         playerPosY = 0;
-        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
     }
   }
 
-  @Override
+  /**
+   * Turn up operation.
+   */
   public void goUp() {
     if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
-      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
         playerPosX = rows - 1;
-        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
     }
   }
 
-  @Override
+  /**
+   * Turn down operation.
+   */
   public void goDown() {
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
-      updateGoldThief();
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
       if (playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
         playerPosX = 0;
-        updateGoldThief();
       } else {
         throw new IllegalArgumentException("Player's move is out of bound!");
       }
@@ -394,11 +379,6 @@ public class MazeGameImpl implements MazeGame {
     return playerPosY;
   }
 
-  @Override
-  public int getPlayerGold() {
-    return playerGold;
-  }
-
   /**
    * Check if the location of the player is out of bound.
    *
@@ -406,20 +386,6 @@ public class MazeGameImpl implements MazeGame {
    */
   public boolean checkOutOfBound() {
     return !(playerPosX < 0 || playerPosY < 0 || playerPosX >= rows || playerPosY >= cols);
-  }
-
-  /**
-   * Update the gold amount of player as well as update the gold amount after the player take the
-   * gold in the current location.
-   */
-  private void updateGoldThief() {
-    if (maze[playerPosX][playerPosY].hasGold()) {
-      playerGold += maze[playerPosX][playerPosY].getGoldNum();
-      maze[playerPosX][playerPosY].setGold(false, 0);
-    }
-    if (maze[playerPosX][playerPosY].hasThief()) {
-      playerGold -= (int) (0.1 * playerGold);
-    }
   }
 
   @Override

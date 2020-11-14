@@ -6,8 +6,8 @@ import game.Cell;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test for the Game.Cell class, which checks if all cell has a correct link with the cell next to it,
- * as well as the gold amount and thief inside or not.
+ * Test for the Game.Cell class, which checks if all cell has a correct link with the cell next
+ * to it.
  */
 public class CellTest {
   private Cell cell1;
@@ -20,8 +20,6 @@ public class CellTest {
   public void setup() {
     cell1 = new Cell();
     cell2 = new Cell();
-    cell1.setGold(true, 10);
-    cell2.setThief();
     cell1.setNextCell(cell2, "right");
     cell1.setNextCell(cell3, "left");
     cell1.setNextCell(cell4, "up");
@@ -41,16 +39,4 @@ public class CellTest {
     assertEquals(cell1.getDownCell(), cell5);
   }
 
-  @Test
-  public void testGetGold() {
-    assertEquals(true, cell1.hasGold());
-    assertEquals(10, cell1.getGoldNum());
-    assertEquals(0, cell2.getGoldNum());
-  }
-
-  @Test
-  public void testThief() {
-    assertEquals(false, cell1.hasThief());
-    assertEquals(true, cell2.hasThief());
-  }
 }
