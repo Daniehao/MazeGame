@@ -306,17 +306,18 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn left operation.
    */
-  public void goLeft() throws IllegalArgumentException {
+  public void goLeft(){
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
     } else {
       if (!isWrapping) {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
       if (playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
         playerPosY = cols - playerPosY - 1;
       } else {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        throw new IllegalArgumentException("Player's move is out of bound! Please re-input " +
+                "your direciton.");
       }
     }
   }
@@ -324,18 +325,18 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn right operation.
    */
-  public void goRight() throws IllegalArgumentException {
+  public void goRight(){
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
       ;
     } else {
       if (!isWrapping) {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
       if (playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
         playerPosY = 0;
       } else {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
     }
   }
@@ -343,17 +344,17 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn up operation.
    */
-  public void goUp() throws IllegalArgumentException {
+  public void goUp() {
     if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
     } else {
       if (!isWrapping) {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
       if (playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
         playerPosX = rows - 1;
       } else {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
     }
   }
@@ -361,17 +362,17 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn down operation.
    */
-  public void goDown() throws IllegalArgumentException {
+  public void goDown() {
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
     } else {
       if (!isWrapping) {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
       if (playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
         playerPosX = 0;
       } else {
-        throw new IllegalArgumentException("Player's move is out of bound!");
+        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
     }
   }
@@ -559,21 +560,21 @@ public class MazeGameImpl implements MazeGame {
   public void move(String direction) throws IllegalArgumentException {
     Cell curr = maze[playerPosX][playerPosY];
     int flag = 0;
-    Cell next = null;
+//    Cell next = null;
     if (direction == "N" || direction == "North") {
       goUp();
-      next = curr.getUpCell();
+//      next = curr.getUpCell();
     } else if (direction == "S" || direction == "South") {
       goDown();
-      next = curr.getDownCell();
+//      next = curr.getDownCell();
       flag = 1;
     } else if (direction == "W" || direction == "West") {
       goLeft();
-      next = curr.getLeftCell();
+//      next = curr.getLeftCell();
       flag = 2;
     } else if (direction == "E" || direction == "East") {
       goRight();
-      next = curr.getRightCell();
+//      next = curr.getRightCell();
       flag = 3;
     } else {
       throw new IllegalArgumentException("The direction input is invalid!");
