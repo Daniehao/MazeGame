@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * The Game.Maze class that implements the Game.MazeGame, and which could generate wrapping or non-wrapping
- * perfect maze, wrapping or non-wrapping room maze.
+ * The Game.Maze class that implements the Game.MazeGame, and which could generate wrapping or
+ * non-wrapping perfect maze, wrapping or non-wrapping room maze.
  */
 public class MazeGameImpl implements MazeGame {
   private List<Integer> savedWall;
@@ -474,18 +474,6 @@ public class MazeGameImpl implements MazeGame {
       int[] pitPos = caveLst.get(index);
       Cell pit = maze[pitPos[0]][pitPos[1]];
       pit.setIsPit();
-      if (pit.getRightCell() != null) {
-        pit.getRightCell().setCloseToPit();
-      }
-      if (pit.getLeftCell() != null) {
-        pit.getLeftCell().setCloseToPit();
-      }
-      if (pit.getUpCell() != null) {
-        pit.getUpCell().setCloseToPit();
-      }
-      if (pit.getDownCell() != null) {
-        pit.getDownCell().setCloseToPit();
-      }
     }
   }
 

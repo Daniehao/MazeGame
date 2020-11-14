@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import game.MazeGame;
+import game.MazeGameImpl;
 
 /**
  * A controller for the maze game. This controller works with a Readable and Appendable object. It
@@ -13,6 +14,7 @@ import game.MazeGame;
 public class ControllerImpl implements Controller {
   private final Readable in;
   private final Appendable out;
+  MazeGame game;
 
   public ControllerImpl(Readable in, Appendable out) {
     this.in = in;
@@ -20,7 +22,23 @@ public class ControllerImpl implements Controller {
   }
 
   @Override
-  public void start(MazeGame game) throws IOException {
+  public void createMaze() {
+    try (Scanner scan = new Scanner(this.in)) {
+      int rows = scan.nextInt();
+      int cols = scan.nextInt();
+      int remains = scan.nextInt();
+      boolean isPerfect = scan.next() == "true"? true: false;
+      boolean isWrapping = scan.next() == "true"?true: false;
+      int playerPosX = scan.nextInt();
+      int playerPosY = scan.nextInt();
+      MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping,
+              playerPosX, playerPosY);
+      this.game = game;
+    }
+  }
+
+  @Override
+  public void start() throws IOException {
     Objects.requireNonNull(game);
     String direction;
     int distance;

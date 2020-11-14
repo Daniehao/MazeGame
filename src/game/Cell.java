@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * The cell class store all of the information about each cell, which includes whether the cell is
  * closing to a wumpus, whether it has wumpus, whether it has a pit, whether it is closing to a pit,
- * whether it has a bat, whether it is closing to a bat in the cell.
+ * whether it has a bat in the cell.
  */
 public class Cell {
   //string is the direction, cell is the next cell.
@@ -151,24 +151,10 @@ public class Cell {
   }
 
   /**
-   * Set the cell close to bats as true.
-   */
-  public void setCloseToBat() {
-    closeToBat = true;
-  }
-
-  /**
    * Get if the cell has bats.
    */
   public boolean getHasBat() {
     return hasBat;
-  }
-
-  /**
-   * Get if the cell is close to bats.
-   */
-  public boolean getCloseToBat() {
-    return closeToBat;
   }
 
   /**
