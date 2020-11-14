@@ -1,9 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import game.Cell;
+
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test for the Cell class, which checks if all cell has a correct link with the cell next to it,
+ * Test for the Game.Cell class, which checks if all cell has a correct link with the cell next to it,
  * as well as the gold amount and thief inside or not.
  */
 public class CellTest {
@@ -27,7 +30,7 @@ public class CellTest {
 
   @Test
   public void testConstructor() {
-    assertEquals("class Cell", cell1.getClass().toString());
+    assertEquals("class Game.Cell", cell1.getClass().toString());
   }
 
   @Test

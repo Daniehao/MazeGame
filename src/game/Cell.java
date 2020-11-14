@@ -1,8 +1,10 @@
+package game;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Cell class to store the pointer as well as the gold number, and whether tbere is a thief inside
+ * Game.Cell class to store the pointer as well as the gold number, and whether tbere is a thief inside
  * the cell.
  */
 public class Cell {
@@ -21,7 +23,7 @@ public class Cell {
   boolean closeToBat;
 
   /**
-   * Constructor for Cell class.
+   * Constructor for Game.Cell class.
    */
   public Cell() {
     cellMap = new HashMap<>();

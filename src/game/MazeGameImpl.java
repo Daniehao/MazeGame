@@ -1,3 +1,5 @@
+package game;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -5,10 +7,10 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * The Maze class that implements the MazeGame, and which could generate wrapping or non-wrapping
+ * The Game.Maze class that implements the Game.MazeGame, and which could generate wrapping or non-wrapping
  * perfect maze, wrapping or non-wrapping room maze.
  */
-public class Maze implements MazeGame {
+public class MazeGameImpl implements MazeGame {
   private List<Integer> savedWall;
   private int rows;
   private int cols;
@@ -23,7 +25,7 @@ public class Maze implements MazeGame {
   private boolean gameOver;
 
   /**
-   * Constructor for Maze class.
+   * Constructor for Game.Maze class.
    *
    * @param rows       The number of rows in the maze.
    * @param cols       The number of columns in the maze.
@@ -33,8 +35,8 @@ public class Maze implements MazeGame {
    * @param playerPosX The horizontal location of the player.
    * @param playerPosY The vertical location of the player.
    */
-  public Maze(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
-              int playerPosX, int playerPosY) throws IllegalArgumentException {
+  public MazeGameImpl(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
+                      int playerPosX, int playerPosY) throws IllegalArgumentException {
     this.rows = rows;
     this.cols = cols;
     this.remains = remains;

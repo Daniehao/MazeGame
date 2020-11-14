@@ -68,6 +68,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/Game/Cell.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/Game/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/Game/Maze.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/Game/MazeGame.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/Main.java">
           <value>
             <set />
@@ -89,6 +109,41 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/Wall.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/controller/Controller.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/controller/ControllerImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/Cell.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/Maze.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/MazeGame.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/MazeGameImpl.java">
           <value>
             <set />
           </value>
@@ -189,6 +244,16 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/Downloads/ListAdt/test/BookListADTTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Downloads/TurtleController/src/turtle/control/ExtensibleController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Downloads/TurtleController/src/turtle/control/commands/Trace.java">
           <value>
             <set />
           </value>

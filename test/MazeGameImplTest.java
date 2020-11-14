@@ -1,12 +1,16 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import game.MazeGameImpl;
+import game.MazeGame;
+
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test for the Maze class, which checks if four types of maze works fine with user's input
+ * Test for the Game.Maze class, which checks if four types of maze works fine with user's input
  * directions.
  */
-public class MazeTest {
+public class MazeGameImplTest {
   private MazeGame maze1;
   private MazeGame maze2;
   private MazeGame maze3;
@@ -17,13 +21,13 @@ public class MazeTest {
    */
   @Before
   public void setup() {
-    maze1 = new Maze(3, 4, 11, true, false,
+    maze1 = new MazeGameImpl(3, 4, 11, true, false,
             0, 1);
-    maze2 = new Maze(3, 4, 11, true, true,
+    maze2 = new MazeGameImpl(3, 4, 11, true, true,
             0, 0);
-    maze3 = new Maze(3, 4, 3, false, false,
+    maze3 = new MazeGameImpl(3, 4, 3, false, false,
             0, 1);
-    maze4 = new Maze(3, 4, 3, false, true,
+    maze4 = new MazeGameImpl(3, 4, 3, false, true,
             0, 1);
   }
 
@@ -40,25 +44,25 @@ public class MazeTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid1() {
-    maze1 = new Maze(-3, 4, 11, true, false,
+    maze1 = new MazeGameImpl(-3, 4, 11, true, false,
             0, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid2() {
-    maze1 = new Maze(3, -4, 11, true, false,
+    maze1 = new MazeGameImpl(3, -4, 11, true, false,
             0, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid3() {
-    maze3 = new Maze(3, 4, -3, false, false,
+    maze3 = new MazeGameImpl(3, 4, -3, false, false,
             0, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid4() {
-    maze3 = new Maze(3, 4, 7, false, false,
+    maze3 = new MazeGameImpl(3, 4, 7, false, false,
             0, 1);
   }
 
@@ -151,7 +155,7 @@ public class MazeTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void checkWrapPerfectMaze2() {
-    MazeGame maze5 = new Maze(3, 4, 11, true, true,
+    MazeGame maze5 = new MazeGameImpl(3, 4, 11, true, true,
             0, 1);
     maze5.goUp();
   }
@@ -163,14 +167,14 @@ public class MazeTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void checkNonWrapRoomMaze2() {
-    MazeGame maze6 = new Maze(3, 4, 3, false, false,
+    MazeGame maze6 = new MazeGameImpl(3, 4, 3, false, false,
             0, 2);
     maze6.goUp();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void checkNonWrapRoomMaze3() {
-    MazeGame maze6 = new Maze(3, 4, 3, false, false,
+    MazeGame maze6 = new MazeGameImpl(3, 4, 3, false, false,
             0, 2);
     maze6.goDown();
   }
@@ -182,7 +186,7 @@ public class MazeTest {
 
   @Test
   public void checkWrapRoomMaze2() {
-    maze4 = new Maze(3, 4, 3, false, true,
+    maze4 = new MazeGameImpl(3, 4, 3, false, true,
             0, 0);
     maze4.goUp();
     assertEquals(maze4.getPlayerPosX(), 2);
