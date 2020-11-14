@@ -1,6 +1,9 @@
 package game;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+import controller.ControllerImpl;
 
 /**
  * Game.Main class for generating two samples for Perfect maze and wrapped room maze. The player visits
@@ -12,15 +15,19 @@ public class Main {
    *
    * @param args The arguments for main method.
    */
-  public static void main(String[] args) {
-    createMaze();
-
+  public static void main(String[] args) throws IOException {
+    MazeGame game = createMaze();
+    try {
+      new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
    * Generate the maze by input the dimension of the maze, maze type, and player's start position.
    */
-  public static void createMaze(){
+  public static MazeGame createMaze(){
     Scanner scan = new Scanner(System.in);
     int rows = scan.nextInt();
     int cols = scan.nextInt();
@@ -31,5 +38,6 @@ public class Main {
     int playerPosY = scan.nextInt();
     MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping,
             playerPosX, playerPosY);
+    return game;
   }
 }

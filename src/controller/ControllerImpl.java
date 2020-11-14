@@ -14,7 +14,6 @@ import game.MazeGameImpl;
 public class ControllerImpl implements Controller {
   private final Readable in;
   private final Appendable out;
-  MazeGame game;
 
   /**
    * Constructor for the ControllerImpl class.

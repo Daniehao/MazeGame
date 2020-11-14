@@ -9,7 +9,6 @@ import game.MazeGame;
  * in the maze as well as the shoot operation to shoot towards to a cave that may have.
  */
 public interface Controller {
-
   /**
    * @throws IOException if an I/O error occurs.
    */
