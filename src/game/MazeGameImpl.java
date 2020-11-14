@@ -76,6 +76,9 @@ public class MazeGameImpl implements MazeGame {
     }
 
     assignCaveTunnel();
+    assignWumpus();
+    assignPits();
+    assignSuperBats();
   }
 
   /**
@@ -325,7 +328,8 @@ public class MazeGameImpl implements MazeGame {
    */
   public void goRight() {
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
-      playerPosY++;;
+      playerPosY++;
+      ;
     } else {
       if (!isWrapping) {
         throw new IllegalArgumentException("Player's move is out of bound!");
@@ -469,9 +473,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  public void assignPits(double pitPercent) {
+  public void assignPits() {
     int caveNum = caveLst.size();
-    int pitNum = (int)(caveNum * pitPercent);
+    int pitNum = (int) (caveNum * pitPercent);
     Random random = new Random();
     random.setSeed(1000);
     for (int i = 0; i < pitNum; i++) {
@@ -482,9 +486,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  public void assignSuperBats(double batPercent) {
+  public void assignSuperBats() {
     int caveNum = caveLst.size();
-    int batNum = (int)(caveNum * batPercent);
+    int batNum = (int) (caveNum * batPercent);
     Random random = new Random();
     random.setSeed(1000);
     for (int i = 0; i < batNum; i++) {
@@ -540,18 +544,15 @@ public class MazeGameImpl implements MazeGame {
         goDown();
         next = curr.getDownCell();
         flag = 1;
-      }
-      else if (curr.getUpCell().isTunnel && flag != 1) {
+      } else if (curr.getUpCell().isTunnel && flag != 1) {
         goUp();
         next = curr.getUpCell();
         flag = 0;
-      }
-      else if (curr.getLeftCell().isTunnel && flag != 3) {
+      } else if (curr.getLeftCell().isTunnel && flag != 3) {
         goLeft();
         next = curr.getLeftCell();
         flag = 2;
-      }
-      else if (curr.getRightCell().isTunnel && flag != 2) {
+      } else if (curr.getRightCell().isTunnel && flag != 2) {
         goRight();
         next = curr.getRightCell();
         flag = 3;
@@ -560,14 +561,11 @@ public class MazeGameImpl implements MazeGame {
     curr = next;
     if (flag == 0) {
       goUp();
-    }
-    else if (flag == 1) {
+    } else if (flag == 1) {
       goDown();
-    }
-    else if (flag == 2) {
+    } else if (flag == 2) {
       goLeft();
-    }
-    else if (flag == 3) {
+    } else if (flag == 3) {
       goRight();
     }
   }
