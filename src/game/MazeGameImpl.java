@@ -74,7 +74,7 @@ public class MazeGameImpl implements MazeGame {
   }
 
   /**
-   * Generate a Wrapping or a Non- wrapping perfect maze.
+   * Generate a Wrapping or a Non-wrapping perfect maze.
    */
   private void generatePerfectMaze() {
     int[][] cellToUnion = new int[rows][cols];
@@ -487,18 +487,6 @@ public class MazeGameImpl implements MazeGame {
       int[] batPos = caveLst.get(index);
       Cell bat = maze[batPos[0]][batPos[1]];
       bat.setHasBat();
-      if (bat.getRightCell() != null) {
-        bat.getRightCell().setCloseToBat();
-      }
-      if (bat.getLeftCell() != null) {
-        bat.getLeftCell().setCloseToBat();
-      }
-      if (bat.getUpCell() != null) {
-        bat.getUpCell().setCloseToBat();
-      }
-      if (bat.getDownCell() != null) {
-        bat.getDownCell().setCloseToBat();
-      }
     }
   }
 

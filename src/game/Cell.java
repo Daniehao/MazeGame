@@ -21,7 +21,7 @@ public class Cell {
   boolean closeToBat;
 
   /**
-   * Constructor for Game.Cell class.
+   * The constructor for Cell class.
    */
   public Cell() {
     cellMap = new HashMap<>();
