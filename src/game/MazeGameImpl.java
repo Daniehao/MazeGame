@@ -21,6 +21,8 @@ public class MazeGameImpl implements MazeGame {
   private int playerPosY;
   private boolean isPerfect;
   private List<int[]> caveLst;
+  private double batPercent;
+  private double pitPercent;
   private boolean gameOver;
 
   /**
@@ -35,7 +37,8 @@ public class MazeGameImpl implements MazeGame {
    * @param playerPosY The vertical location of the player.
    */
   public MazeGameImpl(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
-                      int playerPosX, int playerPosY) throws IllegalArgumentException {
+                      int playerPosX, int playerPosY, double batPercent, double pitPercent)
+          throws IllegalArgumentException {
     this.rows = rows;
     this.cols = cols;
     this.remains = remains;
@@ -45,6 +48,8 @@ public class MazeGameImpl implements MazeGame {
     this.playerPosY = playerPosY;
     savedWall = new ArrayList<>();
     caveLst = new ArrayList<>();
+    this.batPercent = batPercent;
+    this.pitPercent = pitPercent;
     gameOver = false;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
@@ -464,9 +469,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  public void assignPits(int pitPercent) {
+  public void assignPits(double pitPercent) {
     int caveNum = caveLst.size();
-    int pitNum = caveNum * pitPercent;
+    int pitNum = (int)(caveNum * pitPercent);
     Random random = new Random();
     random.setSeed(1000);
     for (int i = 0; i < pitNum; i++) {
@@ -477,9 +482,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  public void assignSuperBats(int batPercent) {
+  public void assignSuperBats(double batPercent) {
     int caveNum = caveLst.size();
-    int batNum = caveNum * batPercent;
+    int batNum = (int)(caveNum * batPercent);
     Random random = new Random();
     random.setSeed(1000);
     for (int i = 0; i < batNum; i++) {

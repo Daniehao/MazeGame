@@ -36,8 +36,10 @@ public class Main {
     boolean isWrapping = scan.next() == "true"?true: false;
     int playerPosX = scan.nextInt();
     int playerPosY = scan.nextInt();
+    double batPercent = Double.parseDouble(scan.next());
+    double pitPercent = Double.parseDouble(scan.next());
     MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping,
-            playerPosX, playerPosY);
+            playerPosX, playerPosY, batPercent, pitPercent);
     return game;
   }
 }
