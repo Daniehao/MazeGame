@@ -42,7 +42,7 @@ public class ControllerImpl implements Controller {
             System.out.println("Where to? ");
             direction = scan.next();
             game.move(direction);
-          case "q":
+          case "Q":
             return;
           default:
             throw new IllegalStateException("ERROR: should not get here");

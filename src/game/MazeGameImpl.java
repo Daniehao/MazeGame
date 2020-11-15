@@ -306,7 +306,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn left operation.
    */
-  public void goLeft(){
+  public void goLeft() {
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
     } else {
@@ -319,7 +319,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Turn right operation.
    */
-  public void goRight(){
+  public void goRight() {
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
     } else {
@@ -398,7 +398,6 @@ public class MazeGameImpl implements MazeGame {
    * Traverse the whole maze, and assign each cell as a cave or a tunnel.
    */
   private void assignCaveTunnel() {
-    int caveNum = 1;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Cell curr = maze[i][j];
@@ -408,7 +407,6 @@ public class MazeGameImpl implements MazeGame {
         } else {
           curr.setIsRoom(true);
           curr.setIsTunnel(false);
-          curr.setCaveNum(caveNum++);
           int[] temp = new int[2];
           temp[0] = i;
           temp[1] = j;
@@ -530,8 +528,7 @@ public class MazeGameImpl implements MazeGame {
     playerPosY = caveLst.get(index)[1];
     if (maze[playerPosX][playerPosY].isWumpus) {
       getInWumpus();
-    }
-    else if (maze[playerPosX][playerPosY].isPit) {
+    } else if (maze[playerPosX][playerPosY].isPit) {
       getInPits();
     }
   }
@@ -633,26 +630,22 @@ public class MazeGameImpl implements MazeGame {
 
   /**
    * The helper function for move method in order to print the current cave info.
+   *
    * @param curr The current cave.
    * @param flag The direction mark.
    */
   private void movehelper(Cell curr, int flag) {
     if (curr.closeToWumpus) {
       System.out.println("You smell something terrible nearby.");
-    }
-    else if (curr.closeToPit) {
+    } else if (curr.closeToPit) {
       System.out.println("You feel a cold wind blowing.");
-    }
-    else if (curr.isWumpus) {
+    } else if (curr.isWumpus) {
       getInWumpus();
-    }
-    else if (curr.hasBat) {
+    } else if (curr.hasBat) {
       getInBats();
-    }
-    else if (curr.isPit) {
+    } else if (curr.isPit) {
       getInPits();
-    }
-    else if (curr.isTunnel) {
+    } else if (curr.isTunnel) {
       getInTunnel(curr, flag);
     } else {
       System.out.println("You feel a draft.");
@@ -681,7 +674,7 @@ public class MazeGameImpl implements MazeGame {
     }
     if (direction == "E") {
       for (int i = 0; i < distance; i++) {
-        destination = curr. getRightCell();
+        destination = curr.getRightCell();
       }
     }
 

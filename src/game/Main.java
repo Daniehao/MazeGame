@@ -3,11 +3,12 @@ package game;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+
 import controller.ControllerImpl;
 
 /**
- * Game.Main class for generating two samples for Perfect maze and wrapped room maze. The player visits
- * each location in the room maze and reach to the goal point in both of the examples.
+ * Game.Main class for generating two samples for Perfect maze and wrapped room maze. The player
+ * visits each location in the room maze and reach to the goal point in both of the examples.
  */
 public class Main {
   /**
@@ -28,13 +29,13 @@ public class Main {
   /**
    * Generate the maze by input the dimension of the maze, maze type, and player's start position.
    */
-  public static MazeGame createMaze(){
+  public static MazeGame createMaze() {
     Scanner scan = new Scanner(System.in);
     int rows = scan.nextInt();
     int cols = scan.nextInt();
     int remains = scan.nextInt();
-    boolean isPerfect = scan.next() == "true"? true: false;
-    boolean isWrapping = scan.next() == "true"?true: false;
+    boolean isPerfect = scan.next() == "true" ? true : false;
+    boolean isWrapping = scan.next() == "true" ? true : false;
     double batPercent = Double.parseDouble(scan.next());
     double pitPercent = Double.parseDouble(scan.next());
     int arrows = scan.nextInt();
