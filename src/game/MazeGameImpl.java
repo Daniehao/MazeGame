@@ -310,14 +310,8 @@ public class MazeGameImpl implements MazeGame {
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
     } else {
-      if (!isWrapping) {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
-      }
-      if (playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
+      if (isWrapping && playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
         playerPosY = cols - playerPosY - 1;
-      } else {
-        throw new IllegalArgumentException("Player's move is out of bound! Please re-input " +
-                "your direciton.");
       }
     }
   }
@@ -328,15 +322,9 @@ public class MazeGameImpl implements MazeGame {
   public void goRight(){
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
-      ;
     } else {
-      if (!isWrapping) {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
-      }
-      if (playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
+      if (isWrapping && playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
         playerPosY = 0;
-      } else {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
     }
   }
@@ -348,13 +336,8 @@ public class MazeGameImpl implements MazeGame {
     if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
     } else {
-      if (!isWrapping) {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
-      }
-      if (playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
+      if (isWrapping && playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
         playerPosX = rows - 1;
-      } else {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
     }
   }
@@ -366,13 +349,8 @@ public class MazeGameImpl implements MazeGame {
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
     } else {
-      if (!isWrapping) {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
-      }
-      if (playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
+      if (isWrapping && playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
         playerPosX = 0;
-      } else {
-        System.out.println("Player's move is out of bound! Please re-input your direciton.");
       }
     }
   }
@@ -545,8 +523,8 @@ public class MazeGameImpl implements MazeGame {
    * The player get into the cave that has wumpus.
    */
   private void getInWumpus() {
-    System.out.println("Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next " +
-              "time.");
+    System.out.println("Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next time."
+    );
   }
 
   /**
@@ -556,51 +534,31 @@ public class MazeGameImpl implements MazeGame {
     System.out.println("You fell into the bottomless pit!");
   }
 
-  @Override
-  public void move(String direction) throws IllegalArgumentException {
-    Cell curr = maze[playerPosX][playerPosY];
-    int flag = 0;
-//    Cell next = null;
-    if (direction == "N" || direction == "North") {
-      goUp();
-//      next = curr.getUpCell();
-    } else if (direction == "S" || direction == "South") {
-      goDown();
-//      next = curr.getDownCell();
-      flag = 1;
-    } else if (direction == "W" || direction == "West") {
-      goLeft();
-//      next = curr.getLeftCell();
-      flag = 2;
-    } else if (direction == "E" || direction == "East") {
-      goRight();
-//      next = curr.getRightCell();
-      flag = 3;
-    } else {
-      throw new IllegalArgumentException("The direction input is invalid!");
-    }
-
-    while (next.isTunnel) {
-      curr = next;
+  /**
+   * The player runs into the tunnel and update the player's location by the tunnel's exit.
+   */
+  private void getInTunnel(Cell curr, int flag) {
+    while (curr.isTunnel) {
       if (curr.getDownCell().isTunnel && flag != 0) {
         goDown();
-        next = curr.getDownCell();
+        curr = curr.getDownCell();
         flag = 1;
       } else if (curr.getUpCell().isTunnel && flag != 1) {
         goUp();
-        next = curr.getUpCell();
+        curr = curr.getUpCell();
         flag = 0;
       } else if (curr.getLeftCell().isTunnel && flag != 3) {
         goLeft();
-        next = curr.getLeftCell();
+        curr = curr.getLeftCell();
         flag = 2;
       } else if (curr.getRightCell().isTunnel && flag != 2) {
         goRight();
-        next = curr.getRightCell();
+        curr = curr.getRightCell();
         flag = 3;
+      } else {
+        break;
       }
     }
-    curr = next;
     if (flag == 0) {
       goUp();
     } else if (flag == 1) {
@@ -609,6 +567,94 @@ public class MazeGameImpl implements MazeGame {
       goLeft();
     } else if (flag == 3) {
       goRight();
+    }
+  }
+
+  @Override
+  public void move(String direction) throws IllegalArgumentException {
+    Cell curr = maze[playerPosX][playerPosY];
+    int flag = 0;
+    if (direction == "N" || direction == "North") {
+      if (curr.getUpCell() != null) {
+        goUp();
+        curr = maze[playerPosX][playerPosY];
+        if (curr.isWumpus) {
+          getInWumpus();
+        }
+        else if (curr.hasBat) {
+          getInBats();
+        }
+        else if (curr.isPit) {
+          getInPits();
+        }
+        else if (curr.isTunnel) {
+          getInTunnel(curr, flag);
+        }
+      } else {
+        System.out.println("Player is running out of bound! Please re-input direction.");
+      }
+    } else if (direction == "S" || direction == "South") {
+      if (curr.getDownCell() != null) {
+        goDown();
+        curr = maze[playerPosX][playerPosY];
+        flag = 1;
+        if (curr.isWumpus) {
+          getInWumpus();
+        }
+        else if (curr.hasBat) {
+          getInBats();
+        }
+        else if (curr.isPit) {
+          getInPits();
+        }
+        else if (curr.isTunnel) {
+          getInTunnel(curr, flag);
+        }
+      } else {
+        System.out.println("Player is running out of bound! Please re-input direction.");
+      }
+    } else if (direction == "W" || direction == "West") {
+      if (curr.getLeftCell() != null) {
+        goLeft();
+        curr = maze[playerPosX][playerPosY];
+        flag = 2;
+        if (curr.isWumpus) {
+          getInWumpus();
+        }
+        else if (curr.hasBat) {
+          getInBats();
+        }
+        else if (curr.isPit) {
+          getInPits();
+        }
+        else if (curr.isTunnel) {
+          getInTunnel(curr, flag);
+        }
+      } else {
+        System.out.println("Player is running out of bound! Please re-input direction.");
+      }
+    } else if (direction == "E" || direction == "East") {
+      if (curr.getRightCell() != null) {
+        goRight();
+        curr = maze[playerPosX][playerPosY];
+        flag = 3;
+        if (curr.isWumpus) {
+          getInWumpus();
+        }
+        else if (curr.hasBat) {
+          getInBats();
+        }
+        else if (curr.isPit) {
+          getInPits();
+        }
+        else if (curr.isTunnel) {
+          getInTunnel(curr, flag);
+        }
+      } else {
+        System.out.println("Player is running out of bound! Please re-input direction.");
+      }
+    } else {
+      throw new IllegalArgumentException("The direction string is invalid!");
     }
   }
 
