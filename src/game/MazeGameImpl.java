@@ -582,7 +582,7 @@ public class MazeGameImpl implements MazeGame {
           System.out.println("You smell something terrible nearby.");
         }
         if (curr.closeToPit) {
-
+          System.out.println("You feel a cold wind blowing.");
         }
         if (curr.isWumpus) {
           getInWumpus();
