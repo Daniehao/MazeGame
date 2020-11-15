@@ -356,8 +356,24 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
-  public int[] getPlayerLocation() {
-    return new int[]{playerPosX, playerPosY};
+  public void getPlayerLocation() {
+    System.out.println("You are in cave (" + playerPosX + ", " + playerPosY + ")");
+    StringBuilder sb = new StringBuilder();
+    sb.append("Tunnels lead to the ");
+    Cell curr = maze[playerPosX][playerPosY];
+    if (curr.getRightCell() != null) {
+      sb.append("E, ");
+    }
+    if (curr.getLeftCell() != null) {
+      sb.append("W, ");
+    }
+    if (curr.getUpCell() != null) {
+      sb.append("N, ");
+    }
+    if (curr.getDownCell() != null) {
+      sb.append("S, ");
+    }
+    sb.delete(sb.length() - 1, sb.length());
   }
 
   @Override
@@ -452,7 +468,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Assign some random caves as bottomless pits.
    */
-  public void assignPits() {
+  private void assignPits() {
     int caveNum = caveLst.size();
     int pitNum = (int) (caveNum * pitPercent);
     Random random = new Random();
@@ -468,7 +484,7 @@ public class MazeGameImpl implements MazeGame {
   /**
    * Assign some random caves to have superbats.
    */
-  public void assignSuperBats() {
+  private void assignSuperBats() {
     int caveNum = caveLst.size();
     int batNum = (int) (caveNum * batPercent);
     Random random = new Random();
@@ -506,6 +522,7 @@ public class MazeGameImpl implements MazeGame {
    * The superbats drop the player to a random cave.
    */
   private void dropToRandomCave() {
+    System.out.println("Whoa -- you successfully duck superbats that try to grab you!");
     Random random = new Random();
     random.setSeed(1000);
     int index = random.nextInt(caveLst.size());
@@ -531,7 +548,7 @@ public class MazeGameImpl implements MazeGame {
    * The player get into the cave that is a bottomless pit.
    */
   private void getInPits() {
-    System.out.println("You fell into the bottomless pit!");
+    System.out.println("You fell into the bottomless pit! Better luck next time.");
   }
 
   /**
@@ -578,24 +595,7 @@ public class MazeGameImpl implements MazeGame {
       if (curr.getUpCell() != null) {
         goUp();
         curr = maze[playerPosX][playerPosY];
-        if (curr.closeToWumpus) {
-          System.out.println("You smell something terrible nearby.");
-        }
-        if (curr.closeToPit) {
-          System.out.println("You feel a cold wind blowing.");
-        }
-        if (curr.isWumpus) {
-          getInWumpus();
-        }
-        else if (curr.hasBat) {
-          getInBats();
-        }
-        else if (curr.isPit) {
-          getInPits();
-        }
-        else if (curr.isTunnel) {
-          getInTunnel(curr, flag);
-        }
+        movehelper(curr, flag);
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
@@ -604,18 +604,7 @@ public class MazeGameImpl implements MazeGame {
         goDown();
         curr = maze[playerPosX][playerPosY];
         flag = 1;
-        if (curr.isWumpus) {
-          getInWumpus();
-        }
-        else if (curr.hasBat) {
-          getInBats();
-        }
-        else if (curr.isPit) {
-          getInPits();
-        }
-        else if (curr.isTunnel) {
-          getInTunnel(curr, flag);
-        }
+        movehelper(curr, flag);
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
@@ -624,18 +613,7 @@ public class MazeGameImpl implements MazeGame {
         goLeft();
         curr = maze[playerPosX][playerPosY];
         flag = 2;
-        if (curr.isWumpus) {
-          getInWumpus();
-        }
-        else if (curr.hasBat) {
-          getInBats();
-        }
-        else if (curr.isPit) {
-          getInPits();
-        }
-        else if (curr.isTunnel) {
-          getInTunnel(curr, flag);
-        }
+        movehelper(curr, flag);
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
@@ -644,24 +622,42 @@ public class MazeGameImpl implements MazeGame {
         goRight();
         curr = maze[playerPosX][playerPosY];
         flag = 3;
-        if (curr.isWumpus) {
-          getInWumpus();
-        }
-        else if (curr.hasBat) {
-          getInBats();
-        }
-        else if (curr.isPit) {
-          getInPits();
-        }
-        else if (curr.isTunnel) {
-          getInTunnel(curr, flag);
-        }
+        movehelper(curr, flag);
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
     } else {
       throw new IllegalArgumentException("The direction string is invalid!");
     }
+  }
+
+  /**
+   * The helper function for move method in order to print the current cave info.
+   * @param curr The current cave.
+   * @param flag The direction mark.
+   */
+  private void movehelper(Cell curr, int flag) {
+    if (curr.closeToWumpus) {
+      System.out.println("You smell something terrible nearby.");
+    }
+    else if (curr.closeToPit) {
+      System.out.println("You feel a cold wind blowing.");
+    }
+    else if (curr.isWumpus) {
+      getInWumpus();
+    }
+    else if (curr.hasBat) {
+      getInBats();
+    }
+    else if (curr.isPit) {
+      getInPits();
+    }
+    else if (curr.isTunnel) {
+      getInTunnel(curr, flag);
+    } else {
+      System.out.println("You feel a draft.");
+    }
+    getPlayerLocation();
   }
 
   @Override

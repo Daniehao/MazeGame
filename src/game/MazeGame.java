@@ -9,7 +9,7 @@ public interface MazeGame {
   /**
    * Get the current location of the player.
    */
-  public int[] getPlayerLocation();
+  public void getPlayerLocation();
 
   public void shoot(String direction, int distance);
 
