@@ -23,7 +23,7 @@ public class MazeGameImpl implements MazeGame {
   private List<int[]> caveLst;
   private double batPercent;
   private double pitPercent;
-  private boolean gameOver;
+  private int arrows;
 
   /**
    * Constructor for Game.Maze class.
@@ -46,7 +46,7 @@ public class MazeGameImpl implements MazeGame {
     caveLst = new ArrayList<>();
     this.batPercent = batPercent;
     this.pitPercent = pitPercent;
-    gameOver = false;
+    this.arrows = arrows;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -662,16 +662,37 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public void shoot(String direction, int distance) {
-    int originX = playerPosX;
-    int originY = playerPosY;
-    for (int i = 0; i < distance; i++) {
-      move(direction);
+    Cell curr = maze[playerPosX][playerPosY];
+    Cell destination = null;
+    if (direction == "N") {
+      for (int i = 0; i < distance; i++) {
+        destination = curr.getUpCell();
+      }
     }
-    if (maze[playerPosX][playerPosY].isWumpus) {
+    if (direction == "S") {
+      for (int i = 0; i < distance; i++) {
+        destination = curr.getDownCell();
+      }
+    }
+    if (direction == "W") {
+      for (int i = 0; i < distance; i++) {
+        destination = curr.getLeftCell();
+      }
+    }
+    if (direction == "E") {
+      for (int i = 0; i < distance; i++) {
+        destination = curr. getRightCell();
+      }
+    }
+
+    if (destination.isWumpus) {
       System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
     } else {
-      playerPosX = originX;
-      playerPosY = originY;
+      System.out.println("You didn't shoot to the wumpus!");
+      arrows--;
+      if (arrows <= 0) {
+        System.out.println("You do not have any arrow to shoot! Game Over.");
+      }
     }
   }
 }

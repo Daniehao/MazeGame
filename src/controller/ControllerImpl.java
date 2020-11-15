@@ -31,13 +31,15 @@ public class ControllerImpl implements Controller {
     int distance;
     try (Scanner scan = new Scanner(this.in)) {
       while (true) {
+        System.out.println("Shoot or Move (S-M)? ");
         switch (scan.next()) {
-          case "shoot":
+          case "S":
             direction = scan.next();
             distance = scan.nextInt();
             game.shoot(direction, distance);
             break;
-          case "move":
+          case "M":
+            System.out.println("Where to? ");
             direction = scan.next();
             game.move(direction);
           case "q":

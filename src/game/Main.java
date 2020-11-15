@@ -17,6 +17,7 @@ public class Main {
    */
   public static void main(String[] args) throws IOException {
     MazeGame game = createMaze();
+    game.getPlayerLocation();
     try {
       new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
     } catch (IOException e) {
