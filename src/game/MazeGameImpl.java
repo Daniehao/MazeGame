@@ -666,12 +666,10 @@ public class MazeGameImpl implements MazeGame {
       move(direction);
     }
     if (maze[playerPosX][playerPosY].isWumpus) {
-      System.out.println("Win!");
-      gameOver = true;
+      System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
     } else {
       playerPosX = originX;
       playerPosY = originY;
     }
   }
-
 }
