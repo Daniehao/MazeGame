@@ -578,6 +578,12 @@ public class MazeGameImpl implements MazeGame {
       if (curr.getUpCell() != null) {
         goUp();
         curr = maze[playerPosX][playerPosY];
+        if (curr.closeToWumpus) {
+          System.out.println("You smell something terrible nearby.");
+        }
+        if (curr.closeToPit) {
+
+        }
         if (curr.isWumpus) {
           getInWumpus();
         }

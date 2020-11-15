@@ -18,7 +18,6 @@ public class Cell {
   boolean isPit;
   boolean closeToPit;
   boolean hasBat;
-  boolean closeToBat;
   int caveNum;
 
   /**
@@ -35,7 +34,6 @@ public class Cell {
     isPit = false;
     closeToPit = false;
     hasBat = false;
-    closeToBat = false;
     caveNum = -1;
   }
 
