@@ -76,8 +76,17 @@ public class MazeGameImpl implements MazeGame {
     Random random = new Random();
     random.setSeed(1000);
     int randomInt = random.nextInt(caveLst.size());
-    this.playerPosX = caveLst.get(randomInt)[0];
-    this.playerPosY = caveLst.get(randomInt)[1];
+    int x = caveLst.get(randomInt)[0];
+    int y = caveLst.get(randomInt)[1];
+    Cell temp = maze[x][y];
+    while (temp.isWumpus || temp.isPit || temp.hasBat) {
+      randomInt = random.nextInt(caveLst.size());
+      x = caveLst.get(randomInt)[0];
+      y = caveLst.get(randomInt)[1];
+      temp = maze[x][y];
+    }
+    this.playerPosX = x;
+    this.playerPosY = y;
   }
 
   /**
@@ -375,7 +384,8 @@ public class MazeGameImpl implements MazeGame {
     if (curr.getDownCell() != null) {
       sb.append("S, ");
     }
-    sb.delete(sb.length() - 1, sb.length());
+    sb.delete(sb.length() - 2, sb.length());
+    System.out.println(sb.toString());
   }
 
   @Override

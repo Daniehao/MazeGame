@@ -25,7 +25,7 @@ public class ControllerImpl implements Controller {
   }
 
   @Override
-  public void start(MazeGame game) throws IOException {
+  public void start(MazeGame game) throws IOException, IllegalArgumentException {
     Objects.requireNonNull(game);
     String direction;
     int distance;
@@ -34,7 +34,9 @@ public class ControllerImpl implements Controller {
         System.out.println("Shoot or Move (S-M)? ");
         switch (scan.next()) {
           case "S":
+            System.out.println("Towards direction(E/W/N/S)? ");
             direction = scan.next();
+            System.out.println("No. of caves (1-5)? ");
             distance = scan.nextInt();
             game.shoot(direction, distance);
             break;
