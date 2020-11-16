@@ -27,7 +27,7 @@ public class MazeGameImplTest {
             0.2, 0.2, 3);
     maze3 = new MazeGameImpl(3, 4, 3, false, false,
             0.2, 0.3, 3);
-    maze4 = new MazeGameImpl(3, 4, 3, false, true,
+    maze4 = new MazeGameImpl(3, 4, 6, false, true,
             0.2, 0.2, 3);
   }
 

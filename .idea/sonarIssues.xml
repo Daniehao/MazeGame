@@ -248,6 +248,46 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/AlphabeticalSchedulingStrategy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/AssignedSchedulingStrategy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/Assignment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/AssignmentList.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/DeadlineSchedulingStrategy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/DifficultySchedulingStrategy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/src/assignments/SchedulingStrategy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../lab9/test/StrategyTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/Downloads/ListAdt/test/BookListADTTest.java">
           <value>
             <set />

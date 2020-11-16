@@ -62,9 +62,7 @@ public class MazeGameImpl implements MazeGame {
               remains >= 0) {
         generateRoomMaze();
       } else {
-        throw new IllegalArgumentException("The remains input is invalid since it needs to be 0 "
-                +
-                "to rows*columns - 1");
+        throw new IllegalArgumentException("The remains input is invalid!");
       }
     }
 
@@ -588,7 +586,7 @@ public class MazeGameImpl implements MazeGame {
   public void move(String direction) throws IllegalArgumentException {
     Cell curr = maze[playerPosX][playerPosY];
     int flag = 0;
-    if (direction == "N" || direction == "North") {
+    if (direction.equals("N")) {
       if (curr.getUpCell() != null) {
         goUp();
         curr = maze[playerPosX][playerPosY];
@@ -596,7 +594,7 @@ public class MazeGameImpl implements MazeGame {
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
-    } else if (direction == "S" || direction == "South") {
+    } else if (direction.equals("S")) {
       if (curr.getDownCell() != null) {
         goDown();
         curr = maze[playerPosX][playerPosY];
@@ -605,7 +603,7 @@ public class MazeGameImpl implements MazeGame {
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
-    } else if (direction == "W" || direction == "West") {
+    } else if (direction.equals("W")) {
       if (curr.getLeftCell() != null) {
         goLeft();
         curr = maze[playerPosX][playerPosY];
@@ -614,7 +612,7 @@ public class MazeGameImpl implements MazeGame {
       } else {
         System.out.println("Player is running out of bound! Please re-input direction.");
       }
-    } else if (direction == "E" || direction == "East") {
+    } else if (direction.equals("E")) {
       if (curr.getRightCell() != null) {
         goRight();
         curr = maze[playerPosX][playerPosY];
@@ -657,22 +655,22 @@ public class MazeGameImpl implements MazeGame {
   public void shoot(String direction, int distance) {
     Cell curr = maze[playerPosX][playerPosY];
     Cell destination = null;
-    if (direction == "N") {
+    if (direction.equals("N")) {
       for (int i = 0; i < distance; i++) {
         destination = curr.getUpCell();
       }
     }
-    if (direction == "S") {
+    if (direction.equals("S")) {
       for (int i = 0; i < distance; i++) {
         destination = curr.getDownCell();
       }
     }
-    if (direction == "W") {
+    if (direction.equals("W")) {
       for (int i = 0; i < distance; i++) {
         destination = curr.getLeftCell();
       }
     }
-    if (direction == "E") {
+    if (direction.equals("E")) {
       for (int i = 0; i < distance; i++) {
         destination = curr.getRightCell();
       }

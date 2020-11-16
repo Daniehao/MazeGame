@@ -31,13 +31,21 @@ public class Main {
    */
   public static MazeGame createMaze() {
     Scanner scan = new Scanner(System.in);
+    System.out.println("Input the rows number of the maze: ");
     int rows = scan.nextInt();
+    System.out.println("Input the columns number of the maze: ");
     int cols = scan.nextInt();
+    System.out.println("Input the wall number of the maze: ");
     int remains = scan.nextInt();
-    boolean isPerfect = scan.next() == "true" ? true : false;
-    boolean isWrapping = scan.next() == "true" ? true : false;
+    System.out.println("The maze is Perfect(true/false)?");
+    boolean isPerfect = scan.nextBoolean();
+    System.out.println("The maze is Wrappping(true/false)?");
+    boolean isWrapping = scan.nextBoolean();
+    System.out.println("Input the percentage of bats: ");
     double batPercent = Double.parseDouble(scan.next());
+    System.out.println("Input the percentage of pits: ");
     double pitPercent = Double.parseDouble(scan.next());
+    System.out.println("Input the number of arrows: ");
     int arrows = scan.nextInt();
     MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping, batPercent,
             pitPercent, arrows);
