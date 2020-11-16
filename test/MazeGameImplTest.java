@@ -66,31 +66,16 @@ public class MazeGameImplTest {
             0.2, 0.2, 3);
   }
 
-  @Test
-  public void getLocationTest() {
-//    assertEquals(2, maze1.getPlayerLocation()[0]);
-//    assertEquals(1, maze1.getPlayerLocation()[1]);
-//    assertEquals(2, maze2.getPlayerLocation()[0]);
-//    assertEquals(0, maze2.getPlayerLocation()[1]);
-//    assertEquals(2, maze3.getPlayerLocation()[0]);
-//    assertEquals(2, maze3.getPlayerLocation()[1]);
-//    assertEquals(1, maze4.getPlayerLocation()[0]);
-//    assertEquals(3, maze4.getPlayerLocation()[1]);
+  @Test(expected = IllegalArgumentException.class)
+  public void testGoDownInvalid() {
+    maze1.move("down");
+    maze1.move("down");
+    maze1.move("down");
   }
-
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testGoDownInvalid() {
-//    maze1.move("down");
-//    maze1.goDown();
-//    maze1.goDown();
-//    maze1.goDown();
-//  }
 
 //  @Test
 //  public void testGoDownValid() {
-//    maze1.goDown();
-//    assertEquals(1, maze1.getPlayerPosX());
-//    assertEquals(1, maze1.getPlayerPosY());
+//    maze1.move("down");
 //  }
 //
 //  @Test
@@ -156,8 +141,7 @@ public class MazeGameImplTest {
 //  @Test(expected = IllegalArgumentException.class)
 //  public void checkWrapPerfectMaze2() {
 //    MazeGame maze5 = new MazeGameImpl(3, 4, 11, true, true,
-//            0, 1);
-//    maze5.goUp();
+//            0.2, 0.1, 2);
 //  }
 //
 //  @Test(expected = IllegalArgumentException.class)
