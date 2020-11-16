@@ -7,8 +7,10 @@ package game;
 public interface MazeGame {
   /**
    * Get the current location of the player.
+   *
+   * @return The string of player's location.
    */
-  public void getPlayerLocation();
+  public String getPlayerLocation();
 
   /**
    * Shoot towards to direction with a specified distance by the number of caves.
@@ -16,7 +18,7 @@ public interface MazeGame {
    * @param direction The direction that player wish to shoot.
    * @param distance  The shooting distance by the number of caves.
    */
-  public void shoot(String direction, int distance);
+  public void shoot(String direction, int distance) throws IllegalArgumentException;
 
   /**
    * The player's move inside the maze.

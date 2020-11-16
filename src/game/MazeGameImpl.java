@@ -368,9 +368,10 @@ public class MazeGameImpl implements MazeGame {
 
 
   @Override
-  public void getPlayerLocation() {
+  public String getPlayerLocation() {
     System.out.println("You are in cave (" + playerPosX + ", " + playerPosY + ")");
     StringBuilder sb = new StringBuilder();
+    sb.append("You are in cave (" + playerPosX + ", " + playerPosY + "). ");
     sb.append("Tunnels lead to the ");
     Cell curr = maze[playerPosX][playerPosY];
     if (curr.getRightCell() != null) {
@@ -387,6 +388,7 @@ public class MazeGameImpl implements MazeGame {
     }
     sb.delete(sb.length() - 2, sb.length());
     System.out.println(sb.toString());
+    return sb.toString();
   }
 
   @Override
@@ -698,7 +700,13 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
-  public void shoot(String direction, int distance) {
+  public void shoot(String direction, int distance) throws IllegalArgumentException{
+    if (direction != "N" && direction != "S" && direction != "W" && direction != "E") {
+      throw new IllegalArgumentException("The direction input is invalid!");
+    }
+    if (distance == 0) {
+      throw new IllegalArgumentException("shooting distance cannot be zero!");
+    }
     Cell curr = maze[playerPosX][playerPosY];
     Cell destination = null;
     if (direction.equals("N")) {

@@ -14,7 +14,7 @@ public class MazeGameImplTest {
   private MazeGame maze1;
   private MazeGame maze2;
   private MazeGame maze3;
-  private MazeGame maze4;
+  private MazeGame game4;
 
   /**
    * Create objects for the following tests.
@@ -27,7 +27,7 @@ public class MazeGameImplTest {
             0.2, 0.2, 3);
     maze3 = new MazeGameImpl(3, 4, 3, false, false,
             0.2, 0.3, 3);
-    maze4 = new MazeGameImpl(3, 4, 6, false, true,
+    game4 = new MazeGameImpl(3, 4, 6, false, true,
             0.2, 0.2, 3);
   }
 
@@ -39,7 +39,7 @@ public class MazeGameImplTest {
             maze2.toString());
     assertEquals("The maze is 3 * 4, and it is non-wrapping room maze.",
             maze3.toString());
-    assertEquals("The maze is 3 * 4, and it is wrapping room maze.", maze4.toString());
+    assertEquals("The maze is 3 * 4, and it is wrapping room maze.", game4.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -73,107 +73,48 @@ public class MazeGameImplTest {
     maze1.move("down");
   }
 
-//  @Test
-//  public void testGoDownValid() {
-//    maze1.move("down");
-//  }
-//
-//  @Test
-//  public void testGoLeftValid() {
-//    maze1.goLeft();
-//    assertEquals(0, maze1.getPlayerPosX());
-//    assertEquals(0, maze1.getPlayerPosY());
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testGoLeftInValid() {
-//    maze1.goLeft();
-//    maze1.goLeft();
-//    assertEquals(0, maze1.getPlayerPosX());
-//    assertEquals(0, maze1.getPlayerPosY());
-//  }
-//
-//  @Test
-//  public void testGoRightValid() {
-//    maze1.goRight();
-//    assertEquals(0, maze1.getPlayerPosX());
-//    assertEquals(2, maze1.getPlayerPosY());
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testGoRightInValid() {
-//    maze1.goRight();
-//    maze1.goRight();
-//    maze1.goRight();
-//    maze1.goRight();
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testGoUpInValid() {
-//    maze1.goUp();
-//  }
-//
-//  @Test
-//  public void testGoUpValid() {
-//    maze1.goDown();
-//    maze1.goUp();
-//    assertEquals(maze1.getPlayerPosX(), 0);
-//    assertEquals(maze1.getPlayerPosY(), 1);
-//  }
-//
-//  @Test
-//  public void checkNonWrapPerfectMaze() {
-//    maze1.goDown();
-//    maze1.goDown();
-//    maze1.goRight();
-//    maze1.goRight();
-//    assertEquals(maze1.getPlayerPosX(), 2);
-//    assertEquals(maze1.getPlayerPosY(), 3);
-//  }
-//
-//  @Test
-//  public void checkWrapPerfectMaze() {
-//    maze2.goUp();
-//    assertEquals(maze2.getPlayerPosX(), 2);
-//    assertEquals(maze2.getPlayerPosY(), 0);
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void checkWrapPerfectMaze2() {
-//    MazeGame maze5 = new MazeGameImpl(3, 4, 11, true, true,
-//            0.2, 0.1, 2);
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void checkNonWrapRoomMaze() {
-//    maze3.goUp();
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void checkNonWrapRoomMaze2() {
-//    MazeGame maze6 = new MazeGameImpl(3, 4, 3, false, false,
-//            0, 2);
-//    maze6.goUp();
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void checkNonWrapRoomMaze3() {
-//    MazeGame maze6 = new MazeGameImpl(3, 4, 3, false, false,
-//            0, 2);
-//    maze6.goDown();
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void checkWrapRoomMaze() {
-//    maze4.goUp();
-//  }
-//
-//  @Test
-//  public void checkWrapRoomMaze2() {
-//    maze4 = new MazeGameImpl(3, 4, 3, false, true,
-//            0, 0);
-//    maze4.goUp();
-//    assertEquals(maze4.getPlayerPosX(), 2);
-//    assertEquals(maze4.getPlayerPosY(), 0);
-//  }
+  @Test(expected = IllegalArgumentException.class)
+  public void testMoveEmptyString() {
+    game4.move("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMoveInvalidString() {
+    game4.move("abc");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testEmptyShoot() {
+    game4.shoot("", 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidShoot() {
+    game4.shoot("abc", 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShootZero() {
+    game4.shoot("N", 0);
+  }
+
+  @Test
+  public void testMoveNorthAndSouth() {
+    game4.move("N");
+    assertEquals("You are in cave (2, 2). Tunnels lead to the W, N, S",
+            game4.getPlayerLocation());
+    game4.move("S");
+    assertEquals("You are in cave (0, 2). Tunnels lead to the E, N, S",
+            game4.getPlayerLocation());
+  }
+
+  @Test
+  public void testMoveEastAndWest() {
+    game4.move("E");
+    assertEquals("You are in cave (0, 3). Tunnels lead to the E, W, N",
+            game4.getPlayerLocation());
+    game4.move("W");
+    assertEquals("You are in cave (0, 2). Tunnels lead to the E, N, S",
+            game4.getPlayerLocation());
+  }
 }
