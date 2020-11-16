@@ -686,14 +686,15 @@ public class MazeGameImpl implements MazeGame {
       getInWumpus();
     } else if (curr.hasBat) {
       getInBats();
+      getPlayerLocation();
     } else if (curr.isPit) {
       getInPits();
     } else if (curr.isTunnel) {
       moveInTunnel(flag);
     } else {
       System.out.println("You feel a draft.");
+      getPlayerLocation();
     }
-    getPlayerLocation();
   }
 
   @Override
@@ -828,5 +829,6 @@ public class MazeGameImpl implements MazeGame {
         break;
       }
     }
+    movehelper(maze[playerPosX][playerPosY], flag);
   }
 }
