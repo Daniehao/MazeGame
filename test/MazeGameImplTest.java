@@ -117,4 +117,33 @@ public class MazeGameImplTest {
     assertEquals("You are in cave (0, 2). Tunnels lead to the E, N, S",
             game4.getPlayerLocation());
   }
+
+  @Test
+  public void testMoveTunnel() {
+    game4.move("E");
+    game4.move("E");
+    game4.move("E");
+    assertEquals("You are in cave (1, 1). Tunnels lead to the E, W, N",
+            game4.getPlayerLocation());
+  }
+
+  @Test
+  public void testMoveTunnel2() {
+    game4.move("E");
+    game4.move("N");
+    assertEquals("You are in cave (2, 0). Tunnels lead to the E, W, N, S",
+            game4.getPlayerLocation());
+  }
+
+  @Test
+  public void testShootUnsuccess() {
+    game4.shoot("N", 3);
+    assertEquals(false, game4.checkShootSuccess());
+  }
+
+  @Test
+  public void testShootSuccess() {
+    game4.shoot("N", 3);
+    assertEquals(false, game4.checkShootSuccess());
+  }
 }

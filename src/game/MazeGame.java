@@ -39,4 +39,6 @@ public interface MazeGame {
    * @return
    */
   public boolean checkUnwinnable();
+
+  public boolean checkShootSuccess();
 }

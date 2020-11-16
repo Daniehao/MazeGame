@@ -25,6 +25,7 @@ public class MazeGameImpl implements MazeGame {
   private double pitPercent;
   private int arrows;
   private boolean isGameOver;
+  private boolean isShootSuccess;
 
   /**
    * Constructor for Game.Maze class.
@@ -49,6 +50,7 @@ public class MazeGameImpl implements MazeGame {
     this.pitPercent = pitPercent;
     this.arrows = arrows;
     isGameOver = false;
+    isShootSuccess = false;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -673,6 +675,11 @@ public class MazeGameImpl implements MazeGame {
     return false;
   }
 
+  @Override
+  public boolean checkShootSuccess() {
+    return isShootSuccess;
+  }
+
   /**
    * The helper function for move method in order to print the current cave info.
    *
@@ -744,6 +751,7 @@ public class MazeGameImpl implements MazeGame {
 
     if (destination.isWumpus) {
       isGameOver = true;
+      isShootSuccess = true;
       System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
     } else {
       System.out.println("You didn't shoot to the wumpus!");
