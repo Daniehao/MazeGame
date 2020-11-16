@@ -148,6 +148,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/maze/Cell.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/maze/CellImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/maze/MazeView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/view/MazeView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/test/CellTest.java">
           <value>
             <set />

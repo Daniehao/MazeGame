@@ -250,6 +250,7 @@ public class MazeGameImpl implements MazeGame {
    * @return The location array of the two cells.
    */
   private int[][] getCellsPositionByWall(int wallIndex) {
+    //The wall index is ordering by vertical first and then horizontal.
     if (wallIndex < rows * (cols - 1)) {
       int colIndex = wallIndex % (cols - 1);
       int rowIndex = wallIndex / (cols - 1);
@@ -485,7 +486,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void assignWumpus() {
     Random random = new Random();
-    random.setSeed(1000);
+    random.setSeed(500);
     int index = random.nextInt(caveLst.size());
     int[] WumpusLocation = caveLst.get(index);
     Cell wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
@@ -511,7 +512,7 @@ public class MazeGameImpl implements MazeGame {
     int caveNum = caveLst.size();
     int pitNum = (int) (caveNum * pitPercent);
     Random random = new Random();
-    random.setSeed(1000);
+    random.setSeed(300);
     for (int i = 0; i < pitNum; i++) {
       int index = random.nextInt(caveLst.size());
       int[] pitPos = caveLst.get(index);
@@ -527,7 +528,7 @@ public class MazeGameImpl implements MazeGame {
     int caveNum = caveLst.size();
     int batNum = (int) (caveNum * batPercent);
     Random random = new Random();
-    random.setSeed(1000);
+    random.setSeed(200);
     for (int i = 0; i < batNum; i++) {
       int index = random.nextInt(caveLst.size());
       int[] batPos = caveLst.get(index);
@@ -541,7 +542,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInBats() {
     Random random = new Random();
-    random.setSeed(1000);
+    random.setSeed(50);
     int num = random.nextInt(2);
     //both bats and pits
     if (maze[playerPosX][playerPosY].getIsPit()) {
@@ -563,7 +564,7 @@ public class MazeGameImpl implements MazeGame {
   private void dropToRandomCave() {
     System.out.println("Whoa -- you successfully duck superbats that try to grab you!");
     Random random = new Random();
-    random.setSeed(1000);
+    random.setSeed(400);
     int index = random.nextInt(caveLst.size());
     playerPosX = caveLst.get(index)[0];
     playerPosY = caveLst.get(index)[1];
@@ -673,6 +674,11 @@ public class MazeGameImpl implements MazeGame {
   @Override
   public boolean getGameOver() {
     return isGameOver;
+  }
+
+  @Override
+  public boolean checkUnwinnable() {
+    return false;
   }
 
   /**
