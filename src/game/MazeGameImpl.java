@@ -24,6 +24,7 @@ public class MazeGameImpl implements MazeGame {
   private double batPercent;
   private double pitPercent;
   private int arrows;
+  private boolean isGameOver;
 
   /**
    * Constructor for Game.Maze class.
@@ -47,6 +48,7 @@ public class MazeGameImpl implements MazeGame {
     this.batPercent = batPercent;
     this.pitPercent = pitPercent;
     this.arrows = arrows;
+    isGameOver = false;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -355,7 +357,6 @@ public class MazeGameImpl implements MazeGame {
   }
 
 
-
   @Override
   public void getPlayerLocation() {
     System.out.println("You are in cave (" + playerPosX + ", " + playerPosY + ")");
@@ -417,6 +418,9 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  /**
+   * Link the two rooms if there is a tunnel between them.
+   */
   private void linkTunnel() {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -566,6 +570,7 @@ public class MazeGameImpl implements MazeGame {
    * The player get into the cave that has wumpus.
    */
   private void getInWumpus() {
+    isGameOver = true;
     System.out.println("Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next time."
     );
   }
@@ -574,6 +579,7 @@ public class MazeGameImpl implements MazeGame {
    * The player get into the cave that is a bottomless pit.
    */
   private void getInPits() {
+    isGameOver = true;
     System.out.println("You fell into the bottomless pit! Better luck next time.");
   }
 
@@ -654,6 +660,11 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  @Override
+  public boolean getGameOver() {
+    return isGameOver;
+  }
+
   /**
    * The helper function for move method in order to print the current cave info.
    *
@@ -703,11 +714,13 @@ public class MazeGameImpl implements MazeGame {
     }
 
     if (destination.isWumpus) {
+      isGameOver = true;
       System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
     } else {
       System.out.println("You didn't shoot to the wumpus!");
       arrows--;
       if (arrows <= 0) {
+        isGameOver = true;
         System.out.println("You do not have any arrow to shoot! Game Over.");
       }
     }

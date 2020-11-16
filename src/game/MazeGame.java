@@ -15,4 +15,6 @@ public interface MazeGame {
 
   public void move(String direction);
 
+  public boolean getGameOver();
+
 }
