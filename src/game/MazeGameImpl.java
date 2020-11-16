@@ -811,18 +811,17 @@ public class MazeGameImpl implements MazeGame {
    * tunnel.
    */
   private void moveInTunnel(int flag) {
-    Cell curr = maze[playerPosX][playerPosY];
-    while (curr.isTunnel) {
-      if (curr.getDownCell() != null && flag != 0) {
+    while (maze[playerPosX][playerPosY].isTunnel) {
+      if (maze[playerPosX][playerPosY].getDownCell() != null && flag != 0) {
         goDown();
         flag = 1;
-      } else if (curr.getUpCell() != null && flag != 1) {
+      } else if (maze[playerPosX][playerPosY].getUpCell() != null && flag != 1) {
         goUp();
         flag = 0;
-      } else if (curr.getLeftCell() != null && flag != 3) {
+      } else if (maze[playerPosX][playerPosY].getLeftCell() != null && flag != 3) {
         goLeft();
         flag = 2;
-      } else if (curr.getRightCell() != null && flag != 2) {
+      } else if (maze[playerPosX][playerPosY].getRightCell() != null && flag != 2) {
         goRight();
         flag = 3;
       } else {
