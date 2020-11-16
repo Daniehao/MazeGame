@@ -42,10 +42,11 @@ public class ControllerImpl implements Controller {
             System.out.println("Where to? ");
             direction = scan.next();
             game.move(direction);
+            break;
           case "Q":
             return;
           default:
-            throw new IllegalStateException("ERROR: should not get here");
+            throw new IllegalStateException("ERROR: Input string is not S or M");
         }
       }
     }
