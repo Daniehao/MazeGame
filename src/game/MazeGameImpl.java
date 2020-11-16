@@ -564,7 +564,6 @@ public class MazeGameImpl implements MazeGame {
   private void dropToRandomCave() {
     System.out.println("Whoa -- you successfully duck superbats that try to grab you!");
     Random random = new Random();
-    random.setSeed(400);
     int index = random.nextInt(caveLst.size());
     playerPosX = caveLst.get(index)[0];
     playerPosY = caveLst.get(index)[1];
@@ -599,30 +598,21 @@ public class MazeGameImpl implements MazeGame {
    */
   private Cell getInTunnel(Cell curr, int flag) {
     while (curr.isTunnel) {
-      if (curr.getDownCell() != null && curr.getDownCell().isTunnel && flag != 0) {
+      if (curr.getDownCell() != null && flag != 0) {
         curr = curr.getDownCell();
         flag = 1;
-      } else if (curr.getUpCell() != null && curr.getUpCell().isTunnel && flag != 1) {
+      } else if (curr.getUpCell() != null && flag != 1) {
         curr = curr.getUpCell();
         flag = 0;
-      } else if (curr.getLeftCell() != null && curr.getLeftCell().isTunnel && flag != 3) {
+      } else if (curr.getLeftCell() != null && flag != 3) {
         curr = curr.getLeftCell();
         flag = 2;
-      } else if (curr.getRightCell() != null && curr.getRightCell().isTunnel && flag != 2) {
+      } else if (curr.getRightCell() != null && flag != 2) {
         curr = curr.getRightCell();
         flag = 3;
       } else {
         break;
       }
-    }
-    if (flag == 0) {
-      curr = curr.getUpCell();
-    } else if (flag == 1) {
-      curr = curr.getDownCell();
-    } else if (flag == 2) {
-      curr = curr.getLeftCell();
-    } else if (flag == 3) {
-      curr = curr.getRightCell();
     }
     return curr;
   }
@@ -689,15 +679,17 @@ public class MazeGameImpl implements MazeGame {
    */
   private void movehelper(Cell curr, int flag) {
     if (curr.closeToWumpus) {
-      System.out.println("You smell something terrible nearby.");
+      System.out.println("You smell a Wumpus!");
     } else if (curr.closeToPit) {
-      System.out.println("You feel a cold wind blowing.");
+      System.out.println("You smell something terrible nearby.");
     } else if (curr.isWumpus) {
       getInWumpus();
     } else if (curr.hasBat) {
       getInBats();
     } else if (curr.isPit) {
       getInPits();
+    } else if (curr.isTunnel) {
+      moveInTunnel(flag);
     } else {
       System.out.println("You feel a draft.");
     }
@@ -812,5 +804,30 @@ public class MazeGameImpl implements MazeGame {
       count++;
     }
     return count;
+  }
+
+  /**
+   * The player move in tunnel and update the player's location when the player get out of the
+   * tunnel.
+   */
+  private void moveInTunnel(int flag) {
+    Cell curr = maze[playerPosX][playerPosY];
+    while (curr.isTunnel) {
+      if (curr.getDownCell() != null && flag != 0) {
+        goDown();
+        flag = 1;
+      } else if (curr.getUpCell() != null && flag != 1) {
+        goUp();
+        flag = 0;
+      } else if (curr.getLeftCell() != null && flag != 3) {
+        goLeft();
+        flag = 2;
+      } else if (curr.getRightCell() != null && flag != 2) {
+        goRight();
+        flag = 3;
+      } else {
+        break;
+      }
+    }
   }
 }
