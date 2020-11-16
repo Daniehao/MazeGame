@@ -67,6 +67,7 @@ public class MazeGameImpl implements MazeGame {
     }
 
     assignCaveTunnel();
+    linkTunnel();
     assignWumpus();
     assignPits();
     assignSuperBats();
@@ -353,6 +354,8 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+
+
   @Override
   public void getPlayerLocation() {
     System.out.println("You are in cave (" + playerPosX + ", " + playerPosY + ")");
@@ -409,6 +412,32 @@ public class MazeGameImpl implements MazeGame {
           temp[0] = i;
           temp[1] = j;
           caveLst.add(temp);
+        }
+      }
+    }
+  }
+
+  private void linkTunnel() {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        Cell curr = maze[i][j];
+        if (curr.isRoom) {
+          if (curr.getUpCell() != null && curr.getUpCell().isTunnel) {
+            Cell next = getInTunnel(curr.getUpCell(), 0);
+            curr.setNextCell(next, "up");
+          }
+          if (curr.getDownCell() != null && curr.getDownCell().isTunnel) {
+            Cell next = getInTunnel(curr.getDownCell(), 1);
+            curr.setNextCell(next, "down");
+          }
+          if (curr.getLeftCell() != null && curr.getLeftCell().isTunnel) {
+            Cell next = getInTunnel(curr.getLeftCell(), 2);
+            curr.setNextCell(next, "left");
+          }
+          if (curr.getRightCell() != null && curr.getRightCell().isTunnel) {
+            Cell next = getInTunnel(curr.getRightCell(), 3);
+            curr.setNextCell(next, "right");
+          }
         }
       }
     }
@@ -526,6 +555,8 @@ public class MazeGameImpl implements MazeGame {
     playerPosY = caveLst.get(index)[1];
     if (maze[playerPosX][playerPosY].isWumpus) {
       getInWumpus();
+    } else if (maze[playerPosX][playerPosY].hasBat) {
+      getInBats();
     } else if (maze[playerPosX][playerPosY].isPit) {
       getInPits();
     }
@@ -549,22 +580,18 @@ public class MazeGameImpl implements MazeGame {
   /**
    * The player runs into the tunnel and update the player's location by the tunnel's exit.
    */
-  private void getInTunnel(Cell curr, int flag) {
+  private Cell getInTunnel(Cell curr, int flag) {
     while (curr.isTunnel) {
-      if (curr.getDownCell().isTunnel && flag != 0) {
-        goDown();
+      if (curr.getDownCell() != null && curr.getDownCell().isTunnel && flag != 0) {
         curr = curr.getDownCell();
         flag = 1;
-      } else if (curr.getUpCell().isTunnel && flag != 1) {
-        goUp();
+      } else if (curr.getUpCell() != null && curr.getUpCell().isTunnel && flag != 1) {
         curr = curr.getUpCell();
         flag = 0;
-      } else if (curr.getLeftCell().isTunnel && flag != 3) {
-        goLeft();
+      } else if (curr.getLeftCell() != null && curr.getLeftCell().isTunnel && flag != 3) {
         curr = curr.getLeftCell();
         flag = 2;
-      } else if (curr.getRightCell().isTunnel && flag != 2) {
-        goRight();
+      } else if (curr.getRightCell() != null && curr.getRightCell().isTunnel && flag != 2) {
         curr = curr.getRightCell();
         flag = 3;
       } else {
@@ -572,14 +599,15 @@ public class MazeGameImpl implements MazeGame {
       }
     }
     if (flag == 0) {
-      goUp();
+      curr = curr.getUpCell();
     } else if (flag == 1) {
-      goDown();
+      curr = curr.getDownCell();
     } else if (flag == 2) {
-      goLeft();
+      curr = curr.getLeftCell();
     } else if (flag == 3) {
-      goRight();
+      curr = curr.getRightCell();
     }
+    return curr;
   }
 
   @Override
@@ -643,8 +671,6 @@ public class MazeGameImpl implements MazeGame {
       getInBats();
     } else if (curr.isPit) {
       getInPits();
-    } else if (curr.isTunnel) {
-      getInTunnel(curr, flag);
     } else {
       System.out.println("You feel a draft.");
     }
