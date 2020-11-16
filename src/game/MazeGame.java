@@ -5,16 +5,31 @@ package game;
  * could also show the player's location and the gold amount he/she has.
  */
 public interface MazeGame {
-
   /**
    * Get the current location of the player.
    */
   public void getPlayerLocation();
 
+  /**
+   * Shoot towards to direction with a specified distance by the number of caves.
+   *
+   * @param direction The direction that player wish to shoot.
+   * @param distance  The shooting distance by the number of caves.
+   */
   public void shoot(String direction, int distance);
 
+  /**
+   * The player's move inside the maze.
+   *
+   * @param direction Move towards to a specific direction.
+   */
   public void move(String direction);
 
+  /**
+   * Return if the game is ended.
+   *
+   * @return True/False.
+   */
   public boolean getGameOver();
 
 }

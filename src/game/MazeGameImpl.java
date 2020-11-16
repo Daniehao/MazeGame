@@ -703,21 +703,33 @@ public class MazeGameImpl implements MazeGame {
     Cell curr = maze[playerPosX][playerPosY];
     Cell destination = null;
     if (direction.equals("N")) {
+      if (!isWrapping && distance > numberOfUpCaves(curr)) {
+        System.out.println("Please re-input the shooting distance!");
+      }
       for (int i = 0; i < distance; i++) {
         destination = curr.getUpCell();
       }
     }
     if (direction.equals("S")) {
+      if (!isWrapping && distance > numberOfDownCaves(curr)) {
+        System.out.println("Please re-input the shooting distance!");
+      }
       for (int i = 0; i < distance; i++) {
         destination = curr.getDownCell();
       }
     }
     if (direction.equals("W")) {
+      if (!isWrapping && distance > numberOfLeftCaves(curr)) {
+        System.out.println("Please re-input the shooting distance!");
+      }
       for (int i = 0; i < distance; i++) {
         destination = curr.getLeftCell();
       }
     }
     if (direction.equals("E")) {
+      if (!isWrapping && distance > numberOfRightCaves(curr)) {
+        System.out.println("Please re-input the shooting distance!");
+      }
       for (int i = 0; i < distance; i++) {
         destination = curr.getRightCell();
       }
@@ -734,5 +746,65 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("You do not have any arrow to shoot! Game Over.");
       }
     }
+  }
+
+  /**
+   * Get the max number of caves that can be shoot by the north direction.
+   *
+   * @param curr The current cell.
+   * @return The max number of caves that can be shoot by the north direction.
+   */
+  private int numberOfUpCaves(Cell curr) {
+    int count = 0;
+    while (curr != null) {
+      curr = curr.getUpCell();
+      count++;
+    }
+    return count;
+  }
+
+  /**
+   * Get the max number of caves that can be shoot by the south direction.
+   *
+   * @param curr The current cell.
+   * @return The max number of caves that can be shoot by the south direction.
+   */
+  private int numberOfDownCaves(Cell curr) {
+    int count = 0;
+    while (curr != null) {
+      curr = curr.getDownCell();
+      count++;
+    }
+    return count;
+  }
+
+  /**
+   * Get the max number of caves that can be shoot by the west direction.
+   *
+   * @param curr The current cell.
+   * @return The max number of caves that can be shoot by the west direction.
+   */
+  private int numberOfLeftCaves(Cell curr) {
+    int count = 0;
+    while (curr != null) {
+      curr = curr.getLeftCell();
+      count++;
+    }
+    return count;
+  }
+
+  /**
+   * Get the max number of caves that can be shoot by the east direction.
+   *
+   * @param curr The current cell.
+   * @return The max number of caves that can be shoot by the east direction.
+   */
+  private int numberOfRightCaves(Cell curr) {
+    int count = 0;
+    while (curr != null) {
+      curr = curr.getRightCell();
+      count++;
+    }
+    return count;
   }
 }

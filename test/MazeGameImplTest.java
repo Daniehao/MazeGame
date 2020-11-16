@@ -1,8 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import game.MazeGameImpl;
 import game.MazeGame;
+import game.MazeGameImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +22,7 @@ public class MazeGameImplTest {
   @Before
   public void setup() {
     maze1 = new MazeGameImpl(3, 4, 11, true, false,
-             0.2, 0.3, 3);
+            0.2, 0.3, 3);
     maze2 = new MazeGameImpl(3, 4, 11, true, true,
             0.2, 0.2, 3);
     maze3 = new MazeGameImpl(3, 4, 3, false, false,

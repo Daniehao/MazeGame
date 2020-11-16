@@ -18,7 +18,6 @@ public class Cell {
   boolean isPit;
   boolean closeToPit;
   boolean hasBat;
-  int caveNum;
 
   /**
    * The constructor for Cell class.
@@ -34,7 +33,6 @@ public class Cell {
     isPit = false;
     closeToPit = false;
     hasBat = false;
-    caveNum = -1;
   }
 
   /**
@@ -99,6 +97,7 @@ public class Cell {
 
   /**
    * Set the room status for the cell.
+   *
    * @param isRoom Whether the cell is a room/cave.
    */
   public void setIsRoom(boolean isRoom) {
@@ -107,6 +106,7 @@ public class Cell {
 
   /**
    * Set the tunnel status for the cell.
+   *
    * @param isTunnel Whether the cell is a tunnel or not.
    */
   public void setIsTunnel(boolean isTunnel) {
@@ -189,11 +189,4 @@ public class Cell {
     return closeToPit;
   }
 
-  public void setCaveNum(int caveNum) {
-    this.caveNum = caveNum;
-  }
-
-  public int getCaveNum() {
-    return caveNum;
-  }
 }

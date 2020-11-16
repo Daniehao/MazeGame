@@ -16,7 +16,8 @@ public class ControllerImpl implements Controller {
 
   /**
    * Constructor for the ControllerImpl class.
-   * @param in The input stream.
+   *
+   * @param in  The input stream.
    * @param out The output strem.
    */
   public ControllerImpl(Readable in, Appendable out) {

@@ -10,6 +10,8 @@ import game.MazeGame;
  */
 public interface Controller {
   /**
+   * Motivate the start of the maze game's controller.
+   *
    * @throws IOException if an I/O error occurs.
    */
   public void start(MazeGame game) throws IOException;
