@@ -40,6 +40,10 @@ public interface MazeGame {
    */
   public boolean checkUnwinnable();
 
+  /**
+   * Get if the player successfully shooted the wumpus.
+   * @return True/False.
+   */
   public boolean checkShootSuccess();
 
   /**
