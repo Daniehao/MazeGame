@@ -27,12 +27,6 @@ public class CellTest {
   }
 
   @Test
-  public void testConstructor() {
-    assertEquals("class Game.Cell",
-            cell1.getClass().toString());
-  }
-
-  @Test
   public void testSetNextCell() {
     assertEquals(cell1.getRightCell(), cell2);
     assertEquals(cell1.getLeftCell(), cell3);

@@ -215,11 +215,8 @@ public class MazeGameImplTest {
   public void testShootToWall() {
     game4.shoot("W", 1);
     assertEquals(false, game4.checkShootSuccess());
-    game4.setPlayerLocation(0, 0);
-    game4.shoot("E", 1);
-    game1.setPlayerLocation(0, 2);
-    game1.shoot("E", 1);
-    assertEquals(false, game1.checkShootSuccess());
+    game1.shoot("E", 2);
+    assertEquals(false, game4.checkShootSuccess());
   }
 
   @Test
