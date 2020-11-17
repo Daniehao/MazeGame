@@ -756,6 +756,12 @@ public class MazeGameImpl implements MazeGame {
     playerPosY = y;
   }
 
+  @Override
+  public void setPlayerStartLocation(int x, int y) {
+    start[0] = x;
+    start[1] = y;
+  }
+
   /**
    * The helper function for move method in order to print the current cave info.
    *
@@ -784,6 +790,7 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public void shoot(String direction, int distance) throws IllegalArgumentException {
+    boolean shootValid = false;
     if (direction != "N" && direction != "S" && direction != "W" && direction != "E") {
       throw new IllegalArgumentException("The direction input is invalid!");
     }
@@ -794,68 +801,63 @@ public class MazeGameImpl implements MazeGame {
     if (direction.equals("N")) {
       if (!isWrapping && distance > numberOfUpCaves(curr)) {
         System.out.println("Please re-input the shooting distance!");
-      }
-      for (int i = 0; i < distance; i++) {
-        if (curr.getUpCell() == null) {
-          arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
-        }
-        curr = curr.getUpCell();
+      } else {
+        shootValid = true;
+        curr = goShootByDistance(distance, curr, curr.getUpCell());
       }
     }
     if (direction.equals("S")) {
       if (!isWrapping && distance > numberOfDownCaves(curr)) {
         System.out.println("Please re-input the shooting distance!");
-      }
-      for (int i = 0; i < distance; i++) {
-        if (curr.getDownCell() == null) {
-          arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
-        }
-        curr = curr.getDownCell();
+      } else {
+        shootValid = true;
+        curr = goShootByDistance(distance, curr, curr.getDownCell());
       }
     }
     if (direction.equals("W")) {
       if (!isWrapping && distance > numberOfLeftCaves(curr)) {
         System.out.println("Please re-input the shooting distance!");
-      }
-      for (int i = 0; i < distance; i++) {
-        if (curr.getLeftCell() == null) {
-          arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
-        }
-        curr = curr.getLeftCell();
-      }
-    }
-    if (direction.equals("E")) {
-      if (!isWrapping && distance > numberOfRightCaves(curr)) {
-        System.out.println("Please re-input the shooting distance!");
-      }
-      for (int i = 0; i < distance; i++) {
-        if (curr.getRightCell() == null) {
-          arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
-        }
-        curr = curr.getRightCell();
+      } else {
+        shootValid = true;
+        curr = goShootByDistance(distance, curr, curr.getLeftCell());
       }
     }
 
-    if (curr.isWumpus) {
-      isGameOver = true;
-      isShootSuccess = true;
-      System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
-    } else {
-      System.out.println("You didn't shoot to the wumpus!");
-      arrows--;
-      if (arrows <= 0) {
-        isGameOver = true;
-        System.out.println("You do not have any arrow to shoot! Game Over.");
+    if (direction.equals("E")) {
+      numberOfRightCaves(curr);
+      if (!isWrapping && distance > numberOfRightCaves(curr)) {
+        System.out.println("Please re-input the shooting distance!");
+      } else {
+        shootValid = true;
+        curr = goShootByDistance(distance, curr, curr.getRightCell());
       }
     }
+    if (shootValid) {
+      if (curr.isWumpus) {
+        isGameOver = true;
+        isShootSuccess = true;
+        System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
+      } else {
+        System.out.println("You didn't shoot to the wumpus!");
+        arrows--;
+        if (arrows <= 0) {
+          isGameOver = true;
+          System.out.println("You do not have any arrow to shoot! Game Over.");
+        }
+      }
+    }
+  }
+
+  private Cell goShootByDistance(int distance, Cell curr, Cell downCell) {
+    for (int i = 0; i < distance; i++) {
+      if (downCell == null) {
+        arrows--;
+        System.out.println("You shoot to a wall!");
+        break;
+      }
+      curr = downCell;
+    }
+    return curr;
   }
 
   /**
@@ -866,7 +868,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private int numberOfUpCaves(Cell curr) {
     int count = 0;
-    while (curr != null) {
+    while (curr.getUpCell() != null) {
       curr = curr.getUpCell();
       count++;
     }
@@ -881,7 +883,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private int numberOfDownCaves(Cell curr) {
     int count = 0;
-    while (curr != null) {
+    while (curr.getDownCell() != null) {
       curr = curr.getDownCell();
       count++;
     }
@@ -896,7 +898,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private int numberOfLeftCaves(Cell curr) {
     int count = 0;
-    while (curr != null) {
+    while (curr.getLeftCell() != null) {
       curr = curr.getLeftCell();
       count++;
     }
@@ -911,7 +913,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private int numberOfRightCaves(Cell curr) {
     int count = 0;
-    while (curr != null) {
+    while (curr.getRightCell() != null) {
       curr = curr.getRightCell();
       count++;
     }

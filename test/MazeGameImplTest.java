@@ -21,9 +21,9 @@ public class MazeGameImplTest {
    */
   @Before
   public void setup() {
-    game1 = new MazeGameImpl(3, 4, 11, true, false,
+    game1 = new MazeGameImpl(3, 4, 6, true, false,
             0.2, 0.3, 3);
-    game2 = new MazeGameImpl(3, 4, 11, true, true,
+    game2 = new MazeGameImpl(3, 4, 13, true, true,
             0.2, 0.2, 3);
     game3 = new MazeGameImpl(3, 4, 3, false, false,
             0.2, 0.3, 3);
@@ -85,34 +85,42 @@ public class MazeGameImplTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testMoveEmptyString() {
+    game1.move("");
     game4.move("");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMoveInvalidString() {
+    game1.move("North");
     game4.move("abc");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testEmptyShoot() {
+    game1.shoot("", 1);
     game4.shoot("", 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidShoot() {
+    game1.shoot("North", 1);
     game4.shoot("abc", 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testShootZero() {
+    game1.shoot("S", 0);
     game4.shoot("N", 0);
   }
 
   @Test
   public void testMoveNorthAndSouth() {
-    game4.move("N");
-    assertEquals("You are in cave (2, 2). Tunnels lead to the W, N, S",
-            game4.getPlayerLocation());
+    game1.move("N");
+    assertEquals("You are in cave (1, 1). Tunnels lead to the E, W, N, S",
+            game1.getPlayerLocation());
+    game1.move("S");
+    assertEquals("You are in cave (2, 1). Tunnels lead to the E, W, N",
+            game1.getPlayerLocation());
     game4.move("S");
     assertEquals("You are in cave (0, 2). Tunnels lead to the E, N, S",
             game4.getPlayerLocation());
@@ -120,6 +128,12 @@ public class MazeGameImplTest {
 
   @Test
   public void testMoveEastAndWest() {
+    game1.move("E");
+    assertEquals("You are in cave (2, 3). Tunnels lead to the W",
+            game1.getPlayerLocation());
+    game1.move("W");
+    assertEquals("You are in cave (2, 1). Tunnels lead to the E, W, N",
+            game1.getPlayerLocation());
     game4.move("E");
     assertEquals("You are in cave (0, 3). Tunnels lead to the E, W, N",
             game4.getPlayerLocation());
@@ -129,7 +143,26 @@ public class MazeGameImplTest {
   }
 
   @Test
+  public void testMoveToWall() {
+    game1.move("N");
+    game1.move("W");
+    String beforeMoveToWall = game1.getPlayerLocation();
+    game1.move("S");
+    String afterMoveToWall = game1.getPlayerLocation();
+    assertEquals(beforeMoveToWall, afterMoveToWall);
+
+    String beforeMoveToWall4 = game4.getPlayerLocation();
+    game4.move("W");
+    String afterMoveToWall4 = game4.getPlayerLocation();
+    assertEquals(beforeMoveToWall4, afterMoveToWall4);
+  }
+
+  @Test
   public void testMoveTunnel() {
+    game1.move("N");
+    game1.move("E");
+    assertEquals("You are in cave (0, 3). Tunnels lead to the S",
+            game1.getPlayerLocation());
     game4.move("E");
     game4.move("E");
     game4.move("E");
@@ -139,6 +172,9 @@ public class MazeGameImplTest {
 
   @Test
   public void testMoveTunnel2() {
+    game1.move("E");
+    assertEquals("You are in cave (2, 3). Tunnels lead to the W",
+            game1.getPlayerLocation());
     game4.move("E");
     game4.move("N");
     assertEquals("You are in cave (2, 0). Tunnels lead to the E, W, N, S",
@@ -147,6 +183,9 @@ public class MazeGameImplTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testShootDistanceZero() {
+    game1.shoot("N", 0);
+    game2.shoot("W", 0);
+    game3.shoot("N", 0);
     game4.shoot("E", 0);
     assertEquals(false, game4.checkShootSuccess());
   }
@@ -164,11 +203,35 @@ public class MazeGameImplTest {
   }
 
   @Test
+  public void testShootThroughTunnel() {
+    game1.move("N");
+    game1.shoot("E", 2);
+    assertEquals(false, game1.checkShootSuccess());
+    game1.shoot("E", 1);
+    assertEquals(true, game1.checkShootSuccess());
+  }
+
+  @Test
   public void testShootToWall() {
     game4.shoot("W", 1);
     assertEquals(false, game4.checkShootSuccess());
     game4.setPlayerLocation(0, 0);
     game4.shoot("E", 1);
+    game1.setPlayerLocation(0, 2);
+    game1.shoot("E", 1);
+    assertEquals(false, game1.checkShootSuccess());
+  }
+
+  @Test
+  public void testOutOfArrows() {
+    game1.shoot("N", 1);
+    assertEquals(false, game1.checkShootSuccess());
+    game1.shoot("N", 2);
+    assertEquals(false, game1.checkShootSuccess());
+    game1.shoot("W", 1);
+    assertEquals(false, game1.checkShootSuccess());
+    game1.shoot("E", 1);
+    assertEquals(false, game1.checkShootSuccess());
   }
 
   @Test
@@ -179,35 +242,47 @@ public class MazeGameImplTest {
   }
 
   @Test
-  public void testHasBat() {
+  public void testCellHasBat() {
+    game1.setPlayerLocation(0, 2);
+    assertEquals(true, game1.getCurrentCell().getHasBat());
     assertEquals(true, game4.getCurrentCell().getDownCell().getHasBat());
   }
 
   @Test
-  public void testNotHasBat() {
+  public void testCellNotHasBat() {
+    game1.move("N");
+    assertEquals(false, game1.getCurrentCell().getHasBat());
     game4.move("N");
     assertEquals(false, game4.getCurrentCell().getDownCell().getHasBat());
   }
 
   @Test
-  public void testHasPit() {
+  public void testCellHasPit() {
+    game1.move("N");
+    game1.move("N");
+    assertEquals(true, game1.getCurrentCell().getIsPit());
     assertEquals(true, game4.getCurrentCell().getDownCell().getIsPit());
   }
 
   @Test
   public void testCloseToPit() {
+    game1.move("N");
+    assertEquals(true, game1.getCurrentCell().getCloseToPit());
+    game1.move("S");
+    game1.move("W");
+    assertEquals(false, game1.getCurrentCell().getCloseToPit());
     game4.move("N");
     assertEquals(true, game4.getCurrentCell().getCloseToPit());
-  }
-
-  @Test
-  public void testNotCloseToPit() {
-    game4.move("E");
+    game4.move("W");
     assertEquals(false, game4.getCurrentCell().getCloseToPit());
   }
 
   @Test
   public void testCloseToWumpus() {
+    game1.move("N");
+    assertEquals(true, game1.getCurrentCell().getCloseToWumpus());
+    game1.move("W");
+    assertEquals(false, game1.getCurrentCell().getCloseToWumpus());
     game4.move("N");
     assertEquals(true, game4.getCurrentCell().getCloseToWumpus());
     game4.move("S");
@@ -223,6 +298,9 @@ public class MazeGameImplTest {
 
   @Test
   public void testGameOver() {
+    game1.move("N");
+    game1.move("E");
+    assertEquals(true, game1.getGameOver());
     game4.move("N");
     game4.move("W");
     assertEquals(true, game4.getGameOver());
@@ -230,7 +308,8 @@ public class MazeGameImplTest {
 
   @Test
   public void testUnWinnable() {
-    game4.checkUnwinnable();
+    game1.setPlayerStartLocation(0,0);
+    assertEquals(true, game1.checkUnwinnable());
     assertEquals(false, game4.checkUnwinnable());
   }
 }

@@ -53,7 +53,16 @@ public interface MazeGame {
   public Cell getCurrentCell();
 
   /**
-   * Set Player's location to a specific cell for testing.
+   * Set the player's location to a specific cell for testing.
+   * @param x The player's horizontal location.
+   * @param y The player's vertical location.
    */
   public void setPlayerLocation(int x, int y);
+
+  /**
+   * Reset the player's starting point for testing.
+   * @param x The horizontal location of the starting point.
+   * @param y The vertical location of the starting point.
+   */
+  public void setPlayerStartLocation(int x, int y);
 }
