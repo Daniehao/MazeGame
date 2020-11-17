@@ -34,22 +34,25 @@ public class ControllerImpl implements Controller {
       while (!game.getGameOver()) {
         System.out.println("Shoot or Move (S-M)? ");
         switch (scan.next()) {
-          case "S":
+          case "Shoot":
             System.out.println("Towards direction(E/W/N/S)? ");
             direction = scan.next();
             System.out.println("No. of caves (1-5)? ");
             distance = scan.nextInt();
             game.shoot(direction, distance);
+            this.out.append(game.getShootRes());
             break;
-          case "M":
+          case "Move":
             System.out.println("Where to? ");
             direction = scan.next();
             game.move(direction);
+            this.out.append(game.getPlayerLocation());
+            this.out.append(" ");
             break;
-          case "Q":
+          case "Quit":
             return;
           default:
-            throw new IllegalStateException("ERROR: Input string is not S or M");
+            throw new IllegalStateException("ERROR: Input string is not Shoot or Move");
         }
       }
     }

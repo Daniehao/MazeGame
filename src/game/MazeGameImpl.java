@@ -762,6 +762,14 @@ public class MazeGameImpl implements MazeGame {
     start[1] = y;
   }
 
+  @Override
+  public String getShootRes() {
+    if (isShootSuccess) {
+      return "You shooted to the wumpus successfully!";
+    }
+    return "You didn't shooted to the wumpus, and you have " + arrows + " arrows remains.";
+  }
+
   /**
    * The helper function for move method in order to print the current cave info.
    *
@@ -791,7 +799,8 @@ public class MazeGameImpl implements MazeGame {
   @Override
   public void shoot(String direction, int distance) throws IllegalArgumentException {
     boolean shootValid = false;
-    if (direction != "N" && direction != "S" && direction != "W" && direction != "E") {
+    if (!direction.equals("N") && !direction.equals("S") && !direction.equals("W") &&
+            !direction.equals("E")) {
       throw new IllegalArgumentException("The direction input is invalid!");
     }
     if (distance == 0) {
@@ -857,24 +866,21 @@ public class MazeGameImpl implements MazeGame {
           break;
         }
         curr = curr.getDownCell();
-      }
-      else if (flag == 0) {
+      } else if (flag == 0) {
         if (curr.getUpCell() == null) {
           arrows--;
           System.out.println("You shoot to a wall!");
           break;
         }
         curr = curr.getUpCell();
-      }
-      else if (flag == 2) {
+      } else if (flag == 2) {
         if (curr.getLeftCell() == null) {
           arrows--;
           System.out.println("You shoot to a wall!");
           break;
         }
         curr = curr.getLeftCell();
-      }
-      else if (flag == 3) {
+      } else if (flag == 3) {
         if (curr.getRightCell() == null) {
           arrows--;
           System.out.println("You shoot to a wall!");

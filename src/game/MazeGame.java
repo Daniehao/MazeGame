@@ -65,4 +65,10 @@ public interface MazeGame {
    * @param y The vertical location of the starting point.
    */
   public void setPlayerStartLocation(int x, int y);
+
+  /**
+   * Get the shooting result by if the player shooted to the wumpus and how many arrows are left.
+   * @return
+   */
+  public String getShootRes();
 }
