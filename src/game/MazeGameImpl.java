@@ -750,6 +750,12 @@ public class MazeGameImpl implements MazeGame {
     return maze[playerPosX][playerPosY];
   }
 
+  @Override
+  public void setPlayerLocation(int x, int y) {
+    playerPosX = x;
+    playerPosY = y;
+  }
+
   /**
    * The helper function for move method in order to print the current cave info.
    *
@@ -785,13 +791,17 @@ public class MazeGameImpl implements MazeGame {
       throw new IllegalArgumentException("shooting distance cannot be zero!");
     }
     Cell curr = maze[playerPosX][playerPosY];
-    Cell destination = null;
     if (direction.equals("N")) {
       if (!isWrapping && distance > numberOfUpCaves(curr)) {
         System.out.println("Please re-input the shooting distance!");
       }
       for (int i = 0; i < distance; i++) {
-        destination = curr.getUpCell();
+        if (curr.getUpCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getUpCell();
       }
     }
     if (direction.equals("S")) {
@@ -799,7 +809,12 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       }
       for (int i = 0; i < distance; i++) {
-        destination = curr.getDownCell();
+        if (curr.getDownCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getDownCell();
       }
     }
     if (direction.equals("W")) {
@@ -807,7 +822,12 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       }
       for (int i = 0; i < distance; i++) {
-        destination = curr.getLeftCell();
+        if (curr.getLeftCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getLeftCell();
       }
     }
     if (direction.equals("E")) {
@@ -815,11 +835,16 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       }
       for (int i = 0; i < distance; i++) {
-        destination = curr.getRightCell();
+        if (curr.getRightCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getRightCell();
       }
     }
 
-    if (destination.isWumpus) {
+    if (curr.isWumpus) {
       isGameOver = true;
       isShootSuccess = true;
       System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");

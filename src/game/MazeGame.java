@@ -47,4 +47,9 @@ public interface MazeGame {
    * @return The current cell.
    */
   public Cell getCurrentCell();
+
+  /**
+   * Set Player's location to a specific cell for testing.
+   */
+  public void setPlayerLocation(int x, int y);
 }

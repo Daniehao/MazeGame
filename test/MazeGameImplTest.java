@@ -11,9 +11,9 @@ import static org.junit.Assert.assertEquals;
  * directions.
  */
 public class MazeGameImplTest {
-  private MazeGame maze1;
-  private MazeGame maze2;
-  private MazeGame maze3;
+  private MazeGame game1;
+  private MazeGame game2;
+  private MazeGame game3;
   private MazeGame game4;
 
   /**
@@ -21,11 +21,11 @@ public class MazeGameImplTest {
    */
   @Before
   public void setup() {
-    maze1 = new MazeGameImpl(3, 4, 11, true, false,
+    game1 = new MazeGameImpl(3, 4, 11, true, false,
             0.2, 0.3, 3);
-    maze2 = new MazeGameImpl(3, 4, 11, true, true,
+    game2 = new MazeGameImpl(3, 4, 11, true, true,
             0.2, 0.2, 3);
-    maze3 = new MazeGameImpl(3, 4, 3, false, false,
+    game3 = new MazeGameImpl(3, 4, 3, false, false,
             0.2, 0.3, 3);
     game4 = new MazeGameImpl(3, 4, 6, false, true,
             0.2, 0.2, 3);
@@ -34,43 +34,53 @@ public class MazeGameImplTest {
   @Test
   public void testMazeConstructorValid() {
     assertEquals("The maze is 3 * 4, and it is non-wrapping perfect maze.",
-            maze1.toString());
+            game1.toString());
     assertEquals("The maze is 3 * 4, and it is a wrapping perfect maze.",
-            maze2.toString());
+            game2.toString());
     assertEquals("The maze is 3 * 4, and it is non-wrapping room maze.",
-            maze3.toString());
+            game3.toString());
     assertEquals("The maze is 3 * 4, and it is wrapping room maze.", game4.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid1() {
-    maze1 = new MazeGameImpl(-3, 4, 11, true, false,
+    game1 = new MazeGameImpl(-3, 4, 11, true, false,
             0.2, 0.2, 3);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid2() {
-    maze1 = new MazeGameImpl(3, -4, 11, true, false,
+    game1 = new MazeGameImpl(3, -4, 11, true, false,
             0.2, 0.2, 3);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid3() {
-    maze3 = new MazeGameImpl(3, 4, -3, false, false,
+    game3 = new MazeGameImpl(3, 4, -3, false, false,
             0.2, 0.2, 3);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMazeConstructorInvalid4() {
-    maze3 = new MazeGameImpl(3, 4, 7, false, false,
+    game3 = new MazeGameImpl(3, 4, 7, false, false,
             0.2, 0.2, 3);
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testMazeConstructorInvalid5() {
+    game3 = new MazeGameImpl(3, 4, 4, false, false,
+            -0.2, 0.2, 3);
+    game3 = new MazeGameImpl(3, 4, 4, false, false,
+            0.2, -0.2, 3);
+    game3 = new MazeGameImpl(3, 4, 4, false, false,
+            0.2, 0.2, -3);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void testGoDownInvalid() {
-    maze1.move("down");
-    maze1.move("down");
-    maze1.move("down");
+    game1.move("down");
+    game1.move("down");
+    game1.move("down");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -135,16 +145,37 @@ public class MazeGameImplTest {
             game4.getPlayerLocation());
   }
 
-  @Test
-  public void testShootUnsuccess() {
-    game4.shoot("N", 3);
+  @Test(expected = IllegalArgumentException.class)
+  public void testShootDistanceZero() {
+    game4.shoot("E", 0);
     assertEquals(false, game4.checkShootSuccess());
   }
 
   @Test
-  public void testShootSuccess() {
+  public void testShootDistanceWrong() {
     game4.shoot("N", 3);
     assertEquals(false, game4.checkShootSuccess());
+    game4.setPlayerLocation(0 ,0);
+    game4.shoot("S", 1);
+    assertEquals(false, game4.checkShootSuccess());
+    game4.setPlayerLocation(0 ,0);
+    game4.shoot("S", 3);
+    assertEquals(false, game4.checkShootSuccess());
+  }
+
+  @Test
+  public void testShootToWall() {
+    game4.shoot("W", 1);
+    assertEquals(false, game4.checkShootSuccess());
+    game4.setPlayerLocation(0, 0);
+    game4.shoot("E", 1);
+  }
+
+  @Test
+  public void testShootSuccess() {
+    game4.setPlayerLocation(0 ,0);
+    game4.shoot("S", 2);
+    assertEquals(true, game4.checkShootSuccess());
   }
 
   @Test
