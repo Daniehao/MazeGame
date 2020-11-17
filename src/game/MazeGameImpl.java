@@ -390,7 +390,6 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public String getPlayerLocation() {
-    System.out.println("You are in cave (" + playerPosX + ", " + playerPosY + ")");
     StringBuilder sb = new StringBuilder();
     sb.append("You are in cave (" + playerPosX + ", " + playerPosY + "). ");
     sb.append("Tunnels lead to the ");
@@ -408,7 +407,6 @@ public class MazeGameImpl implements MazeGame {
       sb.append("S, ");
     }
     sb.delete(sb.length() - 2, sb.length());
-    System.out.println(sb.toString());
     return sb.toString();
   }
 

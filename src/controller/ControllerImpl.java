@@ -32,12 +32,12 @@ public class ControllerImpl implements Controller {
     int distance;
     try (Scanner scan = new Scanner(this.in)) {
       while (!game.getGameOver()) {
-        System.out.println("Shoot or Move (S-M)? ");
+        System.out.println("Shoot or Move? ");
         switch (scan.next()) {
           case "Shoot":
             System.out.println("Towards direction(E/W/N/S)? ");
             direction = scan.next();
-            System.out.println("No. of caves (1-5)? ");
+            System.out.println("No. of caves? ");
             distance = scan.nextInt();
             game.shoot(direction, distance);
             this.out.append(game.getShootRes());

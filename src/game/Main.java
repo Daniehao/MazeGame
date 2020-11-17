@@ -17,10 +17,8 @@ public class Main {
    * @param args The arguments for main method.
    */
   public static void main(String[] args) throws IOException {
-//    MazeGame game = createMaze();
-    MazeGame game = new MazeGameImpl(3, 4, 6, false, true,
-            0.2, 0.2, 3);
-    game.getPlayerLocation();
+    MazeGame game = createMaze();
+    System.out.println(game.getPlayerLocation());
     try {
       new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
     } catch (IOException e) {
