@@ -36,7 +36,7 @@ public interface MazeGame {
 
   /**
    * Check if the game is unwinnable and it's impossible to kill the wumpus from a safe cave.
-   * @return
+   * @return True/False.
    */
   public boolean checkUnwinnable();
 

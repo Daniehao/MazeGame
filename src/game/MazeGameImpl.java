@@ -2,9 +2,13 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * The Game.Maze class that implements the Game.MazeGame, and which could generate wrapping or
@@ -26,6 +30,8 @@ public class MazeGameImpl implements MazeGame {
   private int arrows;
   private boolean isGameOver;
   private boolean isShootSuccess;
+  private Cell wumpus;
+  private int[] start;
 
   /**
    * Constructor for Game.Maze class.
@@ -51,6 +57,7 @@ public class MazeGameImpl implements MazeGame {
     this.arrows = arrows;
     isGameOver = false;
     isShootSuccess = false;
+    wumpus = null;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -98,6 +105,9 @@ public class MazeGameImpl implements MazeGame {
     }
     this.playerPosX = x;
     this.playerPosY = y;
+    start = new int[2];
+    start[0] = x;
+    start[1] = y;
   }
 
   /**
@@ -502,7 +512,7 @@ public class MazeGameImpl implements MazeGame {
     random.setSeed(500);
     int index = random.nextInt(caveLst.size());
     int[] WumpusLocation = caveLst.get(index);
-    Cell wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
+    wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
     wumpus.setIsWumpus();
     if (wumpus.getRightCell() != null) {
       wumpus.getRightCell().setCloseToWumpus();
@@ -693,6 +703,40 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public boolean checkUnwinnable() {
+    Queue<Cell> queue = new LinkedList<>();
+    Set<Cell> visited = new HashSet<>();
+    queue.offer(wumpus);
+    while (!queue.isEmpty()) {
+      Cell curr = queue.poll();
+      curr.couldReachToWumpus = true;
+      visited.add(curr);
+      if (curr.getUpCell() != null && !visited.contains(curr.getUpCell()) &&
+              (!curr.getUpCell().isPit || curr.getUpCell().isPit && curr.getUpCell().hasBat)) {
+        queue.offer(curr.getUpCell());
+      }
+      if (curr.getDownCell() != null && !visited.contains(curr.getDownCell()) &&
+              (!curr.getDownCell().isPit || curr.getDownCell().isPit &&
+                      curr.getDownCell().hasBat)) {
+        queue.offer(curr.getDownCell());
+      }
+      if (curr.getLeftCell() != null && !visited.contains(curr.getLeftCell()) &&
+              (!curr.getLeftCell().isPit || curr.getLeftCell().isPit &&
+                      curr.getLeftCell().hasBat)) {
+        queue.offer(curr.getLeftCell());
+      }
+      if (curr.getRightCell() != null && !visited.contains(curr.getRightCell()) &&
+              (!curr.getRightCell().isPit || curr.getRightCell().isPit
+                      && curr.getRightCell().hasBat)) {
+        queue.offer(curr.getRightCell());
+      }
+    }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        if (maze[i][j].isRoom && !maze[i][j].couldReachToWumpus && i == start[0] && j == start[1]) {
+          return true;
+        }
+      }
+    }
     return false;
   }
 
@@ -733,7 +777,7 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
-  public void shoot(String direction, int distance) throws IllegalArgumentException{
+  public void shoot(String direction, int distance) throws IllegalArgumentException {
     if (direction != "N" && direction != "S" && direction != "W" && direction != "E") {
       throw new IllegalArgumentException("The direction input is invalid!");
     }

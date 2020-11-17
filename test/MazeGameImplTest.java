@@ -166,13 +166,40 @@ public class MazeGameImplTest {
   @Test
   public void testCloseToPit() {
     game4.move("N");
-    game4.getCurrentCell().getCloseToPit();
     assertEquals(true, game4.getCurrentCell().getCloseToPit());
   }
 
   @Test
-  public void testNotHasPit() {
+  public void testNotCloseToPit() {
     game4.move("E");
     assertEquals(false, game4.getCurrentCell().getCloseToPit());
+  }
+
+  @Test
+  public void testCloseToWumpus() {
+    game4.move("N");
+    assertEquals(true, game4.getCurrentCell().getCloseToWumpus());
+    game4.move("S");
+    assertEquals(false, game4.getCurrentCell().getCloseToWumpus());
+  }
+
+  @Test
+  public void testHasWumpus() {
+    game4.move("N");
+    assertEquals(false, game4.getCurrentCell().getIsWumpus());
+    assertEquals(true, game4.getCurrentCell().getLeftCell().getIsWumpus());
+  }
+
+  @Test
+  public void testGameOver() {
+    game4.move("N");
+    game4.move("W");
+    assertEquals(true, game4.getGameOver());
+  }
+
+  @Test
+  public void testUnWinnable() {
+    game4.checkUnwinnable();
+    assertEquals(false, game4.checkUnwinnable());
   }
 }

@@ -18,6 +18,7 @@ public class Cell {
   boolean isPit;
   boolean closeToPit;
   boolean hasBat;
+  boolean couldReachToWumpus;
 
   /**
    * The constructor for Cell class.
@@ -33,6 +34,7 @@ public class Cell {
     isPit = false;
     closeToPit = false;
     hasBat = false;
+    couldReachToWumpus = false;
   }
 
   /**
