@@ -41,4 +41,10 @@ public interface MazeGame {
   public boolean checkUnwinnable();
 
   public boolean checkShootSuccess();
+
+  /**
+   * Get the current cell of that the player is located.
+   * @return The current cell.
+   */
+  public Cell getCurrentCell();
 }

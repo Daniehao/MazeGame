@@ -146,4 +146,33 @@ public class MazeGameImplTest {
     game4.shoot("N", 3);
     assertEquals(false, game4.checkShootSuccess());
   }
+
+  @Test
+  public void testHasBat() {
+    assertEquals(true, game4.getCurrentCell().getDownCell().getHasBat());
+  }
+
+  @Test
+  public void testNotHasBat() {
+    game4.move("N");
+    assertEquals(false, game4.getCurrentCell().getDownCell().getHasBat());
+  }
+
+  @Test
+  public void testHasPit() {
+    assertEquals(true, game4.getCurrentCell().getDownCell().getIsPit());
+  }
+
+  @Test
+  public void testCloseToPit() {
+    game4.move("N");
+    game4.getCurrentCell().getCloseToPit();
+    assertEquals(true, game4.getCurrentCell().getCloseToPit());
+  }
+
+  @Test
+  public void testNotHasPit() {
+    game4.move("E");
+    assertEquals(false, game4.getCurrentCell().getCloseToPit());
+  }
 }

@@ -57,6 +57,15 @@ public class MazeGameImpl implements MazeGame {
     if (cols < 0) {
       throw new IllegalArgumentException("columns input cannot be negative!");
     }
+    if (batPercent < 0) {
+      throw new IllegalArgumentException("The bat percentage is invalid!");
+    }
+    if (pitPercent < 0) {
+      throw new IllegalArgumentException("The pit percentage is invalid!");
+    }
+    if (arrows <= 0) {
+      throw new IllegalArgumentException("The arrow number is invalid!");
+    }
     generatePerfectMaze();
     if (!isPerfect) {
       if (isWrapping && remains < cols * rows + rows * cols - rows * cols + 1 &&
@@ -522,6 +531,18 @@ public class MazeGameImpl implements MazeGame {
       int[] pitPos = caveLst.get(index);
       Cell pit = maze[pitPos[0]][pitPos[1]];
       pit.setIsPit();
+      if (pit.getRightCell() != null) {
+        pit.getRightCell().setCloseToPit();
+      }
+      if (pit.getLeftCell() != null) {
+        pit.getLeftCell().setCloseToPit();
+      }
+      if (pit.getUpCell() != null) {
+        pit.getUpCell().setCloseToPit();
+      }
+      if (pit.getDownCell() != null) {
+        pit.getDownCell().setCloseToPit();
+      }
     }
   }
 
@@ -678,6 +699,11 @@ public class MazeGameImpl implements MazeGame {
   @Override
   public boolean checkShootSuccess() {
     return isShootSuccess;
+  }
+
+  @Override
+  public Cell getCurrentCell() {
+    return maze[playerPosX][playerPosY];
   }
 
   /**
