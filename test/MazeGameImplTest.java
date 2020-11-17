@@ -239,33 +239,27 @@ public class MazeGameImplTest {
     game4.setPlayerLocation(0 ,0);
     game4.shoot("S", 2);
     assertEquals(true, game4.checkShootSuccess());
+    assertEquals(true, game4.getGameOver());
   }
 
   @Test
-  public void testCellHasBat() {
+  public void testPlayerMoveToBat() {
     game1.setPlayerLocation(0, 2);
     assertEquals(true, game1.getCurrentCell().getHasBat());
     assertEquals(true, game4.getCurrentCell().getDownCell().getHasBat());
   }
 
   @Test
-  public void testCellNotHasBat() {
-    game1.move("N");
-    assertEquals(false, game1.getCurrentCell().getHasBat());
-    game4.move("N");
-    assertEquals(false, game4.getCurrentCell().getDownCell().getHasBat());
-  }
-
-  @Test
-  public void testCellHasPit() {
+  public void testMoveToPit() {
     game1.move("N");
     game1.move("N");
     assertEquals(true, game1.getCurrentCell().getIsPit());
+    assertEquals(true, game1.getGameOver());
     assertEquals(true, game4.getCurrentCell().getDownCell().getIsPit());
   }
 
   @Test
-  public void testCloseToPit() {
+  public void testMoveCloseToPit() {
     game1.move("N");
     assertEquals(true, game1.getCurrentCell().getCloseToPit());
     game1.move("S");
@@ -278,7 +272,7 @@ public class MazeGameImplTest {
   }
 
   @Test
-  public void testCloseToWumpus() {
+  public void testMoveCloseToWumpus() {
     game1.move("N");
     assertEquals(true, game1.getCurrentCell().getCloseToWumpus());
     game1.move("W");
@@ -290,19 +284,14 @@ public class MazeGameImplTest {
   }
 
   @Test
-  public void testHasWumpus() {
-    game4.move("N");
-    assertEquals(false, game4.getCurrentCell().getIsWumpus());
-    assertEquals(true, game4.getCurrentCell().getLeftCell().getIsWumpus());
-  }
-
-  @Test
-  public void testGameOver() {
+  public void testEatenByWumpus() {
     game1.move("N");
     game1.move("E");
     assertEquals(true, game1.getGameOver());
-    game4.move("N");
-    game4.move("W");
+    game4.move("E");
+    game4.move("E");
+    game4.move("S");
+    game4.move("S");
     assertEquals(true, game4.getGameOver());
   }
 

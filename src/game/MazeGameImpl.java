@@ -803,7 +803,7 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       } else {
         shootValid = true;
-        curr = goShootByDistance(distance, curr, curr.getUpCell());
+        curr = goShootByDistance(distance, curr, 0);
       }
     }
     if (direction.equals("S")) {
@@ -811,7 +811,7 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       } else {
         shootValid = true;
-        curr = goShootByDistance(distance, curr, curr.getDownCell());
+        curr = goShootByDistance(distance, curr, 1);
       }
     }
     if (direction.equals("W")) {
@@ -819,7 +819,7 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       } else {
         shootValid = true;
-        curr = goShootByDistance(distance, curr, curr.getLeftCell());
+        curr = goShootByDistance(distance, curr, 2);
       }
     }
 
@@ -829,7 +829,7 @@ public class MazeGameImpl implements MazeGame {
         System.out.println("Please re-input the shooting distance!");
       } else {
         shootValid = true;
-        curr = goShootByDistance(distance, curr, curr.getRightCell());
+        curr = goShootByDistance(distance, curr, 3);
       }
     }
     if (shootValid) {
@@ -848,14 +848,40 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
-  private Cell goShootByDistance(int distance, Cell curr, Cell downCell) {
+  private Cell goShootByDistance(int distance, Cell curr, int flag) {
     for (int i = 0; i < distance; i++) {
-      if (downCell == null) {
-        arrows--;
-        System.out.println("You shoot to a wall!");
-        break;
+      if (flag == 1) {
+        if (curr.getDownCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getDownCell();
       }
-      curr = downCell;
+      else if (flag == 0) {
+        if (curr.getUpCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getUpCell();
+      }
+      else if (flag == 2) {
+        if (curr.getLeftCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getLeftCell();
+      }
+      else if (flag == 3) {
+        if (curr.getRightCell() == null) {
+          arrows--;
+          System.out.println("You shoot to a wall!");
+          break;
+        }
+        curr = curr.getRightCell();
+      }
     }
     return curr;
   }
