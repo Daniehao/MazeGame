@@ -459,23 +459,65 @@ public class MazeGameImpl implements MazeGame {
         Cell curr = maze[i][j];
         if (curr.isRoom) {
           if (curr.getUpCell() != null && curr.getUpCell().isTunnel) {
-            Cell next = getInTunnel(curr.getUpCell(), 0);
-            curr.setNextCell(next, "up");
+            linkTunnelHelper(curr, curr.getUpCell(), 0);
           }
           if (curr.getDownCell() != null && curr.getDownCell().isTunnel) {
-            Cell next = getInTunnel(curr.getDownCell(), 1);
-            curr.setNextCell(next, "down");
+            linkTunnelHelper(curr, curr.getDownCell(), 1);
           }
           if (curr.getLeftCell() != null && curr.getLeftCell().isTunnel) {
-            Cell next = getInTunnel(curr.getLeftCell(), 2);
-            curr.setNextCell(next, "left");
+            linkTunnelHelper(curr, curr.getLeftCell(), 2);
           }
           if (curr.getRightCell() != null && curr.getRightCell().isTunnel) {
-            Cell next = getInTunnel(curr.getRightCell(), 3);
-            curr.setNextCell(next, "right");
+            linkTunnelHelper(curr, curr.getRightCell(), 3);
           }
         }
       }
+    }
+  }
+
+  /**
+   * The player runs into the tunnel and update the player's location by the tunnel's exit.
+   */
+  private void linkTunnelHelper(Cell curr, Cell next, int flag) {
+    int originFlag = flag;
+    while (next.isTunnel) {
+      if (next.getDownCell() != null && flag != 0) {
+        next = curr.getDownCell();
+        flag = 1;
+      } else if (next.getUpCell() != null && flag != 1) {
+        next = next.getUpCell();
+        flag = 0;
+      } else if (next.getLeftCell() != null && flag != 3) {
+        next = next.getLeftCell();
+        flag = 2;
+      } else if (next.getRightCell() != null && flag != 2) {
+        next = next.getRightCell();
+        flag = 3;
+      } else {
+        break;
+      }
+    }
+    if (originFlag == 0) {
+      curr.setNextCell(next, "up");
+    }
+    if (originFlag == 1) {
+      curr.setNextCell(next, "down");
+    }
+    if (originFlag == 2) {
+      curr.setNextCell(next, "left");
+    }
+    if (originFlag == 3) {
+      curr.setNextCell(next, "right");
+    }
+
+    if (flag == 0) {
+      next.setNextCell(curr, "down");
+    } else if (flag == 1) {
+      next.setNextCell(curr, "up");
+    } else if (flag == 2) {
+      next.setNextCell(curr, "right");
+    } else if (flag == 3) {
+      next.setNextCell(curr, "left");
     }
   }
 
@@ -626,30 +668,6 @@ public class MazeGameImpl implements MazeGame {
     System.out.println("You fell into the bottomless pit! Better luck next time.");
   }
 
-  /**
-   * The player runs into the tunnel and update the player's location by the tunnel's exit.
-   */
-  private Cell getInTunnel(Cell curr, int flag) {
-    while (curr.isTunnel) {
-      if (curr.getDownCell() != null && flag != 0) {
-        curr = curr.getDownCell();
-        flag = 1;
-      } else if (curr.getUpCell() != null && flag != 1) {
-        curr = curr.getUpCell();
-        flag = 0;
-      } else if (curr.getLeftCell() != null && flag != 3) {
-        curr = curr.getLeftCell();
-        flag = 2;
-      } else if (curr.getRightCell() != null && flag != 2) {
-        curr = curr.getRightCell();
-        flag = 3;
-      } else {
-        break;
-      }
-    }
-    return curr;
-  }
-
   @Override
   public void move(String direction) throws IllegalArgumentException {
     Cell curr = maze[playerPosX][playerPosY];
@@ -796,7 +814,6 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public void shoot(String direction, int distance) throws IllegalArgumentException {
-    boolean shootValid = false;
     if (!direction.equals("N") && !direction.equals("S") && !direction.equals("W") &&
             !direction.equals("E")) {
       throw new IllegalArgumentException("The direction input is invalid!");
@@ -806,148 +823,87 @@ public class MazeGameImpl implements MazeGame {
     }
     Cell curr = maze[playerPosX][playerPosY];
     if (direction.equals("N")) {
-      if (!isWrapping && distance > numberOfUpCaves(curr)) {
-        System.out.println("Please re-input the shooting distance!");
-      } else {
-        shootValid = true;
-        curr = goShootByDistance(distance, curr, 0);
-      }
+      curr = goShootByDistance(distance, curr, 0);
     }
     if (direction.equals("S")) {
-      if (!isWrapping && distance > numberOfDownCaves(curr)) {
-        System.out.println("Please re-input the shooting distance!");
-      } else {
-        shootValid = true;
-        curr = goShootByDistance(distance, curr, 1);
-      }
+      curr = goShootByDistance(distance, curr, 1);
     }
     if (direction.equals("W")) {
-      if (!isWrapping && distance > numberOfLeftCaves(curr)) {
-        System.out.println("Please re-input the shooting distance!");
-      } else {
-        shootValid = true;
-        curr = goShootByDistance(distance, curr, 2);
-      }
+      curr = goShootByDistance(distance, curr, 2);
     }
 
     if (direction.equals("E")) {
-      numberOfRightCaves(curr);
-      if (!isWrapping && distance > numberOfRightCaves(curr)) {
-        System.out.println("Please re-input the shooting distance!");
-      } else {
-        shootValid = true;
-        curr = goShootByDistance(distance, curr, 3);
-      }
+      curr = goShootByDistance(distance, curr, 3);
     }
-    if (shootValid) {
-      if (curr.isWumpus) {
+    if (curr == null) {
+      System.out.println("You didn't shoot to the wumpus!");
+    }
+    else if (curr.isWumpus) {
+      isGameOver = true;
+      isShootSuccess = true;
+      arrows--;
+      System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
+    } else {
+      System.out.println("You didn't shoot to the wumpus!");
+      arrows--;
+      if (arrows <= 0) {
         isGameOver = true;
-        isShootSuccess = true;
-        System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
-      } else {
-        System.out.println("You didn't shoot to the wumpus!");
-        arrows--;
-        if (arrows <= 0) {
-          isGameOver = true;
-          System.out.println("You do not have any arrow to shoot! Game Over.");
-        }
+        System.out.println("You do not have any arrow to shoot! Game Over.");
       }
     }
   }
 
   private Cell goShootByDistance(int distance, Cell curr, int flag) {
     for (int i = 0; i < distance; i++) {
+      Cell prev = curr;
       if (flag == 1) {
         if (curr.getDownCell() == null) {
           arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
+          return null;
         }
         curr = curr.getDownCell();
+        flag = getFlag(prev, curr);
       } else if (flag == 0) {
         if (curr.getUpCell() == null) {
           arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
+          return null;
         }
         curr = curr.getUpCell();
+        flag = getFlag(prev, curr);
       } else if (flag == 2) {
         if (curr.getLeftCell() == null) {
           arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
+          return null;
         }
         curr = curr.getLeftCell();
+        flag = getFlag(prev, curr);
       } else if (flag == 3) {
         if (curr.getRightCell() == null) {
           arrows--;
-          System.out.println("You shoot to a wall!");
-          break;
+          return null;
         }
         curr = curr.getRightCell();
+        flag = getFlag(prev, curr);
       }
     }
     return curr;
   }
 
-  /**
-   * Get the max number of caves that can be shoot by the north direction.
-   *
-   * @param curr The current cell.
-   * @return The max number of caves that can be shoot by the north direction.
-   */
-  private int numberOfUpCaves(Cell curr) {
-    int count = 0;
-    while (curr.getUpCell() != null) {
-      curr = curr.getUpCell();
-      count++;
+  private int getFlag(Cell prev, Cell curr) {
+    int flag = 0;
+    if (curr.getUpCell() == prev) {
+      flag = 1;
     }
-    return count;
-  }
-
-  /**
-   * Get the max number of caves that can be shoot by the south direction.
-   *
-   * @param curr The current cell.
-   * @return The max number of caves that can be shoot by the south direction.
-   */
-  private int numberOfDownCaves(Cell curr) {
-    int count = 0;
-    while (curr.getDownCell() != null) {
-      curr = curr.getDownCell();
-      count++;
+    if (curr.getDownCell() == prev) {
+      flag = 0;
     }
-    return count;
-  }
-
-  /**
-   * Get the max number of caves that can be shoot by the west direction.
-   *
-   * @param curr The current cell.
-   * @return The max number of caves that can be shoot by the west direction.
-   */
-  private int numberOfLeftCaves(Cell curr) {
-    int count = 0;
-    while (curr.getLeftCell() != null) {
-      curr = curr.getLeftCell();
-      count++;
+    if (curr.getLeftCell() == prev) {
+      flag = 3;
     }
-    return count;
-  }
-
-  /**
-   * Get the max number of caves that can be shoot by the east direction.
-   *
-   * @param curr The current cell.
-   * @return The max number of caves that can be shoot by the east direction.
-   */
-  private int numberOfRightCaves(Cell curr) {
-    int count = 0;
-    while (curr.getRightCell() != null) {
-      curr = curr.getRightCell();
-      count++;
+    if (curr.getRightCell() == prev) {
+      flag = 2;
     }
-    return count;
+    return flag;
   }
 
   /**

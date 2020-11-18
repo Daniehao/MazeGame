@@ -59,7 +59,7 @@ public class ControllerTest {
     controller.start(new MazeGameImpl(3, 4, 6, true, false,
             0.2, 0.3, 3));
     assertEquals("You are in cave (1, 1). Tunnels lead to the E, W, N, S You didn't " +
-            "shooted to the wumpus, and you have 3 arrows remains.You shooted to the wumpus " +
+            "shooted to the wumpus, and you have 2 arrows remains.You shooted to the wumpus " +
             "successfully!", out.toString());
   }
 }

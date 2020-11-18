@@ -121,9 +121,6 @@ public class MazeGameImplTest {
     game1.move("S");
     assertEquals("You are in cave (2, 1). Tunnels lead to the E, W, N",
             game1.getPlayerLocation());
-    game4.move("S");
-    assertEquals("You are in cave (0, 2). Tunnels lead to the E, N, S",
-            game4.getPlayerLocation());
   }
 
   @Test
