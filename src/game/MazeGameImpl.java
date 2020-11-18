@@ -410,20 +410,37 @@ public class MazeGameImpl implements MazeGame {
     return sb.toString();
   }
 
+  private String convertWallsToString() {
+    String s = "";
+    for (int i = 0; i < savedWall.size(); i++) {
+      s += savedWall.get(i);
+      s += " ";
+    }
+    return s;
+  }
+
   @Override
   public String toString() {
     String s = "";
     if (isPerfect && isWrapping) {
-      s += String.format("The maze is %d * %d, and it is a wrapping perfect maze.", rows, cols);
+      s += String.format("The maze is %d * %d, and it is a wrapping perfect maze. " +
+              "The start point of player is (%d, %d). The saved walls are numbered by: " +
+              convertWallsToString(), rows, cols, start[0], start[1]);
     }
     if (isPerfect && !isWrapping) {
-      s += String.format("The maze is %d * %d, and it is non-wrapping perfect maze.", rows, cols);
+      s += String.format("The maze is %d * %d, and it is a non-wrapping perfect maze. " +
+              "The start point of player is (%d, %d). The saved walls are numbered by: " +
+              convertWallsToString(), rows, cols, start[0], start[1]);
     }
     if (!isPerfect && isWrapping) {
-      s += String.format("The maze is %d * %d, and it is wrapping room maze.", rows, cols);
+      s += String.format("The maze is %d * %d, and it is a wrapping room maze. " +
+              "The start point of player is (%d, %d). The saved walls are numbered by: " +
+              convertWallsToString(), rows, cols, start[0], start[1]);
     }
     if (!isPerfect && !isWrapping) {
-      s += String.format("The maze is %d * %d, and it is non-wrapping room maze.", rows, cols);
+      s += String.format("The maze is %d * %d, and it is a non-wrapping room maze. " +
+              "The start point of player is (%d, %d). The saved walls are numbered by: " +
+              convertWallsToString(), rows, cols, start[0], start[1]);
     }
     return s;
   }
@@ -621,9 +638,11 @@ public class MazeGameImpl implements MazeGame {
     int num = random.nextInt(2);
     //both bats and pits
     if (maze[playerPosX][playerPosY].getIsPit()) {
+      //50% possibility to pits
       if (num == 0) {
         getInPits();
       } else {
+        //50% possiblity to drop random cave
         dropToRandomCave();
       }
     } else {
@@ -837,8 +856,7 @@ public class MazeGameImpl implements MazeGame {
     }
     if (curr == null) {
       System.out.println("You didn't shoot to the wumpus!");
-    }
-    else if (curr.isWumpus) {
+    } else if (curr.isWumpus) {
       isGameOver = true;
       isShootSuccess = true;
       arrows--;

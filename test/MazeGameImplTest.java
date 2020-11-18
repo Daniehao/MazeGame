@@ -5,6 +5,7 @@ import game.MazeGame;
 import game.MazeGameImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test for the Game.Maze class, which checks if four types of maze works fine with user's input
@@ -33,13 +34,20 @@ public class MazeGameImplTest {
 
   @Test
   public void testMazeConstructorValid() {
-    assertEquals("The maze is 3 * 4, and it is non-wrapping perfect maze.",
+    assertEquals("The maze is 3 * 4, and it is a non-wrapping perfect maze. " +
+                    "The start point of player is (2, 1). The saved walls are numbered by: " +
+                    "9 2 11 13 15 16 ",
             game1.toString());
-    assertEquals("The maze is 3 * 4, and it is a wrapping perfect maze.",
+    assertEquals("The maze is 3 * 4, and it is a wrapping perfect maze. The start point " +
+                    "of player is (2, 0). The saved walls are numbered by: 0 19 2 3 4 5 11 13 16 " +
+                    "17 18 21 23 ",
             game2.toString());
-    assertEquals("The maze is 3 * 4, and it is non-wrapping room maze.",
+    assertEquals("The maze is 3 * 4, and it is a non-wrapping room maze. The start " +
+                    "point of player is (2, 2). The saved walls are numbered by: 11 13 16 ",
             game3.toString());
-    assertEquals("The maze is 3 * 4, and it is wrapping room maze.", game4.toString());
+    assertEquals("The maze is 3 * 4, and it is a wrapping room maze. The start point " +
+                    "of player is (0, 2). The saved walls are numbered by: 19 2 11 13 21 23 ",
+            game4.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -191,12 +199,21 @@ public class MazeGameImplTest {
   public void testShootDistanceWrong() {
     game4.shoot("N", 3);
     assertEquals(false, game4.checkShootSuccess());
-    game4.setPlayerLocation(0 ,0);
+    game4.setPlayerLocation(0, 0);
     game4.shoot("S", 1);
     assertEquals(false, game4.checkShootSuccess());
-    game4.setPlayerLocation(0 ,0);
+    game4.setPlayerLocation(0, 0);
     game4.shoot("S", 3);
     assertEquals(false, game4.checkShootSuccess());
+  }
+
+  @Test
+  public void testShootDistanceOverWumpus() {
+    game1.move("N");
+    game1.shoot("E", 3);
+    assertEquals(false, game1.checkShootSuccess());
+    game1.shoot("E", 1);
+    assertEquals(true, game1.checkShootSuccess());
   }
 
   @Test
@@ -230,7 +247,7 @@ public class MazeGameImplTest {
 
   @Test
   public void testShootSuccess() {
-    game4.setPlayerLocation(0 ,0);
+    game4.setPlayerLocation(0, 0);
     game4.shoot("S", 2);
     assertEquals(true, game4.checkShootSuccess());
     assertEquals(true, game4.getGameOver());
@@ -238,9 +255,9 @@ public class MazeGameImplTest {
 
   @Test
   public void testPlayerMoveToBat() {
-    game1.setPlayerLocation(0, 2);
-    assertEquals(true, game1.getCurrentCell().getHasBat());
-    assertEquals(true, game4.getCurrentCell().getDownCell().getHasBat());
+    game1.setPlayerStartLocation(0, 2);
+    assertNotEquals(game1.getPlayerLocation(), "You are in cave (0, 2). " +
+            "Tunnels lead to the W");
   }
 
   @Test
@@ -266,11 +283,19 @@ public class MazeGameImplTest {
   }
 
   @Test
+  public void testMoveCloseToPitByTunnel() {
+   game4.setPlayerStartLocation(1,0);
+   assertEquals(true, game4.getCurrentCell().getCloseToPit());
+  }
+
+  @Test
   public void testMoveCloseToWumpus() {
+    //Smell a wumpus through a two cells tunnel.
     game1.move("N");
     assertEquals(true, game1.getCurrentCell().getCloseToWumpus());
     game1.move("W");
     assertEquals(false, game1.getCurrentCell().getCloseToWumpus());
+    //Smell a wumpus through a one cell tunnel.
     game4.move("N");
     assertEquals(true, game4.getCurrentCell().getCloseToWumpus());
     game4.move("S");
@@ -290,8 +315,22 @@ public class MazeGameImplTest {
   }
 
   @Test
+  public void testKillWumpusWithTunnel() {
+    game1.move("N");
+    game1.shoot("E", 1);
+    assertEquals(true, game1.checkShootSuccess());
+  }
+
+  @Test
+  public void testKillWumpusWithoutTunnel() {
+    game4.move("N");
+    game4.shoot("W", 1);
+    assertEquals(true, game4.checkShootSuccess());
+  }
+
+  @Test
   public void testUnWinnable() {
-    game1.setPlayerStartLocation(0,0);
+    game1.setPlayerStartLocation(0, 0);
     assertEquals(true, game1.checkUnwinnable());
     assertEquals(false, game4.checkUnwinnable());
   }
