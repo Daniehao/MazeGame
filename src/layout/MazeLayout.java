@@ -1,22 +1,27 @@
 package layout;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import java.util.function.Consumer;
 
 import javax.swing.*;
+
+import game.Cell;
 
 /**
  * The class for the view of the MazeGame.
  */
 public class MazeLayout extends JFrame implements GameView {
+
   private JButton commandButton, quitButton;
   private MazePanel mazePanel;
   private JScrollPane scrollPane;
   private JPanel buttonPanel;
   private transient Consumer<String> commandCallback;
 
-  /** Default constructor. */
+  /**
+   * Default constructor.
+   */
   public MazeLayout() {
     super();
     this.setTitle("Maze Game!");
@@ -50,7 +55,7 @@ public class MazeLayout extends JFrame implements GameView {
 
   public void addComponentsToPane(final Container mazePanel) {
     JPanel mazeGraph = new JPanel();
-    mazeGraph.setLayout(new GridLayout(2,3));
+    mazeGraph.setLayout(new GridLayout(2, 3));
   }
 
   @Override
@@ -70,15 +75,74 @@ public class MazeLayout extends JFrame implements GameView {
 
   }
 
-  ImageIcon grassIcon = new ImageIcon("images/grass_tile.jpg");
-  JPanel panel = new JPanel(new GridLayout(haps,snaps,0,0));
+  @Override
+  public void buildMaze(Cell[] cells) {
+    ImageIcon mazeIcon = null;
+    for (Cell element : cells) {
+      if (element.getIsRoom()) {
+        int roomNum = element.geRoomDoors();
+        if (roomNum == 1) {
+          if (element.getUpCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-1-up.png");
+          }
+          if (element.getDownCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-1-down.png");
+          }
+          if (element.getLeftCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-1-left.png");
+          }
+          if (element.getRightCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-1-right.png");
+          }
+        } else if (roomNum == 3) {
+          if (element.getUpCell() != null && element.getLeftCell() != null && element.getDownCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-3-up-down-left.png");
+          }
+          if (element.getUpCell() != null && element.getLeftCell() != null && element.getRightCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-3-up-left-right.png");
+          }
+          if (element.getUpCell() != null && element.getRightCell() != null && element.getDownCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-3-up-down-right.png");
+          }
+          if (element.getDownCell() != null && element.getLeftCell() != null && element.getRightCell() != null) {
+            mazeIcon = new ImageIcon("../../res/images/roombase-1-down-left-right.png");
+          }
+        } else {
+          mazeIcon = new ImageIcon("../../res/images/roombase-4.png");
+        }
+      } else if (element.getIsTunnel()) {
+        if (element.getLeftCell() != null && element.getRightCell() != null) {
+          mazeIcon = new ImageIcon("../../res/images/hallway-h.png");
+        }
+        if (element.getLeftCell() != null && element.getUpCell() != null) {
+          mazeIcon = new ImageIcon("../../res/images/hallway-up-left.png");
+        }
+        if (element.getLeftCell() != null && element.getDownCell() != null) {
+          mazeIcon = new ImageIcon("../../res/images/hallway-down-left.png");
+        }
+        if (element.getUpCell() != null && element.getDownCell() != null) {
+          mazeIcon = new ImageIcon("../../res/images/hallway-v.png");
+        }
+        if (element.getDownCell() != null && element.getRightCell() != null) {
+          mazeIcon = new ImageIcon("../../res/images/hallway-down-right.png");
+        }
+        if (element.getUpCell() != null && element.getRightCell() != null) {
+          mazeIcon = new ImageIcon("../../res/images/hallway-up-right.png");
+        }
+      }
 
-  JLabel labels[] = new JLabel[(haps*snaps)];
+//      ImageIcon grassIcon = new ImageIcon("images/grass_tile.jpg");
+      JPanel panel = new JPanel(new GridLayout(3, 5, 0, 0));
 
-for (int i =  0; i < haps*snaps; i++)
-  {
-    labels[i] = new JLabel(grassIcon );
-    panel.add(labels[i]);
+      JLabel labels[] = new JLabel[(3 * 5)];
+
+      for (
+              int i = 0;
+              i < 3 * 5; i++) {
+        labels[i] = new JLabel(mazeIcon);
+        panel.add(labels[i]);
+      }
+    }
   }
 
   private static void createAndShowGUI() {
@@ -90,7 +154,6 @@ for (int i =  0; i < haps*snaps; i++)
     frame.pack();
     frame.setVisible(true);
   }
-
 
 
   public static void main(String[] args) {

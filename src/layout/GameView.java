@@ -2,6 +2,8 @@ package layout;
 
 import java.util.function.Consumer;
 
+import game.Cell;
+
 /**
  * The view interface for the maze game and it includes all of the operations that the controller
  * would need to invoke on the view.
@@ -23,6 +25,7 @@ public interface GameView {
    */
   void showErrorMessage(String error);
 
+  void buildMaze(Cell[] cells);
 
 //  void setCellHasPlayer(int x, int y);
 

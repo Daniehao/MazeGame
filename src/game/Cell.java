@@ -19,6 +19,7 @@ public class Cell {
   boolean closeToPit;
   boolean hasBat;
   boolean couldReachToWumpus;
+  boolean isTarget;
 
   /**
    * The constructor for Cell class.
@@ -191,4 +192,28 @@ public class Cell {
     return closeToPit;
   }
 
+  public boolean getIsRoom() {
+    return isRoom;
+  }
+
+  public boolean getIsTunnel() {
+    return isTunnel;
+  }
+
+  public int geRoomDoors() {
+    int count = 0;
+    if (getUpCell() != null) {
+      count++;
+    }
+    if (getDownCell() != null) {
+      count++;
+    }
+    if (getLeftCell() != null) {
+      count++;
+    }
+    if (getRightCell() != null) {
+      count++;
+    }
+    return count;
+  }
 }
