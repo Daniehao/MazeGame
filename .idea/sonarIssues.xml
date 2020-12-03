@@ -48,6 +48,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../grid/src/layout/GridLayoutDemo.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/Cell.java">
           <value>
             <set />
@@ -158,7 +163,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/layout/MazeMenu.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/layout/MazePanel.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/layout/MenuView.java">
           <value>
             <set />
           </value>
@@ -349,6 +364,11 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/Downloads/TurtleController/src/turtle/control/commands/Trace.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Downloads/src 4/basic_mvc/Controller.java">
           <value>
             <set />
           </value>
