@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import controller.ControllerImpl;
 
+
 /**
  * Game.Main class for generating two samples for Perfect maze and wrapped room maze. The player
  * visits each location in the room maze and reach to the goal point in both of the examples.

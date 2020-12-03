@@ -148,6 +148,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/layout/GameView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/layout/MazeLayout.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/layout/MazePanel.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/maze/Cell.java">
           <value>
             <set />
@@ -309,6 +324,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../lab9/test/StrategyTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../leetcode/src/Solution.java">
           <value>
             <set />
           </value>

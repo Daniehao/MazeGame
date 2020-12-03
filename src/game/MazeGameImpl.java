@@ -11,8 +11,10 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * The Game.Maze class that implements the Game.MazeGame, and which could generate wrapping or
- * non-wrapping perfect maze, wrapping or non-wrapping room maze.
+ * The MazeGameImpl class that implements the MazeGame interface, and which could generate wrapping
+ * or non-wrapping perfect maze, wrapping or non-wrapping room maze. There is a player who could go
+ * to four directions, but chances are the player was eaten by the wumpus, fallen into a pit, drop
+ * by the bats, geting into a hallway, or shoot to a wumpus successfully.
  */
 public class MazeGameImpl implements MazeGame {
   private List<Integer> savedWall;
@@ -78,8 +80,8 @@ public class MazeGameImpl implements MazeGame {
       if (isWrapping && remains < cols * rows + rows * cols - rows * cols + 1 &&
               remains >= 0) {
         generateRoomMaze();
-      } else if (!isWrapping && remains < (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1 &&
-              remains >= 0) {
+      } else if (!isWrapping && remains < (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1
+              && remains >= 0) {
         generateRoomMaze();
       } else {
         throw new IllegalArgumentException("The remains input is invalid!");
@@ -355,7 +357,8 @@ public class MazeGameImpl implements MazeGame {
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
     } else {
-      if (isWrapping && playerPosY + 1 >= cols && maze[playerPosX][playerPosY].getRightCell() != null) {
+      if (isWrapping && playerPosY + 1 >= cols
+              && maze[playerPosX][playerPosY].getRightCell() != null) {
         playerPosY = 0;
       }
     }
@@ -381,7 +384,8 @@ public class MazeGameImpl implements MazeGame {
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
     } else {
-      if (isWrapping && playerPosX + 1 >= rows && maze[playerPosX][playerPosY].getDownCell() != null) {
+      if (isWrapping && playerPosX + 1 >= rows
+              && maze[playerPosX][playerPosY].getDownCell() != null) {
         playerPosX = 0;
       }
     }
@@ -468,7 +472,7 @@ public class MazeGameImpl implements MazeGame {
   }
 
   /**
-   * Link the two rooms if there is a tunnel between them.
+   * Link the two rooms if there is a tunnel or tunnels between them.
    */
   private void linkTunnel() {
     for (int i = 0; i < rows; i++) {
@@ -568,8 +572,8 @@ public class MazeGameImpl implements MazeGame {
     Random random = new Random();
     random.setSeed(500);
     int index = random.nextInt(caveLst.size());
-    int[] WumpusLocation = caveLst.get(index);
-    wumpus = maze[WumpusLocation[0]][WumpusLocation[1]];
+    int[] wumpusLocation = caveLst.get(index);
+    wumpus = maze[wumpusLocation[0]][wumpusLocation[1]];
     wumpus.setIsWumpus();
     if (wumpus.getRightCell() != null) {
       wumpus.getRightCell().setCloseToWumpus();
@@ -808,8 +812,8 @@ public class MazeGameImpl implements MazeGame {
   /**
    * The helper function for move method in order to print the current cave info.
    *
-   * @param curr The current cave.
-   * @param flag The direction mark.
+   * @param curr The current cell.
+   * @param flag The direction flag.
    */
   private void movehelper(Cell curr, int flag) {
     if (curr.closeToWumpus) {
@@ -871,6 +875,14 @@ public class MazeGameImpl implements MazeGame {
     }
   }
 
+  /**
+   * A helper method for shoot that get the target cell to shoot after assigning a distance and
+   * direction.
+   * @param distance Number of caves.
+   * @param curr The current cell.
+   * @param flag The direction flag.
+   * @return The target cell to shoot.
+   */
   private Cell goShootByDistance(int distance, Cell curr, int flag) {
     for (int i = 0; i < distance; i++) {
       Cell prev = curr;
@@ -907,6 +919,12 @@ public class MazeGameImpl implements MazeGame {
     return curr;
   }
 
+  /**
+   * Get the direction flag by moving from the last cell to the current cell.
+   * @param prev The cell in the last step.
+   * @param curr The current cell.
+   * @return The flag indicates direction.
+   */
   private int getFlag(Cell prev, Cell curr) {
     int flag = 0;
     if (curr.getUpCell() == prev) {

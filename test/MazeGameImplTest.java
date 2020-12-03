@@ -284,8 +284,8 @@ public class MazeGameImplTest {
 
   @Test
   public void testMoveCloseToPitByTunnel() {
-   game4.setPlayerStartLocation(1,0);
-   assertEquals(true, game4.getCurrentCell().getCloseToPit());
+    game4.setPlayerStartLocation(1, 0);
+    assertEquals(true, game4.getCurrentCell().getCloseToPit());
   }
 
   @Test

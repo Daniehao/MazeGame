@@ -9,6 +9,10 @@ import game.MazeGameImpl;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for the Controller interface which checks if the controller could successfully execute the
+ * operations when player moves in the maze or shoot at a wumpus.
+ */
 public class ControllerTest {
 
   @Test

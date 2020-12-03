@@ -55,6 +55,8 @@ public class ControllerImpl implements Controller {
             throw new IllegalStateException("ERROR: Input string is not Shoot or Move");
         }
       }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

@@ -1,8 +1,10 @@
 package game;
 
 /**
- * The maze game that enables a player to move to four directions(left, right, up, down). The game
- * could also show the player's location and the gold amount he/she has.
+ * The maze game that enables a player to move to four directions(left, right, up, down). The player
+ * may also shoot to a direction by a distance, and the interface supports the user to get the
+ * current location of the player, get the current cell of the player, and whether the shoot is
+ * success, and whether it is an unwinnable game.
  */
 public interface MazeGame {
   /**
@@ -36,24 +38,28 @@ public interface MazeGame {
 
   /**
    * Check if the game is unwinnable and it's impossible to kill the wumpus from a safe cave.
+   *
    * @return True/False.
    */
   public boolean checkUnwinnable();
 
   /**
    * Get if the player successfully shooted the wumpus.
+   *
    * @return True/False.
    */
   public boolean checkShootSuccess();
 
   /**
    * Get the current cell of that the player is located.
+   *
    * @return The current cell.
    */
   public Cell getCurrentCell();
 
   /**
    * Set the player's location to a specific cell for testing.
+   *
    * @param x The player's horizontal location.
    * @param y The player's vertical location.
    */
@@ -61,6 +67,7 @@ public interface MazeGame {
 
   /**
    * Reset the player's starting point for testing.
+   *
    * @param x The horizontal location of the starting point.
    * @param y The vertical location of the starting point.
    */
@@ -68,7 +75,8 @@ public interface MazeGame {
 
   /**
    * Get the shooting result by if the player shooted to the wumpus and how many arrows are left.
-   * @return
+   *
+   * @return The result of shoot is successful or not.
    */
   public String getShootRes();
 }
