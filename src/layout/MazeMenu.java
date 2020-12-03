@@ -2,6 +2,7 @@ package layout;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 import javax.swing.*;
@@ -18,6 +19,8 @@ public class MazeMenu extends JFrame implements MenuView {
   JTextField colsTextBox;
   JComboBox playersComboBox;
   JComboBox difficultyComboBox;
+  Button startButton;
+  Button startSameButton;
   private transient Consumer<String> commandCallback;
 
   /**
@@ -50,8 +53,10 @@ public class MazeMenu extends JFrame implements MenuView {
     this.add(controls, BorderLayout.CENTER);
 
     JPanel commendPanel = new JPanel();
-    commendPanel.add(new Button("Start New"));
-    commendPanel.add(new Button("Start Same Game"));
+    startButton = new Button("Start New");
+    commendPanel.add(startButton);
+    startSameButton = new Button("Start Same Game");
+    commendPanel.add(startSameButton);
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
@@ -93,6 +98,12 @@ public class MazeMenu extends JFrame implements MenuView {
     //Display the window.
     frame.pack();
     frame.setVisible(true);
+  }
+
+  @Override
+  public void setListener(ActionListener listener) {
+    startButton.addActionListener(listener);
+    startSameButton.addActionListener(listener);
   }
 
   @Override
