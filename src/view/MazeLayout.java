@@ -12,11 +12,29 @@ import model.Cell;
  * The class for the view of the MazeGame.
  */
 public class MazeLayout extends JFrame implements GameView {
-
-  private JButton commandButton, quitButton;
+  private int playerNum;
+  private String alert;
+  private MazePanel alertPanel;
   private MazePanel mazePanel;
+  private MazePanel controlPanel;
+  private MazePanel shootPanel;
   private JScrollPane scrollPane;
   private JPanel buttonPanel;
+  private JButton quitButton;
+  private JButton startSameButton;
+  private JButton moveUp;
+  private JButton moveDown;
+  private JButton moveLeft;
+  private JButton moveRight;
+  private JButton shootUp;
+  private JButton shootDown;
+  private JButton shootLeft;
+  private JButton shootRight;
+  private JTextField shootDistance;
+  private JButton applyMoveButton;
+  private JButton applyShootButton;
+  private int rows;
+  private int cols;
   private transient Consumer<String> commandCallback;
 
   /**
@@ -24,37 +42,87 @@ public class MazeLayout extends JFrame implements GameView {
    */
   public MazeLayout() {
     super();
+    initGaps();
     this.setTitle("Maze Game!");
-    this.setSize(500, 500);
+    this.setSize(800, 800);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    // use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
+    alertPanel = new MazePanel();
+    alertPanel.setPreferredSize(new Dimension(200, 50));
+    alertPanel.add(new Label("Player " + playerNum + "'s Round"));
+    alertPanel.add(new Label(alert));
+    this.add(alertPanel, BorderLayout.NORTH);
+
+    // maze panel
     mazePanel = new MazePanel();
     mazePanel.setPreferredSize(new Dimension(500, 500));
+    mazePanel.setLayout(new GridLayout(10,10));
     scrollPane = new JScrollPane(mazePanel);
     this.add(scrollPane, BorderLayout.CENTER);
 
-    // button panel
-    buttonPanel = new JPanel();
-    buttonPanel.setLayout(new FlowLayout());
-    this.add(buttonPanel, BorderLayout.SOUTH);
+    // move
+    controlPanel = new MazePanel();
+    controlPanel.setLayout(new GridLayout(4, 7));
+    controlPanel.add(new Label("Move Direction: "));
+    controlPanel.add (moveUp);
+    controlPanel.add(moveDown);
+    controlPanel.add(moveLeft);
+    controlPanel.add(moveRight);
+    controlPanel.add(new Label(" "));
 
-    // quit button
+    // shoot
+    controlPanel.add(new Label("Shoot Direction: "));
+    controlPanel.add (shootUp);
+    controlPanel.add(shootDown);
+    controlPanel.add(shootLeft);
+    controlPanel.add(shootRight);
+    controlPanel.add(new Label(" "));
+    controlPanel.add(new Label("Shoot Distance: "));
+    controlPanel.add(shootDistance);
+
+    controlPanel.add(new Label(" "));
+    controlPanel.add(new Label(" "));
+    controlPanel.add(new Label(" "));
+    controlPanel.add(new Label(" "));
+
+    //quit
+    controlPanel.add(applyMoveButton);
+    controlPanel.add(new Label(" "));
+    controlPanel.add(applyShootButton);
+    controlPanel.add(new Label(" "));
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
     });
-    buttonPanel.add(quitButton);
-
-    commandCallback = null;
-
-    this.pack();
+    controlPanel.add(quitButton);
+    this.add(controlPanel,BorderLayout.SOUTH);
   }
 
-  public void addComponentsToPane(final Container mazePanel) {
-    JPanel mazeGraph = new JPanel();
-    mazeGraph.setLayout(new GridLayout(2, 3));
+  public void initGaps() {
+    moveUp = new JButton("Up");
+    moveDown = new JButton("Down");
+    moveLeft = new JButton("Left");
+    moveRight = new JButton("Right");
+    shootUp = new JButton("Up");
+    shootDown = new JButton("Down");
+    shootLeft = new JButton("Left");
+    shootRight = new JButton("Right");
+    shootDistance = new JTextField(5);
+    applyMoveButton = new JButton("Move");
+    applyShootButton = new JButton("Shoot");
+  }
+
+  public void setMazeDimension(int rows, int cols) {
+    this.rows = rows;
+    this.cols = cols;
+  }
+
+  public void setPlayer(int player) {
+    playerNum = player;
+  }
+
+  public void setAlertString(String alert) {
+    this.alert = alert;
   }
 
   @Override

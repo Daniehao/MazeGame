@@ -9,7 +9,6 @@ public class MazePanel extends JPanel {
   public MazePanel() {
     super();
     this.setBackground(Color.WHITE);
-
   }
 
 }

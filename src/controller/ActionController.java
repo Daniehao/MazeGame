@@ -72,11 +72,11 @@ public class ActionController implements ActionListener {
             pitPercent = 0.3;
             arrows = 3;
           }
-          System.out.println("arrow: " + arrows);
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
                   pitPercent, arrows);
-          String test = menuView.getTest(game.getPlayerLocation());
-          menuView.setString(test);
+          mazeView.setPlayer(player);
+          mazeView.setAlertString(game.getAlert());
+          mazeView.setMazeDimension(rows, cols);
         }
         break;
       default:

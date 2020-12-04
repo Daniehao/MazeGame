@@ -34,6 +34,7 @@ public class MazeGameImpl implements MazeGame {
   private boolean isShootSuccess;
   private Cell wumpus;
   private int[] start;
+  private String alert;
 
   public MazeGameImpl() {
 
@@ -64,6 +65,7 @@ public class MazeGameImpl implements MazeGame {
     isGameOver = false;
     isShootSuccess = false;
     wumpus = null;
+    alert = "";
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -664,7 +666,8 @@ public class MazeGameImpl implements MazeGame {
    * The superbats drop the player to a random cave.
    */
   private void dropToRandomCave() {
-    System.out.println("Whoa -- you successfully duck superbats that try to grab you!");
+    alert = "Whoa -- you successfully duck superbats that try to grab you!";
+    System.out.println(alert);
     Random random = new Random();
     int index = random.nextInt(caveLst.size());
     playerPosX = caveLst.get(index)[0];
@@ -683,8 +686,8 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInWumpus() {
     isGameOver = true;
-    System.out.println("Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next time."
-    );
+    alert = "Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next time.";
+    System.out.println(alert);
   }
 
   /**
@@ -692,7 +695,8 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInPits() {
     isGameOver = true;
-    System.out.println("You fell into the bottomless pit! Better luck next time.");
+    alert = "You fell into the bottomless pit! Better luck next time.";
+    System.out.println(alert);
   }
 
   @Override
@@ -705,7 +709,8 @@ public class MazeGameImpl implements MazeGame {
         curr = maze[playerPosX][playerPosY];
         movehelper(curr, flag);
       } else {
-        System.out.println("Player is running out of bound! Please re-input direction.");
+        alert = "Player is running out of bound! Please re-input direction.";
+        System.out.println(alert);
       }
     } else if (direction.equals("S")) {
       if (curr.getDownCell() != null) {
@@ -714,7 +719,8 @@ public class MazeGameImpl implements MazeGame {
         flag = 1;
         movehelper(curr, flag);
       } else {
-        System.out.println("Player is running out of bound! Please re-input direction.");
+        alert = "Player is running out of bound! Please re-input direction.";
+        System.out.println(alert);
       }
     } else if (direction.equals("W")) {
       if (curr.getLeftCell() != null) {
@@ -723,7 +729,8 @@ public class MazeGameImpl implements MazeGame {
         flag = 2;
         movehelper(curr, flag);
       } else {
-        System.out.println("Player is running out of bound! Please re-input direction.");
+        alert = "Player is running out of bound! Please re-input direction.";
+        System.out.println(alert);
       }
     } else if (direction.equals("E")) {
       if (curr.getRightCell() != null) {
@@ -732,7 +739,8 @@ public class MazeGameImpl implements MazeGame {
         flag = 3;
         movehelper(curr, flag);
       } else {
-        System.out.println("Player is running out of bound! Please re-input direction.");
+        alert = "Player is running out of bound! Please re-input direction.";
+        System.out.println(alert);
       }
     } else {
       throw new IllegalArgumentException("The direction string is invalid!");
@@ -821,9 +829,11 @@ public class MazeGameImpl implements MazeGame {
    */
   private void movehelper(Cell curr, int flag) {
     if (curr.closeToWumpus) {
-      System.out.println("You smell a Wumpus!");
+      alert = "You smell a Wumpus!";
+      System.out.println(alert);
     } else if (curr.closeToPit) {
-      System.out.println("You smell something terrible nearby.");
+      alert = "You smell something terrible nearby.";
+      System.out.println(alert);
     } else if (curr.isWumpus) {
       getInWumpus();
     } else if (curr.hasBat) {
@@ -834,7 +844,8 @@ public class MazeGameImpl implements MazeGame {
     } else if (curr.isTunnel) {
       moveInTunnel(flag);
     } else {
-      System.out.println("You feel a draft.");
+      alert = "You feel a draft.";
+      System.out.println(alert);
       getPlayerLocation();
     }
   }
@@ -863,18 +874,22 @@ public class MazeGameImpl implements MazeGame {
       curr = goShootByDistance(distance, curr, 3);
     }
     if (curr == null) {
-      System.out.println("You didn't shoot to the wumpus!");
+      alert = "You didn't shoot to the wumpus!";
+      System.out.println(alert);
     } else if (curr.isWumpus) {
       isGameOver = true;
       isShootSuccess = true;
       arrows--;
-      System.out.println("Hee hee hee, you got the wumpus! Next time you won't be so lucky!");
+      alert = "Hee hee hee, you got the wumpus! Next time you won't be so lucky!";
+      System.out.println(alert);
     } else {
-      System.out.println("You didn't shoot to the wumpus!");
+      alert = "You didn't shoot to the wumpus!";
+      System.out.println(alert);
       arrows--;
       if (arrows <= 0) {
         isGameOver = true;
-        System.out.println("You do not have any arrow to shoot! Game Over.");
+        alert = "You do not have any arrow to shoot! Game Over.";
+        System.out.println(alert);
       }
     }
   }
@@ -969,5 +984,9 @@ public class MazeGameImpl implements MazeGame {
       }
     }
     movehelper(maze[playerPosX][playerPosY], flag);
+  }
+
+  public String getAlert() {
+    return alert;
   }
 }

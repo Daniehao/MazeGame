@@ -109,23 +109,6 @@ public class MazeMenu extends JFrame implements MenuView {
     return location;
   }
 
-
-//  public void addComponentsToPane(final Container pane) {
-//    initGaps();
-//    final JPanel menuPane = new JPanel();
-//    JPanel controls = new JPanel();
-//    controls.setLayout(new GridLayout(4,2));
-//    menuPane.add(new Label("MAZE GAME MENU"));
-//    controls.add(new Label("Input maze rows: "));
-//    controls.add(rowsComboBox);
-//    controls.add(new Label("Input maze columns: "));
-//    controls.add(colsComboBox);
-//    controls.add(new Label("Input the number of players (1 or 2): "));
-//    controls.add(playersComboBox);
-//    controls.add(new Label("Input game difficulty: "));
-//    controls.add(difficultyComboBox);
-//  }
-
   private static void createAndShowGUI() {
     //Create and set up the window.
     MazeMenu frame = new MazeMenu();

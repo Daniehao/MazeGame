@@ -79,4 +79,10 @@ public interface MazeGame {
    * @return The result of shoot is successful or not.
    */
   public String getShootRes();
+
+  /**
+   * Return the alert message.
+   * @return The alert message of the game.
+   */
+  public String getAlert();
 }
