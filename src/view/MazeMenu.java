@@ -60,7 +60,7 @@ public class MazeMenu extends JFrame implements MenuView {
     JPanel commendPanel = new JPanel();
     startButton = new Button("Start New");
     commendPanel.add(startButton);
-    startButton.setActionCommand("Start New Game Button");
+    startButton.setActionCommand("Start New Game");
     startSameButton = new Button("Start Same Game");
     commendPanel.add(startSameButton);
     startSameButton.setActionCommand("Start Same Game Button");
@@ -74,7 +74,7 @@ public class MazeMenu extends JFrame implements MenuView {
   }
 
   public void msgbox(){
-    JOptionPane.showMessageDialog(null, "The input of remaining walls " +
+    JOptionPane.showMessageDialog(this, "The input of remaining walls " +
             "is incorrect. Please choose a valid number");
   }
 
@@ -103,6 +103,10 @@ public class MazeMenu extends JFrame implements MenuView {
 
   public String getDifficulty() {
     return (String)difficultyComboBox.getSelectedItem();
+  }
+
+  public String getTest(String location) {
+    return location;
   }
 
 
