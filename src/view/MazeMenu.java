@@ -120,7 +120,6 @@ public class MazeMenu extends JFrame implements MenuView {
   @Override
   public void setListener(ActionListener listener) {
     startButton.addActionListener(listener);
-    startSameButton.addActionListener(listener);
   }
 
   @Override

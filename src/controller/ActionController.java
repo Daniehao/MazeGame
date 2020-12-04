@@ -77,6 +77,7 @@ public class ActionController implements ActionListener {
           mazeView.setPlayer(player);
           mazeView.setAlertString(game.getAlert());
           mazeView.setMazeDimension(rows, cols);
+          mazeView.createAndShowGUI();
         }
         break;
       default:

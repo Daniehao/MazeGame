@@ -32,4 +32,6 @@ public interface GameView {
   void setAlertString(String alert);
 
   void setMazeDimension(int rows, int cols);
+
+  void createAndShowGUI();
 }

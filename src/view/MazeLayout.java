@@ -84,10 +84,8 @@ public class MazeLayout extends JFrame implements GameView {
     controlPanel.add(applyMoveButton);
     controlPanel.add(applyShootButton);
     controlPanel.add(new Label(" "));
-    startSameButton = new JButton("Start Same Game");
     controlPanel.add(startSameButton);
     startSameButton.setActionCommand("Start Same Game");
-    quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
     });
@@ -107,6 +105,8 @@ public class MazeLayout extends JFrame implements GameView {
     shootDistance = new JTextField(5);
     applyMoveButton = new JButton("Move");
     applyShootButton = new JButton("Shoot");
+    startSameButton = new JButton("Start Same Game");
+    quitButton = new JButton("Quit");
   }
 
   public void setMazeDimension(int rows, int cols) {
@@ -209,7 +209,7 @@ public class MazeLayout extends JFrame implements GameView {
     }
   }
 
-  private static void createAndShowGUI() {
+  public void createAndShowGUI() {
     //Create and set up the window.
     MazeLayout frame = new MazeLayout();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -220,29 +220,29 @@ public class MazeLayout extends JFrame implements GameView {
   }
 
 
-  public static void main(String[] args) {
-    /* Use an appropriate Look and Feel */
-    try {
-      //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-      UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-    } catch (UnsupportedLookAndFeelException ex) {
-      ex.printStackTrace();
-    } catch (IllegalAccessException ex) {
-      ex.printStackTrace();
-    } catch (InstantiationException ex) {
-      ex.printStackTrace();
-    } catch (ClassNotFoundException ex) {
-      ex.printStackTrace();
-    }
-    /* Turn off metal's use of bold fonts */
-    UIManager.put("swing.boldMetal", Boolean.FALSE);
-
-    //Schedule a job for the event dispatch thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        createAndShowGUI();
-      }
-    });
-  }
+//  public static void main(String[] args) {
+//    /* Use an appropriate Look and Feel */
+//    try {
+//      //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//      UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+//    } catch (UnsupportedLookAndFeelException ex) {
+//      ex.printStackTrace();
+//    } catch (IllegalAccessException ex) {
+//      ex.printStackTrace();
+//    } catch (InstantiationException ex) {
+//      ex.printStackTrace();
+//    } catch (ClassNotFoundException ex) {
+//      ex.printStackTrace();
+//    }
+//    /* Turn off metal's use of bold fonts */
+//    UIManager.put("swing.boldMetal", Boolean.FALSE);
+//
+//    //Schedule a job for the event dispatch thread:
+//    //creating and showing this application's GUI.
+//    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//      public void run() {
+//        createAndShowGUI();
+//      }
+//    });
+//  }
 }
