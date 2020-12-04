@@ -35,6 +35,10 @@ public class MazeGameImpl implements MazeGame {
   private Cell wumpus;
   private int[] start;
 
+  public MazeGameImpl() {
+
+  }
+
   /**
    * Constructor for Game.Maze class.
    *

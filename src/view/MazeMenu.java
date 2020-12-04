@@ -60,10 +60,10 @@ public class MazeMenu extends JFrame implements MenuView {
     JPanel commendPanel = new JPanel();
     startButton = new Button("Start New");
     commendPanel.add(startButton);
-    startButton.setActionCommand("Start New Game");
+    startButton.setActionCommand("Start New");
     startSameButton = new Button("Start Same Game");
     commendPanel.add(startSameButton);
-    startSameButton.setActionCommand("Start Same Game Button");
+    startSameButton.setActionCommand("Start Same Game");
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
@@ -163,6 +163,12 @@ public class MazeMenu extends JFrame implements MenuView {
   public void display() {
     setVisible(true);
   }
+
+  @Override
+  public void setString(String s) {
+    rowsTextBox.setText(s);
+  }
+
 
   public static void main(String[] args) {
     /* Use an appropriate Look and Feel */

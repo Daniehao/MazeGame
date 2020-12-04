@@ -26,4 +26,15 @@ public interface MenuView {
    */
   void display();
 
+  int[] getMazeInput();
+
+  boolean getWrapping();
+
+  String getDifficulty();
+
+  void msgbox();
+
+  String getTest(String playerLocation);
+
+  public void setString(String s);
 }
