@@ -77,13 +77,19 @@ public class MazeMenu extends JFrame implements MenuView {
     difficultyComboBox = new JComboBox(gapDiffList);
   }
 
-  public int getRows() {
-    return Integer.valueOf(rowsTextBox.getText());
+  public int[] getMazeInput() {
+    int[] info = new int[4];
+    info[0] = Integer.valueOf(rowsTextBox.getText());
+    info[1] = Integer.valueOf(colsTextBox.getText());
+    info[2] = Integer.valueOf(wallsTextBox.getText());
+    info[3] = Integer.valueOf((String)playersComboBox.getSelectedItem());
+    return info;
   }
 
-  public int getCols() {
-    return Integer.valueOf(colsTextBox.getText());
+  public String getDifficulty() {
+    return (String)difficultyComboBox.getSelectedItem();
   }
+
 
 //  public void addComponentsToPane(final Container pane) {
 //    initGaps();
