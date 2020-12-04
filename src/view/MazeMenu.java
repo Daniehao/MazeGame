@@ -73,7 +73,7 @@ public class MazeMenu extends JFrame implements MenuView {
     this.add(commendPanel, BorderLayout.SOUTH);
   }
 
-  private void msgbox(){
+  public void msgbox(){
     JOptionPane.showMessageDialog(null, "The input of remaining walls " +
             "is incorrect. Please choose a valid number");
   }

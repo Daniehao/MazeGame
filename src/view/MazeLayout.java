@@ -40,7 +40,6 @@ public class MazeLayout extends JFrame implements GameView {
     buttonPanel.setLayout(new FlowLayout());
     this.add(buttonPanel, BorderLayout.SOUTH);
 
-
     // quit button
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
