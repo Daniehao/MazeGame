@@ -38,23 +38,28 @@ public class ActionController implements ActionListener {
       case "Start Same Game":
         int[] info = menuView.getMazeInput();
         String difficulty = menuView.getDifficulty();
-        game = new MazeGameImpl()
-        break;
-      case "Start New Game Button":
-        String text = view.getInputString();
-        // send text to the model
-        model.setString(text);
-
-        // clear input text field
-        view.clearInputString();
-        // finally echo the string in view
-        text = model.getString();
-        view.setEchoOutput(text);
-
-        break;
-      case "Exit Button":
-        System.exit(0);
-        break;
+        int rows = info[0];
+        int cols = info[1];
+        int walls = info[2];
+        int player = info[3];
+//        if (walls )
+//        game = new MazeGameImpl()
+//        break;
+//      case "Start New Game Button":
+//        String text = view.getInputString();
+//        // send text to the model
+//        model.setString(text);
+//
+//        // clear input text field
+//        view.clearInputString();
+//        // finally echo the string in view
+//        text = model.getString();
+//        view.setEchoOutput(text);
+//
+//        break;
+//      case "Exit Button":
+//        System.exit(0);
+//        break;
 
       default:
         throw new IllegalStateException("Error: unknown button");

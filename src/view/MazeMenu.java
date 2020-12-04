@@ -11,12 +11,14 @@ import javax.swing.*;
 public class MazeMenu extends JFrame implements MenuView {
   static final String gapPlayerList[] = {"1", "2"};
   static final String gapDiffList[] = {"easy mode", "medium mode", "hard mode"};
+  static final String wrappingList[] = {"Yes", "No"};
   private JButton quitButton;
   private MazePanel menuPanel;
   JTextField rowsTextBox;
   JTextField colsTextBox;
   JTextField wallsTextBox;
   JComboBox playersComboBox;
+  JComboBox wrappingComboBox;
   JComboBox difficultyComboBox;
   Button startButton;
   Button startSameButton;
@@ -40,7 +42,7 @@ public class MazeMenu extends JFrame implements MenuView {
     JPanel controls = new JPanel();
     controls.setPreferredSize(new Dimension(500, 300));
 
-    controls.setLayout(new GridLayout(5,2));
+    controls.setLayout(new GridLayout(6,2));
     controls.add(new Label("Input maze rows: "));
     controls.add(rowsTextBox);
     controls.add(new Label("Input maze columns: "));
@@ -49,6 +51,8 @@ public class MazeMenu extends JFrame implements MenuView {
     controls.add(wallsTextBox);
     controls.add(new Label("Input the number of players (1 or 2): "));
     controls.add(playersComboBox);
+    controls.add(new Label("Whether the maze is Wrapping: "));
+    controls.add(wrappingComboBox);
     controls.add(new Label("Input game difficulty: "));
     controls.add(difficultyComboBox);
     this.add(controls, BorderLayout.CENTER);
@@ -69,12 +73,18 @@ public class MazeMenu extends JFrame implements MenuView {
     this.add(commendPanel, BorderLayout.SOUTH);
   }
 
+  private void msgbox(){
+    JOptionPane.showMessageDialog(null, "The input of remaining walls " +
+            "is incorrect. Please choose a valid number");
+  }
+
   public void initGaps() {
     rowsTextBox = new JTextField(5);
     colsTextBox = new JTextField(5);
     wallsTextBox = new JTextField(5);
     playersComboBox = new JComboBox(gapPlayerList);
     difficultyComboBox = new JComboBox(gapDiffList);
+    wrappingComboBox = new JComboBox(wrappingList);
   }
 
   public int[] getMazeInput() {
@@ -84,6 +94,11 @@ public class MazeMenu extends JFrame implements MenuView {
     info[2] = Integer.valueOf(wallsTextBox.getText());
     info[3] = Integer.valueOf((String)playersComboBox.getSelectedItem());
     return info;
+  }
+
+  public boolean getWrapping() {
+    boolean rst = wrappingComboBox.getSelectedItem() == "Yes"? true: false;
+    return rst;
   }
 
   public String getDifficulty() {
