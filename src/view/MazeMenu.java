@@ -61,9 +61,6 @@ public class MazeMenu extends JFrame implements MenuView {
     startButton = new Button("Start New");
     commendPanel.add(startButton);
     startButton.setActionCommand("Start New");
-    startSameButton = new Button("Start Same Game");
-    commendPanel.add(startSameButton);
-    startSameButton.setActionCommand("Start Same Game");
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);

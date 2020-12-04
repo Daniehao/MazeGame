@@ -17,9 +17,7 @@ public class MazeLayout extends JFrame implements GameView {
   private MazePanel alertPanel;
   private MazePanel mazePanel;
   private MazePanel controlPanel;
-  private MazePanel shootPanel;
   private JScrollPane scrollPane;
-  private JPanel buttonPanel;
   private JButton quitButton;
   private JButton startSameButton;
   private JButton moveUp;
@@ -62,13 +60,12 @@ public class MazeLayout extends JFrame implements GameView {
 
     // move
     controlPanel = new MazePanel();
-    controlPanel.setLayout(new GridLayout(4, 7));
+    controlPanel.setLayout(new GridLayout(4, 6));
     controlPanel.add(new Label("Move Direction: "));
     controlPanel.add (moveUp);
     controlPanel.add(moveDown);
     controlPanel.add(moveLeft);
     controlPanel.add(moveRight);
-    controlPanel.add(new Label(" "));
 
     // shoot
     controlPanel.add(new Label("Shoot Direction: "));
@@ -76,20 +73,20 @@ public class MazeLayout extends JFrame implements GameView {
     controlPanel.add(shootDown);
     controlPanel.add(shootLeft);
     controlPanel.add(shootRight);
-    controlPanel.add(new Label(" "));
     controlPanel.add(new Label("Shoot Distance: "));
     controlPanel.add(shootDistance);
 
     controlPanel.add(new Label(" "));
     controlPanel.add(new Label(" "));
     controlPanel.add(new Label(" "));
-    controlPanel.add(new Label(" "));
 
     //quit
     controlPanel.add(applyMoveButton);
-    controlPanel.add(new Label(" "));
     controlPanel.add(applyShootButton);
     controlPanel.add(new Label(" "));
+    startSameButton = new JButton("Start Same Game");
+    controlPanel.add(startSameButton);
+    startSameButton.setActionCommand("Start Same Game");
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
