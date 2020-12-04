@@ -1,4 +1,4 @@
-package layout;
+package view;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 import javax.swing.*;
 
-import game.Cell;
+import model.Cell;
 
 /**
  * The class for the view of the MazeGame.

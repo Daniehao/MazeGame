@@ -2,7 +2,7 @@ package controller;
 
 import java.io.IOException;
 
-import game.MazeGame;
+import model.MazeGame;
 
 /**
  * The controller for the MazeGame interface, which enables users to do the move operation to move

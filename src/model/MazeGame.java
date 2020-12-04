@@ -1,4 +1,4 @@
-package game;
+package model;
 
 /**
  * The maze game that enables a player to move to four directions(left, right, up, down). The player

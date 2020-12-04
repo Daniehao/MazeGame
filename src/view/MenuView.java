@@ -1,9 +1,7 @@
-package layout;
+package view;
 
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
-
-import game.Cell;
 
 public interface MenuView {
   /**
@@ -22,5 +20,10 @@ public interface MenuView {
    * @param error the message
    */
   void showErrorMessage(String error);
+
+  /**
+   * Display this view.
+   */
+  void display();
 
 }

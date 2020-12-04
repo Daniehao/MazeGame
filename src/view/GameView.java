@@ -1,8 +1,8 @@
-package layout;
+package view;
 
 import java.util.function.Consumer;
 
-import game.Cell;
+import model.Cell;
 
 /**
  * The view interface for the maze game and it includes all of the operations that the controller

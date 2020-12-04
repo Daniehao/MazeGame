@@ -5,7 +5,7 @@ import java.io.StringReader;
 
 import controller.Controller;
 import controller.ControllerImpl;
-import game.MazeGameImpl;
+import model.MazeGameImpl;
 
 import static org.junit.Assert.assertEquals;
 

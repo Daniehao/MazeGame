@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import game.MazeGame;
+import model.MazeGame;
 
 /**
  * A controller for the maze game. This controller works with a Readable and Appendable object. It

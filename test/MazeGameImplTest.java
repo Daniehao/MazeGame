@@ -1,8 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import game.MazeGame;
-import game.MazeGameImpl;
+import model.MazeGame;
+import model.MazeGameImpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

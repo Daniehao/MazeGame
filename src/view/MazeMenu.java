@@ -1,4 +1,4 @@
-package layout;
+package view;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,12 +11,11 @@ import javax.swing.*;
 public class MazeMenu extends JFrame implements MenuView {
   static final String gapPlayerList[] = {"1", "2"};
   static final String gapDiffList[] = {"easy mode", "medium mode", "hard mode"};
-  private JButton commandButton, quitButton;
+  private JButton quitButton;
   private MazePanel menuPanel;
-  private JScrollPane scrollPane;
-  private JPanel buttonPanel;
   JTextField rowsTextBox;
   JTextField colsTextBox;
+  JTextField wallsTextBox;
   JComboBox playersComboBox;
   JComboBox difficultyComboBox;
   Button startButton;
@@ -41,11 +40,13 @@ public class MazeMenu extends JFrame implements MenuView {
     JPanel controls = new JPanel();
     controls.setPreferredSize(new Dimension(500, 300));
 
-    controls.setLayout(new GridLayout(4,2));
+    controls.setLayout(new GridLayout(5,2));
     controls.add(new Label("Input maze rows: "));
     controls.add(rowsTextBox);
     controls.add(new Label("Input maze columns: "));
     controls.add(colsTextBox);
+    controls.add(new Label("Input the remaining walls: "));
+    controls.add(wallsTextBox);
     controls.add(new Label("Input the number of players (1 or 2): "));
     controls.add(playersComboBox);
     controls.add(new Label("Input game difficulty: "));
@@ -55,8 +56,10 @@ public class MazeMenu extends JFrame implements MenuView {
     JPanel commendPanel = new JPanel();
     startButton = new Button("Start New");
     commendPanel.add(startButton);
+    startButton.setActionCommand("Start New Game Button");
     startSameButton = new Button("Start Same Game");
     commendPanel.add(startSameButton);
+    startSameButton.setActionCommand("Start Same Game Button");
     quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
@@ -69,8 +72,17 @@ public class MazeMenu extends JFrame implements MenuView {
   public void initGaps() {
     rowsTextBox = new JTextField(5);
     colsTextBox = new JTextField(5);
+    wallsTextBox = new JTextField(5);
     playersComboBox = new JComboBox(gapPlayerList);
     difficultyComboBox = new JComboBox(gapDiffList);
+  }
+
+  public int getRows() {
+    return Integer.valueOf(rowsTextBox.getText());
+  }
+
+  public int getCols() {
+    return Integer.valueOf(colsTextBox.getText());
   }
 
 //  public void addComponentsToPane(final Container pane) {
@@ -107,20 +119,24 @@ public class MazeMenu extends JFrame implements MenuView {
   }
 
   @Override
+  public void showErrorMessage(java.lang.String error) {
+    JOptionPane.showMessageDialog(this, error, "Error",
+            JOptionPane.ERROR_MESSAGE);
+  }
+
+  @Override
   public void makeVisible() {
     this.setVisible(true);
   }
 
   @Override
-  public void setCommandCallback(Consumer<String> callback) {
-    commandCallback = callback;
+  public void setCommandCallback(Consumer<java.lang.String> callback) {
+
   }
 
   @Override
-  public void showErrorMessage(String error) {
-    JOptionPane.showMessageDialog(this, error, "Error",
-            JOptionPane.ERROR_MESSAGE);
-
+  public void display() {
+    setVisible(true);
   }
 
   public static void main(String[] args) {
