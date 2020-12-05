@@ -15,7 +15,7 @@ public interface GameView {
 
   void createAndShowGUI();
 
-  void addComponents(int rows, int cols, String alert, int playerNum);
+  void addComponents(int rows, int cols, int playerNum);
 
   /**
    * Transmit an error message to the view, in case the command could not be
@@ -24,4 +24,16 @@ public interface GameView {
    * @param error the message
    */
   void showErrorMessage(String error);
+
+  String getShootDistance();
+
+  void setMoveDirection(String direction);
+
+  String getMoveDirection();
+
+  void setShootDirection(String direction);
+
+  String getShootDirection();
+
+  void setAlertPanel(String alert, int flag);
 }

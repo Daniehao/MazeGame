@@ -29,6 +29,8 @@ public class MazeLayout extends JFrame implements GameView {
   private JTextField shootDistance;
   private JButton applyMoveButton;
   private JButton applyShootButton;
+  private String moveDirection;
+  private String shootDirection;
 
   /**
    * Default constructor.
@@ -42,13 +44,7 @@ public class MazeLayout extends JFrame implements GameView {
     this.setLayout(new BorderLayout());
   }
 
-  public void addComponents(int rows, int cols, String alert, int playerNum) {
-    alertPanel = new MazePanel();
-    alertPanel.setPreferredSize(new Dimension(200, 50));
-    alertPanel.add(new Label("Player " + playerNum + "'s Round"));
-    alertPanel.add(new Label(alert));
-    this.add(alertPanel, BorderLayout.NORTH);
-
+  public void addComponents(int rows, int cols, int playerNum) {
     // maze panel
     mazePanel = new MazePanel();
     mazePanel.setPreferredSize(new Dimension(500, 500));
@@ -81,8 +77,6 @@ public class MazeLayout extends JFrame implements GameView {
     shootRight.setActionCommand("Shoot right");
     controlPanel.add(new Label("Shoot Distance: "));
     controlPanel.add(shootDistance);
-    shootDistance.setActionCommand("Shoot right");
-
     controlPanel.add(new Label(" "));
     controlPanel.add(new Label(" "));
     controlPanel.add(new Label(" "));
@@ -104,6 +98,18 @@ public class MazeLayout extends JFrame implements GameView {
     this.add(controlPanel,BorderLayout.SOUTH);
   }
 
+  public void setAlertPanel(String alert, int flag) {
+    alertPanel = new MazePanel();
+    alertPanel.setPreferredSize(new Dimension(200, 50));
+    alertPanel.add(new Label("Player " + flag + "'s Round"));
+    alertPanel.add(new Label(alert));
+    this.add(alertPanel, BorderLayout.NORTH);
+  }
+
+  public void changeAlertPanel(String alert, int flag) {
+
+  }
+
   private void initGaps() {
     moveUp = new JButton("Up");
     moveDown = new JButton("Down");
@@ -118,6 +124,30 @@ public class MazeLayout extends JFrame implements GameView {
     applyShootButton = new JButton("Shoot");
     startSameButton = new JButton("Start Same Game");
     quitButton = new JButton("Quit");
+  }
+
+  public String getShootDistance() {
+    return shootDistance.getText();
+  }
+
+  @Override
+  public void setMoveDirection(String direction) {
+    this.moveDirection = direction;
+  }
+
+  @Override
+  public String getMoveDirection() {
+    return moveDirection;
+  }
+
+  @Override
+  public void setShootDirection(String direction) {
+    this.shootDirection = direction;
+  }
+
+  @Override
+  public String getShootDirection() {
+    return null;
   }
 
 

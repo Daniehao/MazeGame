@@ -74,9 +74,26 @@ public class ActionController implements ActionListener {
           }
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
                   pitPercent, arrows, players);
-          mazeView.addComponents(rows,cols,game.getAlert(), players);
+          mazeView.setAlertPanel(game.getAlert(), 1);
+          mazeView.addComponents(rows,cols,players);
           mazeView.createAndShowGUI();
         }
+        break;
+      case "Move up":
+        mazeView.setMoveDirection("up");
+        break;
+      case "Move down":
+        mazeView.setMoveDirection("down");
+        break;
+      case "Move left":
+        mazeView.setMoveDirection("left");
+        break;
+      case "Move right":
+        mazeView.setMoveDirection("right");
+        break;
+      case "Move":
+        game.changePlayerFlag();
+        mazeView.setAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
       default:
         throw new IllegalStateException("Error: unknown button");
