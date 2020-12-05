@@ -10,12 +10,12 @@ import model.Cell;
  *
  */
 public interface GameView {
-  /**
-   * Make the view visible. This is usually called after the view is constructed
-   */
-  void makeVisible();
 
-  void setCommandCallback(Consumer<String> callback);
+  void buildMaze(Cell[] cells);
+
+  void createAndShowGUI();
+
+  void addComponents(int rows, int cols, String alert, int playerNum);
 
   /**
    * Transmit an error message to the view, in case the command could not be
@@ -24,10 +24,4 @@ public interface GameView {
    * @param error the message
    */
   void showErrorMessage(String error);
-
-  void buildMaze(Cell[] cells);
-
-  void createAndShowGUI();
-
-  void addComponents(int rows, int cols, String alert, int playerNum);
 }

@@ -12,8 +12,6 @@ import model.Cell;
  * The class for the view of the MazeGame.
  */
 public class MazeLayout extends JFrame implements GameView {
-  private int playerNum;
-  private String alert;
   private MazePanel alertPanel;
   private MazePanel mazePanel;
   private MazePanel controlPanel;
@@ -31,9 +29,6 @@ public class MazeLayout extends JFrame implements GameView {
   private JTextField shootDistance;
   private JButton applyMoveButton;
   private JButton applyShootButton;
-  private int rows;
-  private int cols;
-  private transient Consumer<String> commandCallback;
 
   /**
    * Default constructor.
@@ -85,8 +80,12 @@ public class MazeLayout extends JFrame implements GameView {
 
     //quit
     controlPanel.add(applyMoveButton);
+    applyMoveButton.setActionCommand("Move");
+
     controlPanel.add(applyShootButton);
+    applyShootButton.setActionCommand("Shoot");
     controlPanel.add(new Label(" "));
+
     controlPanel.add(startSameButton);
     startSameButton.setActionCommand("Start Same Game");
     quitButton.addActionListener((ActionEvent e) -> {
@@ -112,16 +111,6 @@ public class MazeLayout extends JFrame implements GameView {
     quitButton = new JButton("Quit");
   }
 
-
-  @Override
-  public void makeVisible() {
-    this.setVisible(true);
-  }
-
-  @Override
-  public void setCommandCallback(Consumer<String> callback) {
-    commandCallback = callback;
-  }
 
   @Override
   public void showErrorMessage(String error) {
