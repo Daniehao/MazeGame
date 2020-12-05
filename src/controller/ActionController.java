@@ -74,9 +74,7 @@ public class ActionController implements ActionListener {
           }
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
                   pitPercent, arrows);
-          mazeView.setPlayer(player);
-          mazeView.setAlertString(game.getAlert());
-          mazeView.setMazeDimension(rows, cols);
+          mazeView.addComponents(rows,cols,game.getAlert(), player);
           mazeView.createAndShowGUI();
         }
         break;

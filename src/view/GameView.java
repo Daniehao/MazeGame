@@ -27,11 +27,7 @@ public interface GameView {
 
   void buildMaze(Cell[] cells);
 
-  void setPlayer(int player);
-
-  void setAlertString(String alert);
-
-  void setMazeDimension(int rows, int cols);
-
   void createAndShowGUI();
+
+  void addComponents(int rows, int cols, String alert, int playerNum);
 }

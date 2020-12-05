@@ -45,6 +45,9 @@ public class MazeLayout extends JFrame implements GameView {
     this.setSize(800, 800);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
+  }
+
+  public void addComponents(int rows, int cols, String alert, int playerNum) {
     alertPanel = new MazePanel();
     alertPanel.setPreferredSize(new Dimension(200, 50));
     alertPanel.add(new Label("Player " + playerNum + "'s Round"));
@@ -54,7 +57,7 @@ public class MazeLayout extends JFrame implements GameView {
     // maze panel
     mazePanel = new MazePanel();
     mazePanel.setPreferredSize(new Dimension(500, 500));
-    mazePanel.setLayout(new GridLayout(10,10));
+    mazePanel.setLayout(new GridLayout(rows,cols));
     scrollPane = new JScrollPane(mazePanel);
     this.add(scrollPane, BorderLayout.CENTER);
 
@@ -93,7 +96,7 @@ public class MazeLayout extends JFrame implements GameView {
     this.add(controlPanel,BorderLayout.SOUTH);
   }
 
-  public void initGaps() {
+  private void initGaps() {
     moveUp = new JButton("Up");
     moveDown = new JButton("Down");
     moveLeft = new JButton("Left");
@@ -109,18 +112,6 @@ public class MazeLayout extends JFrame implements GameView {
     quitButton = new JButton("Quit");
   }
 
-  public void setMazeDimension(int rows, int cols) {
-    this.rows = rows;
-    this.cols = cols;
-  }
-
-  public void setPlayer(int player) {
-    playerNum = player;
-  }
-
-  public void setAlertString(String alert) {
-    this.alert = alert;
-  }
 
   @Override
   public void makeVisible() {
@@ -194,29 +185,16 @@ public class MazeLayout extends JFrame implements GameView {
           mazeIcon = new ImageIcon("../../res/images/hallway-up-right.png");
         }
       }
-
-//      ImageIcon grassIcon = new ImageIcon("images/grass_tile.jpg");
-      JPanel panel = new JPanel(new GridLayout(3, 5, 0, 0));
-
-      JLabel labels[] = new JLabel[(3 * 5)];
-
-      for (
-              int i = 0;
-              i < 3 * 5; i++) {
-        labels[i] = new JLabel(mazeIcon);
-        panel.add(labels[i]);
-      }
     }
   }
 
   public void createAndShowGUI() {
     //Create and set up the window.
-    MazeLayout frame = new MazeLayout();
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     //Set up the content pane.
     //Display the window.
-    frame.pack();
-    frame.setVisible(true);
+    this.pack();
+    this.setVisible(true);
   }
 
 
