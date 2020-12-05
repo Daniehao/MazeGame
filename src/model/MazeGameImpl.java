@@ -23,8 +23,8 @@ public class MazeGameImpl implements MazeGame {
   private int remains;
   private Cell[][] maze;
   private boolean isWrapping;
-  private int playerPosX;
-  private int playerPosY;
+//  private int playerPosX;
+//  private int playerPosY;
   private boolean isPerfect;
   private List<int[]> caveLst;
   private double batPercent;
@@ -33,8 +33,13 @@ public class MazeGameImpl implements MazeGame {
   private boolean isGameOver;
   private boolean isShootSuccess;
   private Cell wumpus;
-  private int[] start;
+//  private int[] start;
   private String alert;
+  private int playerNum;
+  private int flag;
+  private Player player1;
+  private Player player2;
+  private Player currPlayer;
 
   public MazeGameImpl() {
 
@@ -48,9 +53,10 @@ public class MazeGameImpl implements MazeGame {
    * @param remains    The number of walls that should remain.
    * @param isPerfect  The maze is perfect or not.
    * @param isWrapping The maze is wrapping or not.
+   * @param playerNum The total number of players.
    */
   public MazeGameImpl(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
-                      double batPercent, double pitPercent, int arrows)
+                      double batPercent, double pitPercent, int arrows, int playerNum)
           throws IllegalArgumentException {
     this.rows = rows;
     this.cols = cols;
@@ -62,10 +68,17 @@ public class MazeGameImpl implements MazeGame {
     this.batPercent = batPercent;
     this.pitPercent = pitPercent;
     this.arrows = arrows;
+    this.playerNum = playerNum;
     isGameOver = false;
     isShootSuccess = false;
+    flag = 1;
     wumpus = null;
     alert = "";
+    player1 = new Player(1);
+    player2 = null;
+    if (playerNum == 2) {
+      player2 = new Player(2);
+    }
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -99,8 +112,40 @@ public class MazeGameImpl implements MazeGame {
     assignWumpus();
     assignPits();
     assignSuperBats();
+    setStartPosition(1);
+    if (playerNum == 2) {
+      setStartPosition(2);
+    }
+    currPlayer = player1;
+  }
+
+  public void changePlayerFlag() {
+    if (playerNum == 1) {
+      flag = 1;
+      currPlayer = player1;
+    } else {
+      if (flag == 1) {
+        flag = 2;
+        currPlayer = player2;
+      } else {
+        flag = 1;
+        currPlayer = player1;
+      }
+    }
+  }
+
+  @Override
+  public int getPlayerRound() {
+    return flag;
+  }
+
+  private void setStartPosition(int flag) {
     Random random = new Random();
-    random.setSeed(1000);
+    if (flag == 1) {
+      random.setSeed(1000);
+    } else {
+      random.setSeed(50);
+    }
     int randomInt = random.nextInt(caveLst.size());
     int x = caveLst.get(randomInt)[0];
     int y = caveLst.get(randomInt)[1];
@@ -111,11 +156,11 @@ public class MazeGameImpl implements MazeGame {
       y = caveLst.get(randomInt)[1];
       temp = maze[x][y];
     }
-    this.playerPosX = x;
-    this.playerPosY = y;
-    start = new int[2];
-    start[0] = x;
-    start[1] = y;
+    if (flag == 1) {
+      player1.setPlayerStartLocation(x, y);
+    } else {
+      player2.setPlayerStartLocation(x, y);
+    }
   }
 
   /**
@@ -347,11 +392,15 @@ public class MazeGameImpl implements MazeGame {
    * Turn left operation.
    */
   public void goLeft() {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     if (playerPosY - 1 >= 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
       playerPosY--;
+      currPlayer.setPlayerLocation(playerPosX, playerPosY);
     } else {
       if (isWrapping && playerPosY - 1 < 0 && maze[playerPosX][playerPosY].getLeftCell() != null) {
         playerPosY = cols - playerPosY - 1;
+        currPlayer.setPlayerLocation(playerPosX, playerPosY);
       }
     }
   }
@@ -360,12 +409,16 @@ public class MazeGameImpl implements MazeGame {
    * Turn right operation.
    */
   public void goRight() {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     if (playerPosY + 1 < cols && maze[playerPosX][playerPosY].getRightCell() != null) {
       playerPosY++;
+      currPlayer.setPlayerLocation(playerPosX, playerPosY);
     } else {
       if (isWrapping && playerPosY + 1 >= cols
               && maze[playerPosX][playerPosY].getRightCell() != null) {
         playerPosY = 0;
+        currPlayer.setPlayerLocation(playerPosX, playerPosY);
       }
     }
   }
@@ -374,11 +427,15 @@ public class MazeGameImpl implements MazeGame {
    * Turn up operation.
    */
   public void goUp() {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     if (playerPosX - 1 >= 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
       playerPosX--;
+      currPlayer.setPlayerLocation(playerPosX, playerPosY);
     } else {
       if (isWrapping && playerPosX - 1 < 0 && maze[playerPosX][playerPosY].getUpCell() != null) {
         playerPosX = rows - 1;
+        currPlayer.setPlayerLocation(playerPosX, playerPosY);
       }
     }
   }
@@ -387,12 +444,16 @@ public class MazeGameImpl implements MazeGame {
    * Turn down operation.
    */
   public void goDown() {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     if (playerPosX + 1 < rows && maze[playerPosX][playerPosY].getDownCell() != null) {
       playerPosX++;
+      currPlayer.setPlayerLocation(playerPosX, playerPosY);
     } else {
       if (isWrapping && playerPosX + 1 >= rows
               && maze[playerPosX][playerPosY].getDownCell() != null) {
         playerPosX = 0;
+        currPlayer.setPlayerLocation(playerPosX, playerPosY);
       }
     }
   }
@@ -401,6 +462,8 @@ public class MazeGameImpl implements MazeGame {
   @Override
   public String getPlayerLocation() {
     StringBuilder sb = new StringBuilder();
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     sb.append("You are in cave (" + playerPosX + ", " + playerPosY + "). ");
     sb.append("Tunnels lead to the ");
     Cell curr = maze[playerPosX][playerPosY];
@@ -432,6 +495,7 @@ public class MazeGameImpl implements MazeGame {
   @Override
   public String toString() {
     String s = "";
+    int[] start = currPlayer.getPlayerStartLocation();
     if (isPerfect && isWrapping) {
       s += String.format("The maze is %d * %d, and it is a wrapping perfect maze. " +
               "The start point of player is (%d, %d). The saved walls are numbered by: " +
@@ -646,6 +710,8 @@ public class MazeGameImpl implements MazeGame {
     Random random = new Random();
     random.setSeed(50);
     int num = random.nextInt(2);
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     //both bats and pits
     if (maze[playerPosX][playerPosY].getIsPit()) {
       //50% possibility to pits
@@ -669,6 +735,8 @@ public class MazeGameImpl implements MazeGame {
     alert = "Whoa -- you successfully duck superbats that try to grab you!";
     System.out.println(alert);
     Random random = new Random();
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     int index = random.nextInt(caveLst.size());
     playerPosX = caveLst.get(index)[0];
     playerPosY = caveLst.get(index)[1];
@@ -701,6 +769,8 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public void move(String direction) throws IllegalArgumentException {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     Cell curr = maze[playerPosX][playerPosY];
     int flag = 0;
     if (direction.equals("N")) {
@@ -783,7 +853,11 @@ public class MazeGameImpl implements MazeGame {
     }
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        if (maze[i][j].isRoom && !maze[i][j].couldReachToWumpus && i == start[0] && j == start[1]) {
+        if (maze[i][j].isRoom && !maze[i][j].couldReachToWumpus &&
+                i == player1.getPlayerStartLocation()[0] &&
+                j == player1.getPlayerStartLocation()[1] || maze[i][j].isRoom &&
+                !maze[i][j].couldReachToWumpus && i == player2.getPlayerStartLocation()[0] &&
+                j == player2.getPlayerStartLocation()[1]) {
           return true;
         }
       }
@@ -798,20 +872,20 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public Cell getCurrentCell() {
-    return maze[playerPosX][playerPosY];
+    return maze[currPlayer.getPlayerLocation()[0]][currPlayer.getPlayerLocation()[1]];
   }
 
-  @Override
-  public void setPlayerLocation(int x, int y) {
-    playerPosX = x;
-    playerPosY = y;
-  }
+//  @Override
+//  public void setPlayerLocation(int x, int y) {
+//    playerPosX = x;
+//    playerPosY = y;
+//  }
 
-  @Override
-  public void setPlayerStartLocation(int x, int y) {
-    start[0] = x;
-    start[1] = y;
-  }
+//  @Override
+//  public void setPlayerStartLocation(int x, int y) {
+//    start[0] = x;
+//    start[1] = y;
+//  }
 
   @Override
   public String getShootRes() {
@@ -852,6 +926,8 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public void shoot(String direction, int distance) throws IllegalArgumentException {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     if (!direction.equals("N") && !direction.equals("S") && !direction.equals("W") &&
             !direction.equals("E")) {
       throw new IllegalArgumentException("The direction input is invalid!");
@@ -966,6 +1042,8 @@ public class MazeGameImpl implements MazeGame {
    * tunnel.
    */
   private void moveInTunnel(int flag) {
+    int playerPosX = currPlayer.getPlayerLocation()[0];
+    int playerPosY = currPlayer.getPlayerLocation()[1];
     while (maze[playerPosX][playerPosY].isTunnel) {
       if (maze[playerPosX][playerPosY].getDownCell() != null && flag != 0) {
         goDown();

@@ -1,38 +1,38 @@
 package model;
 
 public class Player {
-  private int player1x;
-  private int player1y;
-  private int player2x;
-  private int player2y;
+  private int playerX;
+  private int playerY;
   private int flag;
+  private int[] start;
+  private int arrows;
 
   public Player(int flag) {
     this.flag = flag;
-    player1x = 0;
-    player1y = 0;
-    player2x = 0;
-    player2y = 0;
+    playerX = 0;
+    playerY = 0;
+    start = new int[2];
+    arrows = 0;
+  }
+  public void setPlayerStartLocation(int x, int y) {
+    start[0] = x;
+    start[1] = y;
+    setPlayerLocation(x, y);
+  }
+
+  public int[] getPlayerStartLocation() {
+    return start;
   }
 
   public void setPlayerLocation(int x, int y) {
-    if (flag == 1) {
-      player1x = x;
-      player1x = y;
-    } else {
-      player2x = x;
-      player2y = y;
-    }
+    playerX = x;
+    playerY = y;
   }
-  public int[] getPlayerLocation(int flag) {
+
+  public int[] getPlayerLocation() {
     int[] location = new int[2];
-    if (flag == 1) {
-      location[0] = player1x;
-      location[1] = player1y;
-    } else {
-      location[0] = player2x;
-      location[1] = player2y;
-    }
+    location[0] = playerX;
+    location[1] = playerY;
     return location;
   }
 }

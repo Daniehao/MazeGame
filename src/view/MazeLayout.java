@@ -61,18 +61,27 @@ public class MazeLayout extends JFrame implements GameView {
     controlPanel.setLayout(new GridLayout(4, 6));
     controlPanel.add(new Label("Move Direction: "));
     controlPanel.add (moveUp);
+    moveUp.setActionCommand("Move up");
     controlPanel.add(moveDown);
+    moveDown.setActionCommand("Move down");
     controlPanel.add(moveLeft);
+    moveLeft.setActionCommand("Move left");
     controlPanel.add(moveRight);
+    moveRight.setActionCommand("Move right");
 
     // shoot
     controlPanel.add(new Label("Shoot Direction: "));
     controlPanel.add (shootUp);
+    shootUp.setActionCommand("Shoot up");
     controlPanel.add(shootDown);
+    shootDown.setActionCommand("Shoot down");
     controlPanel.add(shootLeft);
+    shootLeft.setActionCommand("Shoot left");
     controlPanel.add(shootRight);
+    shootRight.setActionCommand("Shoot right");
     controlPanel.add(new Label("Shoot Distance: "));
     controlPanel.add(shootDistance);
+    shootDistance.setActionCommand("Shoot right");
 
     controlPanel.add(new Label(" "));
     controlPanel.add(new Label(" "));

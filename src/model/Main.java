@@ -49,7 +49,7 @@ public class Main {
     System.out.println("Input the number of arrows: ");
     int arrows = scan.nextInt();
     MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping, batPercent,
-            pitPercent, arrows);
+            pitPercent, arrows, 1);
     return game;
   }
 }

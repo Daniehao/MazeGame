@@ -40,7 +40,7 @@ public class ActionController implements ActionListener {
         int rows = info[0];
         int cols = info[1];
         int walls = info[2];
-        int player = info[3];
+        int players = info[3];
         boolean isWrapping = menuView.getWrapping();
         String difficulty = menuView.getDifficulty();
         System.out.println(difficulty);
@@ -73,8 +73,8 @@ public class ActionController implements ActionListener {
             arrows = 3;
           }
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
-                  pitPercent, arrows);
-          mazeView.addComponents(rows,cols,game.getAlert(), player);
+                  pitPercent, arrows, players);
+          mazeView.addComponents(rows,cols,game.getAlert(), players);
           mazeView.createAndShowGUI();
         }
         break;
