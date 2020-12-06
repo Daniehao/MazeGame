@@ -12,8 +12,6 @@ import model.Cell;
  */
 public interface GameView {
 
-  void buildMaze(Cell[] cells);
-
   void createAndShowGUI();
 
   void addComponents(int rows, int cols, int playerNum);
@@ -41,4 +39,8 @@ public interface GameView {
   void changeAlertPanel(String alert, int flag);
 
   public void setListener(ActionListener listener);
+
+  public void showPlayer(int flag, int x, int y);
+
+  public void changeViewByMove(int[] prevPos, String prevCellStatus, int[] newPos);
 }

@@ -40,6 +40,7 @@ public class MazeGameImpl implements MazeGame {
   private Player player1;
   private Player player2;
   private Player currPlayer;
+  private Player otherPlayer;
 
   public MazeGameImpl() {
 
@@ -875,18 +876,6 @@ public class MazeGameImpl implements MazeGame {
     return maze[currPlayer.getPlayerLocation()[0]][currPlayer.getPlayerLocation()[1]];
   }
 
-//  @Override
-//  public void setPlayerLocation(int x, int y) {
-//    playerPosX = x;
-//    playerPosY = y;
-//  }
-
-//  @Override
-//  public void setPlayerStartLocation(int x, int y) {
-//    start[0] = x;
-//    start[1] = y;
-//  }
-
   @Override
   public String getShootRes() {
     if (isShootSuccess) {
@@ -1067,4 +1056,24 @@ public class MazeGameImpl implements MazeGame {
   public String getAlert() {
     return alert;
   }
+
+  public int[] getPlayerPosition(int flag) {
+    Player player = null;
+    if (flag == 1) {
+      player = player1;
+    } else {
+      player = player2;
+    }
+    int[] position = new int[2];
+    position[0] = player.getPlayerLocation()[0];
+    position[1] = player.getPlayerLocation()[1];
+    return position;
+  }
+
+  @Override
+  public Cell getCurrCell() {
+    int[] pos = currPlayer.getPlayerLocation();
+    return maze[pos[0]][pos[1]];
+  }
+
 }

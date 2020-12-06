@@ -89,4 +89,8 @@ public interface MazeGame {
   public void changePlayerFlag();
 
   public int getPlayerRound();
+
+  public int[] getPlayerPosition(int flag);
+
+  public Cell getCurrCell();
 }

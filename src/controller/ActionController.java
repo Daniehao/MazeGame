@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.Cell;
 import model.MazeGame;
 import model.MazeGameImpl;
 import view.GameView;
@@ -76,6 +77,12 @@ public class ActionController implements ActionListener {
                   pitPercent, arrows, players);
           mazeView.setAlertPanel(game.getAlert(), 1);
           mazeView.addComponents(rows,cols,players);
+          int[] pos1 = game.getPlayerPosition(1);
+          mazeView.showPlayer(1, pos1[0], pos1[1]);
+          if (players == 2) {
+            int[] pos2 = game.getPlayerPosition(2);
+            mazeView.showPlayer(2, pos2[0], pos2[1]);
+          }
           mazeView.createAndShowGUI();
         }
         break;
@@ -92,7 +99,12 @@ public class ActionController implements ActionListener {
         mazeView.setMoveDirection("right");
         break;
       case "Move":
+        int[] prevPos = game.getPlayerPosition(game.getPlayerRound());
+        String prevCellStatus = game.getCurrentCell().getCurrCellStatus();
         game.changePlayerFlag();
+        game.move(mazeView.getMoveDirection());
+        int[] newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(prevPos, prevCellStatus, newPos);
         mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
       default:

@@ -216,4 +216,71 @@ public class Cell {
     }
     return count;
   }
+
+  public String getCurrCellStatus() {
+    if (this.closeToWumpus) {
+      return "close to wumpus";
+    } else if (this.isWumpus) {
+      return "is wumpus";
+    } else if (this.isPit && this.hasBat) {
+      return "has bat and pit";
+    } else if (this.closeToPit) {
+      return "close to pit";
+    } else if (this.isPit) {
+      return "is Pit";
+    } else if (this.hasBat) {
+      return "has bat";
+    } else if (this.isTunnel) {
+      if (getLeftCell() != null && getRightCell() != null) {
+        return "is tunnel horizontal";
+      }
+      if (getLeftCell() != null && getUpCell() != null) {
+        return "is tunnel 1";
+      }
+      if (getLeftCell() != null && getDownCell() != null) {
+        return "is tunnel 2";
+      }
+      if (getUpCell() != null && getDownCell() != null) {
+        return "is tunnel vertical";
+      }
+      if (getDownCell() != null && getRightCell() != null) {
+        return "is tunnel 3";
+      }
+      if (getUpCell() != null && getRightCell() != null) {
+        return "is tunnel 4";
+      }
+    } else {
+      int roomNum = geRoomDoors();
+      if (roomNum == 1) {
+        if (getUpCell() != null) {
+          return "is room 1 up";
+        }
+        if (getDownCell() != null) {
+          return "is room 1 down";
+        }
+        if (getLeftCell() != null) {
+          return "is room 1 left";
+        }
+        if (getRightCell() != null) {
+          return "is room 1 right";
+        }
+      } else if (roomNum == 3) {
+        if (getUpCell() != null && getLeftCell() != null && getDownCell() != null) {
+          return "is room 3 1";
+        }
+        if (getUpCell() != null && getLeftCell() != null && getRightCell() != null) {
+          return "is room 3 2";
+        }
+        if (getUpCell() != null && getRightCell() != null && getDownCell() != null) {
+          return "is room 3 3";
+        }
+        if (getDownCell() != null && getLeftCell() != null && getRightCell() != null) {
+          return "is room 3 4";
+        }
+      } else {
+        return "is room 4";
+      }
+    }
+    return "";
+  }
 }

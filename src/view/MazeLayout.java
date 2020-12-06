@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -33,6 +35,10 @@ public class MazeLayout extends JFrame implements GameView {
   private String shootDirection;
   private Label currRoundLabel;
   private Label alertLabel;
+  private JLabel[][] labelArray;
+  private int rows;
+  private int cols;
+  private Map<String, String> alertPicMap;
 
   /**
    * Default constructor.
@@ -47,10 +53,13 @@ public class MazeLayout extends JFrame implements GameView {
   }
 
   public void addComponents(int rows, int cols, int playerNum) {
+    this.rows = rows;
+    this.cols = cols;
     // maze panel
     mazePanel = new MazePanel();
     mazePanel.setPreferredSize(new Dimension(500, 500));
     mazePanel.setLayout(new GridLayout(rows, cols));
+    initImageArray();
     scrollPane = new JScrollPane(mazePanel);
     this.add(scrollPane, BorderLayout.CENTER);
 
@@ -100,6 +109,17 @@ public class MazeLayout extends JFrame implements GameView {
     this.add(controlPanel, BorderLayout.SOUTH);
   }
 
+  private void initImageArray() {
+    labelArray = new JLabel[rows][cols];
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        ImageIcon icon = new ImageIcon("res/images/empty.png");
+        labelArray[i][j] = new JLabel(icon);
+        mazePanel.add(labelArray[i][j]);
+      }
+    }
+  }
+
   public void setAlertPanel(String alert, int flag) {
     alertPanel = new MazePanel();
     alertPanel.setPreferredSize(new Dimension(200, 50));
@@ -131,6 +151,28 @@ public class MazeLayout extends JFrame implements GameView {
     applyShootButton.addActionListener(listener);
   }
 
+  @Override
+  public void showPlayer(int flag, int x, int y) {
+    String source = "";
+    if (flag == 1) {
+      source = "res/images/player.png";
+    } else {
+      source = "res/images/player2.png";
+    }
+    ImageIcon icon = new ImageIcon(source);
+    labelArray[x][y] = new JLabel(icon);
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        mazePanel.add(labelArray[i][j]);
+      }
+    }
+  }
+
+  @Override
+  public void changeViewByMove(int[] prevPos, String prevCellStatus, int[] newPos) {
+
+  }
+
   private void initGaps() {
     moveUp = new JButton("Up");
     moveDown = new JButton("Down");
@@ -145,6 +187,7 @@ public class MazeLayout extends JFrame implements GameView {
     applyShootButton = new JButton("Shoot");
     startSameButton = new JButton("Start Same Game");
     quitButton = new JButton("Quit");
+    alertPicMap = new HashMap<>();
   }
 
   public String getShootDistance() {
@@ -179,62 +222,26 @@ public class MazeLayout extends JFrame implements GameView {
 
   }
 
-  @Override
-  public void buildMaze(Cell[] cells) {
-    ImageIcon mazeIcon = null;
-    for (Cell element : cells) {
-      if (element.getIsRoom()) {
-        int roomNum = element.geRoomDoors();
-        if (roomNum == 1) {
-          if (element.getUpCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-1-up.png");
-          }
-          if (element.getDownCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-1-down.png");
-          }
-          if (element.getLeftCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-1-left.png");
-          }
-          if (element.getRightCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-1-right.png");
-          }
-        } else if (roomNum == 3) {
-          if (element.getUpCell() != null && element.getLeftCell() != null && element.getDownCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-3-up-down-left.png");
-          }
-          if (element.getUpCell() != null && element.getLeftCell() != null && element.getRightCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-3-up-left-right.png");
-          }
-          if (element.getUpCell() != null && element.getRightCell() != null && element.getDownCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-3-up-down-right.png");
-          }
-          if (element.getDownCell() != null && element.getLeftCell() != null && element.getRightCell() != null) {
-            mazeIcon = new ImageIcon("../../res/images/roombase-1-down-left-right.png");
-          }
-        } else {
-          mazeIcon = new ImageIcon("../../res/images/roombase-4.png");
-        }
-      } else if (element.getIsTunnel()) {
-        if (element.getLeftCell() != null && element.getRightCell() != null) {
-          mazeIcon = new ImageIcon("../../res/images/hallway-h.png");
-        }
-        if (element.getLeftCell() != null && element.getUpCell() != null) {
-          mazeIcon = new ImageIcon("../../res/images/hallway-up-left.png");
-        }
-        if (element.getLeftCell() != null && element.getDownCell() != null) {
-          mazeIcon = new ImageIcon("../../res/images/hallway-down-left.png");
-        }
-        if (element.getUpCell() != null && element.getDownCell() != null) {
-          mazeIcon = new ImageIcon("../../res/images/hallway-v.png");
-        }
-        if (element.getDownCell() != null && element.getRightCell() != null) {
-          mazeIcon = new ImageIcon("../../res/images/hallway-down-right.png");
-        }
-        if (element.getUpCell() != null && element.getRightCell() != null) {
-          mazeIcon = new ImageIcon("../../res/images/hallway-up-right.png");
-        }
-      }
-    }
+  private void generateAlertPicMap() {
+    alertPicMap.put("close to wumpus", "res/images/wumpus-nearby.png");
+    alertPicMap.put("close to pit", "res/images/slime-pit-nearby.png");
+    alertPicMap.put("is pit", "res/images/slime-pit.png");
+    alertPicMap.put("has bat", "res/images/superbat.png");
+    alertPicMap.put("is tunnel vertical", "res/images/hallway-v.png");
+    alertPicMap.put("is tunnel horizontal", "res/images/hallway-h.png");
+    alertPicMap.put("is tunnel 1", "res/images/hallway-up-left.png");
+    alertPicMap.put("is tunnel 2", "res/images/hallway-down-left.png");
+    alertPicMap.put("is tunnel 3", "res/images/hallway-down-right.png");
+    alertPicMap.put("is tunnel 4", "res/images/hallway-up-right.png");
+    alertPicMap.put("is room 1 up", "res/images/roombase-1-up.png");
+    alertPicMap.put("is room 1 down", "res/images/roombase-1-down.png");
+    alertPicMap.put("is room 1 left", "res/images/roombase-1-left.png");
+    alertPicMap.put("is room 1 right", "res/images/roombase-1-right.png");
+    alertPicMap.put("is room 3 1", "res/images/roombase-3-up-down-left.png");
+    alertPicMap.put("is room 3 2", "res/images/roombase-3-up-left-right.png");
+    alertPicMap.put("is room 3 3", "res/images/roombase-3-up-down-right.png");
+    alertPicMap.put("is room 3 4", "res/images/roombase-3-down-left-right.png");
+    alertPicMap.put("is room 4", "res/images/roombase-4.png");
   }
 
   public void createAndShowGUI() {
