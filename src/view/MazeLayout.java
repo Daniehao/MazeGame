@@ -3,7 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.function.Consumer;
 
 import javax.swing.*;
 
@@ -51,7 +50,7 @@ public class MazeLayout extends JFrame implements GameView {
     // maze panel
     mazePanel = new MazePanel();
     mazePanel.setPreferredSize(new Dimension(500, 500));
-    mazePanel.setLayout(new GridLayout(rows,cols));
+    mazePanel.setLayout(new GridLayout(rows, cols));
     scrollPane = new JScrollPane(mazePanel);
     this.add(scrollPane, BorderLayout.CENTER);
 
@@ -59,7 +58,7 @@ public class MazeLayout extends JFrame implements GameView {
     controlPanel = new MazePanel();
     controlPanel.setLayout(new GridLayout(4, 6));
     controlPanel.add(new Label("Move Direction: "));
-    controlPanel.add (moveUp);
+    controlPanel.add(moveUp);
     moveUp.setActionCommand("Move up");
     controlPanel.add(moveDown);
     moveDown.setActionCommand("Move down");
@@ -70,7 +69,7 @@ public class MazeLayout extends JFrame implements GameView {
 
     // shoot
     controlPanel.add(new Label("Shoot Direction: "));
-    controlPanel.add (shootUp);
+    controlPanel.add(shootUp);
     shootUp.setActionCommand("Shoot up");
     controlPanel.add(shootDown);
     shootDown.setActionCommand("Shoot down");
@@ -98,7 +97,7 @@ public class MazeLayout extends JFrame implements GameView {
       System.exit(0);
     });
     controlPanel.add(quitButton);
-    this.add(controlPanel,BorderLayout.SOUTH);
+    this.add(controlPanel, BorderLayout.SOUTH);
   }
 
   public void setAlertPanel(String alert, int flag) {

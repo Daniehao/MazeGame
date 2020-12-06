@@ -21,7 +21,6 @@ public class MazeMenu extends JFrame implements MenuView {
   JComboBox wrappingComboBox;
   JComboBox difficultyComboBox;
   Button startButton;
-  Button startSameButton;
   private transient Consumer<String> commandCallback;
 
   /**

@@ -44,7 +44,6 @@ public class ActionController implements ActionListener {
         int players = info[3];
         boolean isWrapping = menuView.getWrapping();
         String difficulty = menuView.getDifficulty();
-        System.out.println(difficulty);
         if (isWrapping && walls > cols * rows + rows * cols - rows * cols + 1) {
           menuView.msgbox();
         } else if (!isWrapping && walls > (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1) {
@@ -82,7 +81,6 @@ public class ActionController implements ActionListener {
         break;
       case "Move up":
         mazeView.setMoveDirection("up");
-        System.out.println(mazeView.getMoveDirection());
         break;
       case "Move down":
         mazeView.setMoveDirection("down");
@@ -95,7 +93,6 @@ public class ActionController implements ActionListener {
         break;
       case "Move":
         game.changePlayerFlag();
-        System.out.println(game.getPlayerRound());
         mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
       default:
