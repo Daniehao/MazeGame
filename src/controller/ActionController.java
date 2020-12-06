@@ -28,6 +28,7 @@ public class ActionController implements ActionListener {
     this.menuView = menuView;
     this.mazeView = mazeView;
     menuView.setListener(this);
+    mazeView.setListener(this);
     menuView.display();
   }
 
@@ -81,6 +82,7 @@ public class ActionController implements ActionListener {
         break;
       case "Move up":
         mazeView.setMoveDirection("up");
+        System.out.println(mazeView.getMoveDirection());
         break;
       case "Move down":
         mazeView.setMoveDirection("down");
@@ -93,7 +95,8 @@ public class ActionController implements ActionListener {
         break;
       case "Move":
         game.changePlayerFlag();
-        mazeView.setAlertPanel(game.getAlert(), game.getPlayerRound());
+        System.out.println(game.getPlayerRound());
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
       default:
         throw new IllegalStateException("Error: unknown button");

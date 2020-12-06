@@ -2,6 +2,7 @@ package view;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 import javax.swing.*;
@@ -31,6 +32,8 @@ public class MazeLayout extends JFrame implements GameView {
   private JButton applyShootButton;
   private String moveDirection;
   private String shootDirection;
+  private Label currRoundLabel;
+  private Label alertLabel;
 
   /**
    * Default constructor.
@@ -101,13 +104,32 @@ public class MazeLayout extends JFrame implements GameView {
   public void setAlertPanel(String alert, int flag) {
     alertPanel = new MazePanel();
     alertPanel.setPreferredSize(new Dimension(200, 50));
-    alertPanel.add(new Label("Player " + flag + "'s Round"));
-    alertPanel.add(new Label(alert));
+    currRoundLabel = new Label("Player " + flag + "'s Round");
+    alertPanel.add(currRoundLabel);
+    alertLabel = new Label(alert);
+    alertPanel.add(alertLabel);
     this.add(alertPanel, BorderLayout.NORTH);
   }
 
   public void changeAlertPanel(String alert, int flag) {
+    currRoundLabel.setText("Player " + flag + "'s Round");
+    alertLabel.setText(alert);
+  }
 
+  @Override
+  public void setListener(ActionListener listener) {
+    startSameButton.addActionListener(listener);
+    moveUp.addActionListener(listener);
+    moveDown.addActionListener(listener);
+    moveLeft.addActionListener(listener);
+    moveRight.addActionListener(listener);
+    shootUp.addActionListener(listener);
+    shootDown.addActionListener(listener);
+    shootLeft.addActionListener(listener);
+    shootRight.addActionListener(listener);
+    shootDistance.addActionListener(listener);
+    applyMoveButton.addActionListener(listener);
+    applyShootButton.addActionListener(listener);
   }
 
   private void initGaps() {

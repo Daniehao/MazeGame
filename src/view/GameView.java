@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 import model.Cell;
@@ -36,4 +37,8 @@ public interface GameView {
   String getShootDirection();
 
   void setAlertPanel(String alert, int flag);
+
+  void changeAlertPanel(String alert, int flag);
+
+  public void setListener(ActionListener listener);
 }
