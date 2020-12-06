@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * The maze game that enables a player to move to four directions(left, right, up, down). The player
  * may also shoot to a direction by a distance, and the interface supports the user to get the
@@ -93,4 +95,6 @@ public interface MazeGame {
   public int[] getPlayerPosition(int flag);
 
   public Cell getCurrCell();
+
+  public List<Cell> getWalkedCells();
 }

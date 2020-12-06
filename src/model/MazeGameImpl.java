@@ -23,8 +23,6 @@ public class MazeGameImpl implements MazeGame {
   private int remains;
   private Cell[][] maze;
   private boolean isWrapping;
-//  private int playerPosX;
-//  private int playerPosY;
   private boolean isPerfect;
   private List<int[]> caveLst;
   private double batPercent;
@@ -33,7 +31,6 @@ public class MazeGameImpl implements MazeGame {
   private boolean isGameOver;
   private boolean isShootSuccess;
   private Cell wumpus;
-//  private int[] start;
   private String alert;
   private int playerNum;
   private int flag;
@@ -41,6 +38,7 @@ public class MazeGameImpl implements MazeGame {
   private Player player2;
   private Player currPlayer;
   private Player otherPlayer;
+  private List<Cell> walkedCells;
 
   public MazeGameImpl() {
 
@@ -77,6 +75,7 @@ public class MazeGameImpl implements MazeGame {
     alert = "";
     player1 = new Player(1);
     player2 = null;
+    walkedCells = new ArrayList<>();
     if (playerNum == 2) {
       player2 = new Player(2);
     }
@@ -140,6 +139,7 @@ public class MazeGameImpl implements MazeGame {
     return flag;
   }
 
+  //todo assign differ position
   private void setStartPosition(int flag) {
     Random random = new Random();
     if (flag == 1) {
@@ -313,7 +313,7 @@ public class MazeGameImpl implements MazeGame {
     random.setSeed(1000);
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        maze[i][j] = new Cell();
+        maze[i][j] = new Cell(i, j);
       }
     }
   }
@@ -770,9 +770,11 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public void move(String direction) throws IllegalArgumentException {
+    walkedCells.clear();
     int playerPosX = currPlayer.getPlayerLocation()[0];
     int playerPosY = currPlayer.getPlayerLocation()[1];
     Cell curr = maze[playerPosX][playerPosY];
+    walkedCells.add(curr);
     int flag = 0;
     if (direction.equals("N")) {
       if (curr.getUpCell() != null) {
@@ -891,6 +893,7 @@ public class MazeGameImpl implements MazeGame {
    * @param flag The direction flag.
    */
   private void movehelper(Cell curr, int flag) {
+    walkedCells.add(curr);
     if (curr.closeToWumpus) {
       alert = "You smell a Wumpus!";
       System.out.println(alert);
@@ -1049,6 +1052,9 @@ public class MazeGameImpl implements MazeGame {
       } else {
         break;
       }
+      playerPosX = currPlayer.getPlayerLocation()[0];
+      playerPosY = currPlayer.getPlayerLocation()[1];
+      walkedCells.add(maze[playerPosX][playerPosY]);
     }
     movehelper(maze[playerPosX][playerPosY], flag);
   }
@@ -1076,4 +1082,7 @@ public class MazeGameImpl implements MazeGame {
     return maze[pos[0]][pos[1]];
   }
 
+  public List<Cell> getWalkedCells() {
+    return walkedCells;
+  }
 }

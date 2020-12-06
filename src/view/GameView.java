@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.function.Consumer;
 
 import model.Cell;
@@ -42,5 +43,5 @@ public interface GameView {
 
   public void showPlayer(int flag, int x, int y);
 
-  public void changeViewByMove(int[] prevPos, String prevCellStatus, int[] newPos);
+  public void changeViewByMove(List<Cell> getWalkedCells, int[] newPos, int flag);
 }

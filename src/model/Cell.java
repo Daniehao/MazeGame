@@ -20,11 +20,13 @@ public class Cell {
   boolean hasBat;
   boolean couldReachToWumpus;
   boolean isTarget;
+  int x;
+  int y;
 
   /**
    * The constructor for Cell class.
    */
-  public Cell() {
+  public Cell(int x, int y) {
     cellMap = new HashMap<>();
     cellMap.put("left", null);
     cellMap.put("right", null);
@@ -36,6 +38,8 @@ public class Cell {
     closeToPit = false;
     hasBat = false;
     couldReachToWumpus = false;
+    this.x = x;
+    this.y = y;
   }
 
   /**
@@ -217,20 +221,12 @@ public class Cell {
     return count;
   }
 
+  public int[] getCellPos() {
+    return new int[] {x, y};
+  }
+
   public String getCurrCellStatus() {
-    if (this.closeToWumpus) {
-      return "close to wumpus";
-    } else if (this.isWumpus) {
-      return "is wumpus";
-    } else if (this.isPit && this.hasBat) {
-      return "has bat and pit";
-    } else if (this.closeToPit) {
-      return "close to pit";
-    } else if (this.isPit) {
-      return "is Pit";
-    } else if (this.hasBat) {
-      return "has bat";
-    } else if (this.isTunnel) {
+    if (this.isTunnel) {
       if (getLeftCell() != null && getRightCell() != null) {
         return "is tunnel horizontal";
       }
@@ -249,7 +245,7 @@ public class Cell {
       if (getUpCell() != null && getRightCell() != null) {
         return "is tunnel 4";
       }
-    } else {
+    } else if (this.isRoom){
       int roomNum = geRoomDoors();
       if (roomNum == 1) {
         if (getUpCell() != null) {

@@ -75,7 +75,7 @@ public class ActionController implements ActionListener {
           }
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
                   pitPercent, arrows, players);
-          mazeView.setAlertPanel(game.getAlert(), 1);
+          mazeView.setAlertPanel(game.getPlayerLocation(), 1);
           mazeView.addComponents(rows,cols,players);
           int[] pos1 = game.getPlayerPosition(1);
           mazeView.showPlayer(1, pos1[0], pos1[1]);
@@ -87,24 +87,25 @@ public class ActionController implements ActionListener {
         }
         break;
       case "Move up":
-        mazeView.setMoveDirection("up");
+        mazeView.setMoveDirection("N");
         break;
       case "Move down":
-        mazeView.setMoveDirection("down");
+        mazeView.setMoveDirection("E");
         break;
       case "Move left":
-        mazeView.setMoveDirection("left");
+        mazeView.setMoveDirection("W");
         break;
       case "Move right":
-        mazeView.setMoveDirection("right");
+        mazeView.setMoveDirection("E");
         break;
       case "Move":
         int[] prevPos = game.getPlayerPosition(game.getPlayerRound());
         String prevCellStatus = game.getCurrentCell().getCurrCellStatus();
-        game.changePlayerFlag();
+//        System.out.println(prevCellStatus);
         game.move(mazeView.getMoveDirection());
         int[] newPos = game.getPlayerPosition(game.getPlayerRound());
-        mazeView.changeViewByMove(prevPos, prevCellStatus, newPos);
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
         mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
       default:

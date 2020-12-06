@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class MazeLayout extends JFrame implements GameView {
   private JLabel[][] labelArray;
   private int rows;
   private int cols;
-  private Map<String, String> alertPicMap;
+  private Map<String, String> statusPicMap;
 
   /**
    * Default constructor.
@@ -122,16 +123,17 @@ public class MazeLayout extends JFrame implements GameView {
 
   public void setAlertPanel(String alert, int flag) {
     alertPanel = new MazePanel();
-    alertPanel.setPreferredSize(new Dimension(200, 50));
-    currRoundLabel = new Label("Player " + flag + "'s Round");
-    alertPanel.add(currRoundLabel);
+    alertPanel.setLayout(new GridLayout(2, 1));
+    alertPanel.setPreferredSize(new Dimension(200, 80));
     alertLabel = new Label(alert);
     alertPanel.add(alertLabel);
+    currRoundLabel = new Label("Next: Player " + flag + "'s Round");
+    alertPanel.add(currRoundLabel);
     this.add(alertPanel, BorderLayout.NORTH);
   }
 
   public void changeAlertPanel(String alert, int flag) {
-    currRoundLabel.setText("Player " + flag + "'s Round");
+    currRoundLabel.setText("Next: Player " + flag + "'s Round");
     alertLabel.setText(alert);
   }
 
@@ -159,18 +161,20 @@ public class MazeLayout extends JFrame implements GameView {
     } else {
       source = "res/images/player2.png";
     }
-    ImageIcon icon = new ImageIcon(source);
-    labelArray[x][y] = new JLabel(icon);
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        mazePanel.add(labelArray[i][j]);
-      }
-    }
+    labelArray[x][y].setIcon(new ImageIcon(source));
   }
 
   @Override
-  public void changeViewByMove(int[] prevPos, String prevCellStatus, int[] newPos) {
-
+  public void changeViewByMove(List<Cell> getWalkedCells, int[] newPos, int flag) {
+    for (Cell cell: getWalkedCells) {
+      ImageIcon icon = new ImageIcon(statusPicMap.get(cell.getCurrCellStatus()));
+      labelArray[cell.getCellPos()[0]][cell.getCellPos()[1]].setIcon(icon);
+    }
+    if (flag == 1) {
+      labelArray[newPos[0]][newPos[1]].setIcon(new ImageIcon(statusPicMap.get("player 1")));
+    } else {
+      labelArray[newPos[0]][newPos[1]].setIcon(new ImageIcon(statusPicMap.get("player 2")));
+    }
   }
 
   private void initGaps() {
@@ -187,7 +191,8 @@ public class MazeLayout extends JFrame implements GameView {
     applyShootButton = new JButton("Shoot");
     startSameButton = new JButton("Start Same Game");
     quitButton = new JButton("Quit");
-    alertPicMap = new HashMap<>();
+    statusPicMap = new HashMap<>();
+    generateAlertPicMap();
   }
 
   public String getShootDistance() {
@@ -223,25 +228,23 @@ public class MazeLayout extends JFrame implements GameView {
   }
 
   private void generateAlertPicMap() {
-    alertPicMap.put("close to wumpus", "res/images/wumpus-nearby.png");
-    alertPicMap.put("close to pit", "res/images/slime-pit-nearby.png");
-    alertPicMap.put("is pit", "res/images/slime-pit.png");
-    alertPicMap.put("has bat", "res/images/superbat.png");
-    alertPicMap.put("is tunnel vertical", "res/images/hallway-v.png");
-    alertPicMap.put("is tunnel horizontal", "res/images/hallway-h.png");
-    alertPicMap.put("is tunnel 1", "res/images/hallway-up-left.png");
-    alertPicMap.put("is tunnel 2", "res/images/hallway-down-left.png");
-    alertPicMap.put("is tunnel 3", "res/images/hallway-down-right.png");
-    alertPicMap.put("is tunnel 4", "res/images/hallway-up-right.png");
-    alertPicMap.put("is room 1 up", "res/images/roombase-1-up.png");
-    alertPicMap.put("is room 1 down", "res/images/roombase-1-down.png");
-    alertPicMap.put("is room 1 left", "res/images/roombase-1-left.png");
-    alertPicMap.put("is room 1 right", "res/images/roombase-1-right.png");
-    alertPicMap.put("is room 3 1", "res/images/roombase-3-up-down-left.png");
-    alertPicMap.put("is room 3 2", "res/images/roombase-3-up-left-right.png");
-    alertPicMap.put("is room 3 3", "res/images/roombase-3-up-down-right.png");
-    alertPicMap.put("is room 3 4", "res/images/roombase-3-down-left-right.png");
-    alertPicMap.put("is room 4", "res/images/roombase-4.png");
+    statusPicMap.put("is tunnel vertical", "res/images/hallway-v.png");
+    statusPicMap.put("is tunnel horizontal", "res/images/hallway-h.png");
+    statusPicMap.put("is tunnel 1", "res/images/hallway-up-left.png");
+    statusPicMap.put("is tunnel 2", "res/images/hallway-down-left.png");
+    statusPicMap.put("is tunnel 3", "res/images/hallway-down-right.png");
+    statusPicMap.put("is tunnel 4", "res/images/hallway-up-right.png");
+    statusPicMap.put("is room 1 up", "res/images/roombase-1-up.png");
+    statusPicMap.put("is room 1 down", "res/images/roombase-1-down.png");
+    statusPicMap.put("is room 1 left", "res/images/roombase-1-left.png");
+    statusPicMap.put("is room 1 right", "res/images/roombase-1-right.png");
+    statusPicMap.put("is room 3 1", "res/images/roombase-3-up-down-left.png");
+    statusPicMap.put("is room 3 2", "res/images/roombase-3-up-left-right.png");
+    statusPicMap.put("is room 3 3", "res/images/roombase-3-up-down-right.png");
+    statusPicMap.put("is room 3 4", "res/images/roombase-3-down-left-right.png");
+    statusPicMap.put("is room 4", "res/images/roombase-4.png");
+    statusPicMap.put("player 1", "res/images/player.png");
+    statusPicMap.put("player 2", "res/images/player2.png");
   }
 
   public void createAndShowGUI() {
