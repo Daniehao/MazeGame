@@ -30,7 +30,7 @@ public class ActionController implements ActionListener, KeyListener {
     this.menuView = menuView;
     this.mazeView = mazeView;
     menuView.setListener(this);
-    mazeView.setListener(this);
+    mazeView.setListener(this, this);
     menuView.display();
   }
 
@@ -127,6 +127,7 @@ public class ActionController implements ActionListener, KeyListener {
           throw new IllegalStateException("Error: unknown button");
       }
     }
+    mazeView.resetFocus();
   }
 
 
@@ -147,7 +148,37 @@ public class ActionController implements ActionListener, KeyListener {
 
   @Override
   public void keyTyped(KeyEvent e) {
-
+    System.out.println("test key");
+    switch (e.getKeyCode()) {
+      case KeyEvent.VK_UP:
+        game.move("N");
+        int[] newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+      case KeyEvent.VK_DOWN: //caps
+        game.move("S");
+        newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+      case KeyEvent.VK_LEFT: //caps
+        game.move("W");
+        newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+      case KeyEvent.VK_RIGHT: //caps
+        game.move("E");
+        newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+    }
   }
 
   @Override
@@ -159,7 +190,7 @@ public class ActionController implements ActionListener, KeyListener {
         mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
         game.changePlayerFlag();
         mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
-          break;
+        break;
       case KeyEvent.VK_DOWN: //caps
         game.move("S");
         newPos = game.getPlayerPosition(game.getPlayerRound());
@@ -186,7 +217,7 @@ public class ActionController implements ActionListener, KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
-
+    System.out.println("key pressed activated");
   }
 }
 

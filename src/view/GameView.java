@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -39,11 +40,13 @@ public interface GameView {
 
   void changeAlertPanel(String alert, int flag);
 
-  public void setListener(ActionListener listener);
+  public void setListener(ActionListener listener, KeyListener keyListener);
 
   public void showPlayer(int flag, int x, int y);
 
   public void changeViewByMove(List<Cell> getWalkedCells, int[] newPos, int flag);
 
   public void clearPanels();
+
+  public void resetFocus();
 }

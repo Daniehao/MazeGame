@@ -52,6 +52,7 @@ public class MazeLayout extends JFrame implements GameView {
     this.setSize(800, 800);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
+    resetFocus();
   }
 
   public void addComponents(int rows, int cols, int playerNum) {
@@ -254,6 +255,12 @@ public class MazeLayout extends JFrame implements GameView {
     statusPicMap.put("is room 4", "res/images/roombase-4.png");
     statusPicMap.put("player 1", "res/images/player.png");
     statusPicMap.put("player 2", "res/images/player2.png");
+  }
+
+  @Override
+  public void resetFocus() {
+    this.setFocusable(true);
+    this.requestFocus();
   }
 
   public void createAndShowGUI() {
