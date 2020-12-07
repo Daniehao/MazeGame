@@ -39,9 +39,9 @@ public class MazeGameImpl implements MazeGame {
   private Player currPlayer;
   private Player otherPlayer;
   private List<Cell> walkedCells;
+  private int lives;
 
   public MazeGameImpl() {
-
   }
 
   /**
@@ -76,6 +76,7 @@ public class MazeGameImpl implements MazeGame {
     player1 = new Player(1);
     player2 = null;
     walkedCells = new ArrayList<>();
+    lives = playerNum;
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -111,9 +112,10 @@ public class MazeGameImpl implements MazeGame {
     assignSuperBats();
     setStartPosition(1);
     currPlayer = player1;
+    otherPlayer = null;
     if (playerNum == 2) {
-      setStartPosition(2);
       player2 = new Player(2);
+      setStartPosition(2);
       otherPlayer = player2;
     }
   }
@@ -759,7 +761,10 @@ public class MazeGameImpl implements MazeGame {
    * The player get into the cave that has wumpus.
    */
   private void getInWumpus() {
-    isGameOver = true;
+    lives--;
+    if (lives == 0) {
+      isGameOver = true;
+    }
     currPlayer.setDead();
     alert = "Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next time.";
     System.out.println(alert);
@@ -769,7 +774,10 @@ public class MazeGameImpl implements MazeGame {
    * The player get into the cave that is a bottomless pit.
    */
   private void getInPits() {
-    isGameOver = true;
+    lives--;
+    if (lives == 0) {
+      isGameOver = true;
+    }
     currPlayer.setDead();
     alert = "You fell into the bottomless pit! Better luck next time.";
     System.out.println(alert);
@@ -825,10 +833,7 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public boolean getGameEnd() {
-    if (otherPlayer == null) {
-      return currPlayer.getDead() || isShootSuccess;
-    }
-    return currPlayer.getDead() && otherPlayer.getDead() || isShootSuccess;
+    return isGameOver;
   }
 
   @Override
@@ -962,7 +967,10 @@ public class MazeGameImpl implements MazeGame {
       System.out.println(alert);
       arrows--;
       if (arrows <= 0) {
-        currPlayer.setDead();
+        lives--;
+        if (lives == 0) {
+          isGameOver = true;
+        }
         alert = "You do not have any arrow to shoot!";
         System.out.println(alert);
       }

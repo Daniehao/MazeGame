@@ -15,6 +15,7 @@ public class ActionController implements ActionListener {
   private MazeGame game;
   private MenuView menuView;
   private GameView mazeView;
+
   /**
    * Constructor.
    *
@@ -75,51 +76,57 @@ public class ActionController implements ActionListener {
                   pitPercent, arrows, players);
           startNewGame(info);
         }
-        break;
-      case "Move up":
-        mazeView.setMoveDirection("N");
-        break;
-      case "Move down":
-        mazeView.setMoveDirection("S");
-        break;
-      case "Move left":
-        mazeView.setMoveDirection("W");
-        break;
-      case "Move right":
-        mazeView.setMoveDirection("E");
-        break;
-      case "Move":
-        game.move(mazeView.getMoveDirection());
-        int[] newPos = game.getPlayerPosition(game.getPlayerRound());
-        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-        game.changePlayerFlag();
-        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
-        break;
-      case "Shoot up":
-        mazeView.setShootDirection("N");
-        break;
-      case "Shoot down":
-        mazeView.setShootDirection("S");
-        break;
-      case "Shoot left":
-        mazeView.setShootDirection("W");
-        break;
-      case "Shoot right":
-        mazeView.setShootDirection("E");
-        break;
-      case "Shoot":
-        int distance = Integer.valueOf(mazeView.getShootDistance());
-        game.shoot(mazeView.getShootDirection(), distance);
-        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
-        break;
+        return;
       case "Start Same Game":
         mazeView.clearPanels();
-        mazeView.addComponents(3,5,1);
+        return;
+    }
+
+    if (!game.getGameEnd()) {
+      switch (e.getActionCommand()) {
+        case "Move up":
+          mazeView.setMoveDirection("N");
           break;
-      default:
-        throw new IllegalStateException("Error: unknown button");
+        case "Move down":
+          mazeView.setMoveDirection("S");
+          break;
+        case "Move left":
+          mazeView.setMoveDirection("W");
+          break;
+        case "Move right":
+          mazeView.setMoveDirection("E");
+          break;
+        case "Move":
+          game.move(mazeView.getMoveDirection());
+          int[] newPos = game.getPlayerPosition(game.getPlayerRound());
+          mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+          game.changePlayerFlag();
+          mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+          break;
+        case "Shoot up":
+          mazeView.setShootDirection("N");
+          break;
+        case "Shoot down":
+          mazeView.setShootDirection("S");
+          break;
+        case "Shoot left":
+          mazeView.setShootDirection("W");
+          break;
+        case "Shoot right":
+          mazeView.setShootDirection("E");
+          break;
+        case "Shoot":
+          int distance = Integer.valueOf(mazeView.getShootDistance());
+          game.shoot(mazeView.getShootDirection(), distance);
+          game.changePlayerFlag();
+          mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+          break;
+        default:
+          throw new IllegalStateException("Error: unknown button");
+      }
     }
   }
+
 
   private void startNewGame(int[] info) {
     mazeView.setAlertPanel(game.getPlayerLocation(), 1);
