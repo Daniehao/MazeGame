@@ -216,7 +216,7 @@ public class MazeLayout extends JFrame implements GameView {
 
   @Override
   public String getShootDirection() {
-    return null;
+    return shootDirection;
   }
 
 

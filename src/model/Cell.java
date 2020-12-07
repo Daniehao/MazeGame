@@ -222,7 +222,7 @@ public class Cell {
   }
 
   public int[] getCellPos() {
-    return new int[] {x, y};
+    return new int[]{x, y};
   }
 
   public String getCurrCellStatus() {
@@ -245,7 +245,7 @@ public class Cell {
       if (getUpCell() != null && getRightCell() != null) {
         return "is tunnel 4";
       }
-    } else if (this.isRoom){
+    } else if (this.isRoom) {
       int roomNum = geRoomDoors();
       if (roomNum == 1) {
         if (getUpCell() != null) {

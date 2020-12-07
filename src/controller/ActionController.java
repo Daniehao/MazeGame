@@ -3,7 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import model.Cell;
 import model.MazeGame;
 import model.MazeGameImpl;
 import view.GameView;
@@ -76,7 +75,7 @@ public class ActionController implements ActionListener {
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
                   pitPercent, arrows, players);
           mazeView.setAlertPanel(game.getPlayerLocation(), 1);
-          mazeView.addComponents(rows,cols,players);
+          mazeView.addComponents(rows, cols, players);
           int[] pos1 = game.getPlayerPosition(1);
           mazeView.showPlayer(1, pos1[0], pos1[1]);
           if (players == 2) {
@@ -99,14 +98,27 @@ public class ActionController implements ActionListener {
         mazeView.setMoveDirection("E");
         break;
       case "Move":
-        int[] prevPos = game.getPlayerPosition(game.getPlayerRound());
-        String prevCellStatus = game.getCurrentCell().getCurrCellStatus();
-//        System.out.println(prevCellStatus);
         game.move(mazeView.getMoveDirection());
         int[] newPos = game.getPlayerPosition(game.getPlayerRound());
         mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
         game.changePlayerFlag();
         mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+      case "Shoot up":
+        mazeView.setShootDirection("N");
+        break;
+      case "Shoot down":
+        mazeView.setShootDirection("S");
+        break;
+      case "Shoot left":
+        mazeView.setShootDirection("W");
+        break;
+      case "Shoot right":
+        mazeView.setShootDirection("E");
+        break;
+      case "Shoot":
+        int distance = Integer.valueOf(mazeView.getShootDistance());
+        game.shoot(mazeView.getShootDirection(), distance);
         break;
       default:
         throw new IllegalStateException("Error: unknown button");
