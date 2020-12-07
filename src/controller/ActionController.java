@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import model.MazeGame;
 import model.MazeGameImpl;
@@ -9,9 +11,9 @@ import view.GameView;
 import view.MenuView;
 
 /**
- * Implementation of the controller for the basic MVC.
+ * Implementation of the controller for the Maze Game.
  */
-public class ActionController implements ActionListener {
+public class ActionController implements ActionListener, KeyListener {
   private MazeGame game;
   private MenuView menuView;
   private GameView mazeView;
@@ -141,6 +143,50 @@ public class ActionController implements ActionListener {
       mazeView.showPlayer(2, pos2[0], pos2[1]);
     }
     mazeView.createAndShowGUI();
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    switch (e.getKeyCode()) {
+      case KeyEvent.VK_UP:
+        game.move("N");
+        int[] newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+          break;
+      case KeyEvent.VK_DOWN: //caps
+        game.move("S");
+        newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+      case KeyEvent.VK_LEFT: //caps
+        game.move("W");
+        newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+      case KeyEvent.VK_RIGHT: //caps
+        game.move("E");
+        newPos = game.getPlayerPosition(game.getPlayerRound());
+        mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
+        game.changePlayerFlag();
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
+        break;
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+
   }
 }
 

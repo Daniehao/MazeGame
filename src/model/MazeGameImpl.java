@@ -132,8 +132,8 @@ public class MazeGameImpl implements MazeGame {
         }
       } else {
         if (!player1.getDead()) {
-          flag = 2;
-          currPlayer = player2;
+          flag = 1;
+          currPlayer = player1;
         }
       }
     }
@@ -762,6 +762,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInWumpus() {
     lives--;
+    currPlayer.setDead();
     if (lives == 0) {
       isGameOver = true;
     }
@@ -775,6 +776,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInPits() {
     lives--;
+    currPlayer.setDead();
     if (lives == 0) {
       isGameOver = true;
     }
@@ -968,6 +970,7 @@ public class MazeGameImpl implements MazeGame {
       arrows--;
       if (arrows <= 0) {
         lives--;
+        currPlayer.setDead();
         if (lives == 0) {
           isGameOver = true;
         }

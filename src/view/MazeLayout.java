@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +139,7 @@ public class MazeLayout extends JFrame implements GameView {
   }
 
   @Override
-  public void setListener(ActionListener listener) {
+  public void setListener(ActionListener listener, KeyListener keyListener) {
     startSameButton.addActionListener(listener);
     moveUp.addActionListener(listener);
     moveDown.addActionListener(listener);
@@ -151,6 +152,7 @@ public class MazeLayout extends JFrame implements GameView {
     shootDistance.addActionListener(listener);
     applyMoveButton.addActionListener(listener);
     applyShootButton.addActionListener(listener);
+    this.addKeyListener(keyListener);
   }
 
   @Override
