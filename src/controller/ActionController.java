@@ -114,6 +114,7 @@ public class ActionController implements ActionListener {
         break;
       case "Start Same Game":
         mazeView.clearPanels();
+        mazeView.addComponents(3,5,1);
           break;
       default:
         throw new IllegalStateException("Error: unknown button");
