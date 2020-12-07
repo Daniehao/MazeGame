@@ -139,15 +139,17 @@ public class MazeGameImpl implements MazeGame {
     return flag;
   }
 
-  //todo assign differ position
   private void setStartPosition(int flag) {
     Random random = new Random();
+    int randomInt = 0;
     if (flag == 1) {
       random.setSeed(1000);
+      randomInt = random.nextInt(caveLst.size());
     } else {
       random.setSeed(50);
+      random.nextInt(caveLst.size());
+      randomInt = random.nextInt(caveLst.size());
     }
-    int randomInt = random.nextInt(caveLst.size());
     int x = caveLst.get(randomInt)[0];
     int y = caveLst.get(randomInt)[1];
     Cell temp = maze[x][y];
