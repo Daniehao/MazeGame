@@ -6,6 +6,7 @@ public class Player {
   private int flag;
   private int[] start;
   private int arrows;
+  private boolean isDead;
 
   public Player(int flag) {
     this.flag = flag;
@@ -13,6 +14,7 @@ public class Player {
     playerY = 0;
     start = new int[2];
     arrows = 0;
+    isDead = false;
   }
   public void setPlayerStartLocation(int x, int y) {
     start[0] = x;
@@ -34,5 +36,13 @@ public class Player {
     location[0] = playerX;
     location[1] = playerY;
     return location;
+  }
+
+  public void setDead() {
+    isDead = true;
+  }
+
+  public boolean getDead() {
+    return isDead;
   }
 }

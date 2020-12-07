@@ -757,6 +757,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInWumpus() {
     isGameOver = true;
+    currPlayer.setDead();
     alert = "Chomp, chomp, chomp, thanks for feeding the Wumpus! Better luck next time.";
     System.out.println(alert);
   }
@@ -766,6 +767,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void getInPits() {
     isGameOver = true;
+    currPlayer.setDead();
     alert = "You fell into the bottomless pit! Better luck next time.";
     System.out.println(alert);
   }
@@ -820,7 +822,9 @@ public class MazeGameImpl implements MazeGame {
 
   @Override
   public boolean getGameOver() {
-    return isGameOver;
+    if (otherPlayer == null) {
+      return currPlayer.getDead();
+    }
   }
 
   @Override
@@ -944,6 +948,7 @@ public class MazeGameImpl implements MazeGame {
       System.out.println(alert);
     } else if (curr.isWumpus) {
       isGameOver = true;
+      alert = "Player " + getPlayerRound() + "wins!";
       isShootSuccess = true;
       arrows--;
       alert = "Hee hee hee, you got the wumpus! Next time you won't be so lucky!";
@@ -953,8 +958,8 @@ public class MazeGameImpl implements MazeGame {
       System.out.println(alert);
       arrows--;
       if (arrows <= 0) {
-        isGameOver = true;
-        alert = "You do not have any arrow to shoot! Game Over.";
+        currPlayer.setDead();
+        alert = "You do not have any arrow to shoot!";
         System.out.println(alert);
       }
     }
