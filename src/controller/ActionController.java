@@ -90,7 +90,7 @@ public class ActionController implements ActionListener {
         mazeView.setMoveDirection("N");
         break;
       case "Move down":
-        mazeView.setMoveDirection("E");
+        mazeView.setMoveDirection("S");
         break;
       case "Move left":
         mazeView.setMoveDirection("W");

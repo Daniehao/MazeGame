@@ -723,7 +723,7 @@ public class MazeGameImpl implements MazeGame {
         dropToRandomCave();
       }
     } else {
-      if (num == 1) {
+      if (num == 3) {
         dropToRandomCave();
       }
     }
@@ -779,8 +779,6 @@ public class MazeGameImpl implements MazeGame {
     if (direction.equals("N")) {
       if (curr.getUpCell() != null) {
         goUp();
-        curr = maze[playerPosX][playerPosY];
-        movehelper(curr, flag);
       } else {
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
@@ -788,9 +786,7 @@ public class MazeGameImpl implements MazeGame {
     } else if (direction.equals("S")) {
       if (curr.getDownCell() != null) {
         goDown();
-        curr = maze[playerPosX][playerPosY];
         flag = 1;
-        movehelper(curr, flag);
       } else {
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
@@ -798,9 +794,7 @@ public class MazeGameImpl implements MazeGame {
     } else if (direction.equals("W")) {
       if (curr.getLeftCell() != null) {
         goLeft();
-        curr = maze[playerPosX][playerPosY];
         flag = 2;
-        movehelper(curr, flag);
       } else {
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
@@ -808,9 +802,7 @@ public class MazeGameImpl implements MazeGame {
     } else if (direction.equals("E")) {
       if (curr.getRightCell() != null) {
         goRight();
-        curr = maze[playerPosX][playerPosY];
         flag = 3;
-        movehelper(curr, flag);
       } else {
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
@@ -818,6 +810,10 @@ public class MazeGameImpl implements MazeGame {
     } else {
       throw new IllegalArgumentException("The direction string is invalid!");
     }
+    playerPosX = currPlayer.getPlayerLocation()[0];
+    playerPosY = currPlayer.getPlayerLocation()[1];
+    curr = maze[playerPosX][playerPosY];
+    movehelper(curr, flag);
   }
 
   @Override

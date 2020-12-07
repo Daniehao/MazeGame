@@ -240,8 +240,8 @@ public class MazeLayout extends JFrame implements GameView {
     statusPicMap.put("is room 1 right", "res/images/roombase-1-right.png");
     statusPicMap.put("is room 3 1", "res/images/roombase-3-up-down-left.png");
     statusPicMap.put("is room 3 2", "res/images/roombase-3-up-left-right.png");
-    statusPicMap.put("is room 3 3", "res/images/roombase-3-up-down-right.png");
-    statusPicMap.put("is room 3 4", "res/images/roombase-3-down-left-right.png");
+    statusPicMap.put("is room 3 3", "res/images/roombase-up-down-right.png");
+    statusPicMap.put("is room 3 4", "res/images/roombase-down-left-right.png");
     statusPicMap.put("is room 4", "res/images/roombase-4.png");
     statusPicMap.put("player 1", "res/images/player.png");
     statusPicMap.put("player 2", "res/images/player2.png");
