@@ -892,6 +892,16 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
+  public void setPlayerLocation(int x, int y) {
+    currPlayer.setPlayerLocation(x, y);
+  }
+
+  @Override
+  public void setPlayerStartLocation(int x, int y) {
+    currPlayer.setPlayerStartLocation(x, y);
+  }
+
+  @Override
   public String getShootRes() {
     if (isShootSuccess) {
       return "You shooted to the wumpus successfully!";
