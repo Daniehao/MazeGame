@@ -34,7 +34,5 @@ public interface MenuView {
 
   void msgbox();
 
-  String getTest(String playerLocation);
-
   public void setString(String s);
 }

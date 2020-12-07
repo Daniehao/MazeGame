@@ -15,7 +15,6 @@ public class ActionController implements ActionListener {
   private MazeGame game;
   private MenuView menuView;
   private GameView mazeView;
-
   /**
    * Constructor.
    *
@@ -74,15 +73,7 @@ public class ActionController implements ActionListener {
           }
           game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
                   pitPercent, arrows, players);
-          mazeView.setAlertPanel(game.getPlayerLocation(), 1);
-          mazeView.addComponents(rows, cols, players);
-          int[] pos1 = game.getPlayerPosition(1);
-          mazeView.showPlayer(1, pos1[0], pos1[1]);
-          if (players == 2) {
-            int[] pos2 = game.getPlayerPosition(2);
-            mazeView.showPlayer(2, pos2[0], pos2[1]);
-          }
-          mazeView.createAndShowGUI();
+          startNewGame(info);
         }
         break;
       case "Move up":
@@ -121,9 +112,27 @@ public class ActionController implements ActionListener {
         game.shoot(mazeView.getShootDirection(), distance);
         mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
+      case "Start Same Game":
+        mazeView.clearPanels();
+          break;
       default:
         throw new IllegalStateException("Error: unknown button");
     }
+  }
+
+  private void startNewGame(int[] info) {
+    mazeView.setAlertPanel(game.getPlayerLocation(), 1);
+    int rows = info[0];
+    int cols = info[1];
+    int players = info[3];
+    mazeView.addComponents(rows, cols, players);
+    int[] pos1 = game.getPlayerPosition(1);
+    mazeView.showPlayer(1, pos1[0], pos1[1]);
+    if (players == 2) {
+      int[] pos2 = game.getPlayerPosition(2);
+      mazeView.showPlayer(2, pos2[0], pos2[1]);
+    }
+    mazeView.createAndShowGUI();
   }
 }
 

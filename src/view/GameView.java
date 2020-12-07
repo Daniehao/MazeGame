@@ -44,4 +44,6 @@ public interface GameView {
   public void showPlayer(int flag, int x, int y);
 
   public void changeViewByMove(List<Cell> getWalkedCells, int[] newPos, int flag);
+
+  public void clearPanels();
 }
