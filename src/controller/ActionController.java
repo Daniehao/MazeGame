@@ -78,9 +78,56 @@ public class ActionController implements ActionListener, KeyListener {
                   pitPercent, arrows, players);
           startNewGame(info);
         }
+        mazeView.resetFocus();
         return;
       case "Start Same Game":
-        mazeView.clearPanels();
+        info = menuView.getMazeInput();
+        rows = info[0];
+        cols = info[1];
+        walls = info[2];
+        players = info[3];
+        isWrapping = menuView.getWrapping();
+        difficulty = menuView.getDifficulty();
+        if (isWrapping && walls > cols * rows + rows * cols - rows * cols + 1) {
+          menuView.msgbox();
+        } else if (!isWrapping && walls > (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1) {
+          menuView.msgbox();
+        } else {
+          boolean isPerfect = false;
+          if (isWrapping && walls == cols * rows + rows * cols - rows * cols + 1 || !isWrapping &&
+                  walls == (cols - 1) * rows + (rows - 1) * cols - rows * cols + 1) {
+            isPerfect = true;
+          }
+          double batPercent = 0;
+          double pitPercent = 0;
+          int arrows = 0;
+          if (difficulty.equals("easy mode")) {
+            batPercent = 0.1;
+            pitPercent = 0.1;
+            arrows = 10;
+          }
+          if (difficulty.equals("medium mode")) {
+            batPercent = 0.2;
+            pitPercent = 0.2;
+            arrows = 5;
+          }
+          if (difficulty.equals("hard mode")) {
+            batPercent = 0.3;
+            pitPercent = 0.3;
+            arrows = 3;
+          }
+          game = new MazeGameImpl(rows, cols, walls, isPerfect, isWrapping, batPercent,
+                  pitPercent, arrows, players);
+          mazeView.setAlertPanel(game.getPlayerLocation(), 1);
+          mazeView.clearPanels();
+          int[] pos1 = game.getPlayerPosition(1);
+          mazeView.showPlayer(1, pos1[0], pos1[1]);
+          if (players == 2) {
+            int[] pos2 = game.getPlayerPosition(2);
+            mazeView.showPlayer(2, pos2[0], pos2[1]);
+          }
+        }
+        mazeView.resetFocus();
         return;
     }
 

@@ -182,9 +182,11 @@ public class MazeLayout extends JFrame implements GameView {
 
   @Override
   public void clearPanels() {
-    alertPanel.removeAll();
-    mazePanel.removeAll();
-    scrollPane.removeAll();
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        labelArray[i][j].setIcon(new ImageIcon("res/images/empty.png"));
+      }
+    }
   }
 
   private void initGaps() {
