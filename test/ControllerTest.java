@@ -21,7 +21,7 @@ public class ControllerTest {
 //    Reader in = new StringReader("Move N Move E");
 //    Controller controller = new ControllerImpl(in, out);
 //    controller.start(new MazeGameImpl(3, 4, 6, true, false,
-//            0.2, 0.3, 3));
+//            0.2, 0.3, 3, 1));
 //    assertEquals("You are in cave (1, 1). Tunnels lead to the E, W, N, S You are in " +
 //            "cave (0, 3). Tunnels lead to the S ", out.toString());
 //  }
@@ -32,7 +32,7 @@ public class ControllerTest {
 //    Reader in = new StringReader("Move E Move E");
 //    Controller controller = new ControllerImpl(in, out);
 //    controller.start(new MazeGameImpl(3, 4, 6, true, false,
-//            0.2, 0.3, 3));
+//            0.2, 0.3, 3, 1));
 //    assertEquals("You are in cave (1, 1). Tunnels lead to the E, W, N, S You are in " +
 //            "cave (0, 3). Tunnels lead to the S ", out.toString());
 //  }
@@ -43,7 +43,7 @@ public class ControllerTest {
 //    Reader in = new StringReader("Move abcdefs Move E");
 //    Controller controller = new ControllerImpl(in, out);
 //    controller.start(new MazeGameImpl(3, 4, 6, true, false,
-//            0.2, 0.3, 3));
+//            0.2, 0.3, 3, 1));
 //  }
 //
 //  @Test
@@ -52,7 +52,7 @@ public class ControllerTest {
 //    Reader in = new StringReader("Move N Shoot E 1");
 //    Controller controller = new ControllerImpl(in, out);
 //    controller.start(new MazeGameImpl(3, 4, 6, true, false,
-//            0.2, 0.3, 3));
+//            0.2, 0.3, 3, 1));
 //    assertEquals("You are in cave (1, 1). Tunnels lead to the E, W, N, S " +
 //            "You shooted to the wumpus successfully!", out.toString());
 //  }
