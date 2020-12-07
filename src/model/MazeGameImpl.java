@@ -76,9 +76,6 @@ public class MazeGameImpl implements MazeGame {
     player1 = new Player(1);
     player2 = null;
     walkedCells = new ArrayList<>();
-    if (playerNum == 2) {
-      player2 = new Player(2);
-    }
     if (rows < 0) {
       throw new IllegalArgumentException("rows input cannot be negative!");
     }
@@ -113,10 +110,12 @@ public class MazeGameImpl implements MazeGame {
     assignPits();
     assignSuperBats();
     setStartPosition(1);
+    currPlayer = player1;
     if (playerNum == 2) {
       setStartPosition(2);
+      player2 = new Player(2);
+      otherPlayer = player2;
     }
-    currPlayer = player1;
   }
 
   public void changePlayerFlag() {
@@ -125,11 +124,15 @@ public class MazeGameImpl implements MazeGame {
       currPlayer = player1;
     } else {
       if (flag == 1) {
-        flag = 2;
-        currPlayer = player2;
+        if (!player2.getDead()){
+          flag = 2;
+          currPlayer = player2;
+        }
       } else {
-        flag = 1;
-        currPlayer = player1;
+        if (!player1.getDead()) {
+          flag = 2;
+          currPlayer = player2;
+        }
       }
     }
   }
@@ -821,10 +824,11 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
-  public boolean getGameOver() {
+  public boolean getGameEnd() {
     if (otherPlayer == null) {
-      return currPlayer.getDead();
+      return currPlayer.getDead() || isShootSuccess;
     }
+    return currPlayer.getDead() && otherPlayer.getDead() || isShootSuccess;
   }
 
   @Override

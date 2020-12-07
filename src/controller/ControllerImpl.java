@@ -31,7 +31,7 @@ public class ControllerImpl implements Controller {
     String direction;
     int distance;
     try (Scanner scan = new Scanner(this.in)) {
-      while (!game.getGameOver()) {
+      while (!game.getGameEnd()) {
         System.out.println("Shoot or Move? ");
         switch (scan.next()) {
           case "Shoot":
