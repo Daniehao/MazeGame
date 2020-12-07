@@ -723,7 +723,7 @@ public class MazeGameImpl implements MazeGame {
         dropToRandomCave();
       }
     } else {
-      if (num == 3) {
+      if (num == 1) {
         dropToRandomCave();
       }
     }
