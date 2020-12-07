@@ -119,6 +119,7 @@ public class ActionController implements ActionListener {
       case "Shoot":
         int distance = Integer.valueOf(mazeView.getShootDistance());
         game.shoot(mazeView.getShootDirection(), distance);
+        mazeView.changeAlertPanel(game.getAlert(), game.getPlayerRound());
         break;
       default:
         throw new IllegalStateException("Error: unknown button");
