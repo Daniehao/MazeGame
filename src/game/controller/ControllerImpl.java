@@ -52,7 +52,7 @@ public class ControllerImpl implements Controller {
           case "Quit":
             return;
           default:
-            throw new IllegalStateException("ERROR: Input string is not Shoot or Move");
+            break;
         }
       }
     } catch (IOException e) {
