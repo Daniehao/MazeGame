@@ -793,10 +793,12 @@ public class MazeGameImpl implements MazeGame {
     Cell curr = maze[playerPosX][playerPosY];
     walkedCells.add(curr);
     int flag = 0;
+    boolean getToWall = false;
     if (direction.equals("N")) {
       if (curr.getUpCell() != null) {
         goUp();
       } else {
+        getToWall = true;
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
       }
@@ -805,6 +807,7 @@ public class MazeGameImpl implements MazeGame {
         goDown();
         flag = 1;
       } else {
+        getToWall = true;
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
       }
@@ -813,6 +816,7 @@ public class MazeGameImpl implements MazeGame {
         goLeft();
         flag = 2;
       } else {
+        getToWall = true;
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
       }
@@ -821,17 +825,21 @@ public class MazeGameImpl implements MazeGame {
         goRight();
         flag = 3;
       } else {
+        getToWall = true;
         alert = "Player is running out of bound! Please re-input direction.";
         System.out.println(alert);
       }
     } else {
+      getToWall = true;
       alert = "The direction input is incorrect";
       System.out.println("The direction string is invalid!");
     }
     playerPosX = currPlayer.getPlayerLocation()[0];
     playerPosY = currPlayer.getPlayerLocation()[1];
     curr = maze[playerPosX][playerPosY];
-    movehelper(curr, flag);
+    if (!getToWall) {
+      movehelper(curr, flag);
+    }
   }
 
   @Override

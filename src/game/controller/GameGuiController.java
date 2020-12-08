@@ -158,9 +158,9 @@ public class GameGuiController implements ActionListener, KeyListener {
           game.move(mazeView.getMoveDirection());
           int[] newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case "Shoot up":
           mazeView.setShootDirection("N");
@@ -196,33 +196,33 @@ public class GameGuiController implements ActionListener, KeyListener {
           game.move("N");
           int[] newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case KeyEvent.VK_DOWN: //caps
           game.move("S");
           newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case KeyEvent.VK_LEFT: //caps
           game.move("W");
           newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case KeyEvent.VK_RIGHT: //caps
           game.move("E");
           newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         default:
           break;
@@ -238,33 +238,33 @@ public class GameGuiController implements ActionListener, KeyListener {
           game.move("N");
           int[] newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case KeyEvent.VK_DOWN: //caps
           game.move("S");
           newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case KeyEvent.VK_LEFT: //caps
           game.move("W");
           newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         case KeyEvent.VK_RIGHT: //caps
           game.move("E");
           newPos = game.getPlayerPosition(game.getPlayerRound());
           mazeView.changeViewByMove(game.getWalkedCells(), newPos, game.getPlayerRound());
-          game.changePlayerFlag();
           mazeView.changeAlertPanel(game.getAlert(), game.getPlayerLocation(),
                   game.getPlayerRound());
+          game.changePlayerFlag();
           break;
         default:
           break;

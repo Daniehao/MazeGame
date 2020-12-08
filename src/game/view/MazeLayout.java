@@ -142,14 +142,14 @@ public class MazeLayout extends JFrame implements GameView {
     alertPanel.add(alertLabel);
     positionLabel = new Label();
     alertPanel.add(positionLabel);
-    currRoundLabel = new Label("Next: Player " + flag + "'s Round");
+    currRoundLabel = new Label("Player " + flag + "'s Round");
     alertPanel.add(currRoundLabel);
     this.add(alertPanel, BorderLayout.NORTH);
   }
 
   @Override
   public void changeAlertPanel(String alert, String location, int flag) {
-    currRoundLabel.setText("Next: Player " + flag + "'s Round");
+    currRoundLabel.setText("Player " + flag + "'s Round");
     alertLabel.setText(alert);
     positionLabel.setText(location);
   }
