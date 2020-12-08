@@ -173,12 +173,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/game/controller/ControllerImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/game/controller/GameGuiController.java">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/game/model/Cell.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/game/model/MazeGame.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/model/MazeGameImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/game/model/Player.java">
           <value>
             <set />
           </value>

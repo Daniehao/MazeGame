@@ -1,28 +1,33 @@
 package game.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * The class implements the MenuView interface, which shows the menu panel and fetch the game
  * setting options that are chosen by the user.
  */
 public class MazeMenu extends JFrame implements MenuView {
-  static final String gapPlayerList[] = {"1", "2"};
-  static final String gapDiffList[] = {"easy mode", "medium mode", "hard mode"};
-  static final String wrappingList[] = {"Yes", "No"};
-  private JButton quitButton;
-  private MazePanel menuPanel;
-  JTextField rowsTextBox;
-  JTextField colsTextBox;
-  JTextField wallsTextBox;
-  JComboBox playersComboBox;
-  JComboBox wrappingComboBox;
-  JComboBox difficultyComboBox;
-  JButton startButton;
+  private static final String[] gapPlayerList = {"1", "2"};
+  private static final String[] gapDiffList = {"easy mode", "medium mode", "hard mode"};
+  private static final String[] wrappingList = {"Yes", "No"};
+  private JTextField rowsTextBox;
+  private JTextField colsTextBox;
+  private JTextField wallsTextBox;
+  private JComboBox playersComboBox;
+  private JComboBox wrappingComboBox;
+  private JComboBox difficultyComboBox;
+  private JButton startButton;
 
   /**
    * Default constructor.
@@ -35,7 +40,7 @@ public class MazeMenu extends JFrame implements MenuView {
     initGaps();
     this.setLayout(new BorderLayout());
 
-    menuPanel = new MazePanel();
+    MazePanel menuPanel = new MazePanel();
     this.add(menuPanel, BorderLayout.NORTH);
     menuPanel.setPreferredSize(new Dimension(300, 50));
     menuPanel.add(new Label("MAZE GAME MENU"));
@@ -61,7 +66,7 @@ public class MazeMenu extends JFrame implements MenuView {
     startButton = new JButton("Start New");
     commendPanel.add(startButton);
     startButton.setActionCommand("Start New");
-    quitButton = new JButton("Quit");
+    JButton quitButton = new JButton("Quit");
     quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
     });
@@ -104,7 +109,7 @@ public class MazeMenu extends JFrame implements MenuView {
 
   @Override
   public boolean getWrapping() {
-    boolean rst = wrappingComboBox.getSelectedItem() == "Yes" ? true : false;
+    boolean rst = wrappingComboBox.getSelectedItem().equals("Yes");
     return rst;
   }
 

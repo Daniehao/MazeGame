@@ -27,7 +27,6 @@ public class MazeGameImpl implements MazeGame {
   private List<int[]> caveLst;
   private double batPercent;
   private double pitPercent;
-  private int arrows;
   private boolean isGameOver;
   private boolean isShootSuccess;
   private Cell wumpus;
@@ -37,11 +36,14 @@ public class MazeGameImpl implements MazeGame {
   private Player player1;
   private Player player2;
   private Player currPlayer;
-  private Player otherPlayer;
   private List<Cell> walkedCells;
   private int lives;
 
+  /**
+   * Empty constructor.
+   */
   public MazeGameImpl() {
+    //Empty constructor as input of the controller.
   }
 
   /**
@@ -52,7 +54,7 @@ public class MazeGameImpl implements MazeGame {
    * @param remains    The number of walls that should remain.
    * @param isPerfect  The maze is perfect or not.
    * @param isWrapping The maze is wrapping or not.
-   * @param playerNum The total number of players.
+   * @param playerNum  The total number of players.
    */
   public MazeGameImpl(int rows, int cols, int remains, boolean isPerfect, boolean isWrapping,
                       double batPercent, double pitPercent, int arrows, int playerNum)
@@ -66,7 +68,6 @@ public class MazeGameImpl implements MazeGame {
     caveLst = new ArrayList<>();
     this.batPercent = batPercent;
     this.pitPercent = pitPercent;
-    this.arrows = arrows;
     this.playerNum = playerNum;
     isGameOver = false;
     isShootSuccess = false;
@@ -112,21 +113,22 @@ public class MazeGameImpl implements MazeGame {
     assignSuperBats();
     setStartPosition(1);
     currPlayer = player1;
-    otherPlayer = null;
+    player1.setArrows(arrows);
     if (playerNum == 2) {
       player2 = new Player(2);
       setStartPosition(2);
-      otherPlayer = player2;
+      player2.setArrows(arrows);
     }
   }
 
+  @Override
   public void changePlayerFlag() {
     if (playerNum == 1) {
       flag = 1;
       currPlayer = player1;
     } else {
       if (flag == 1) {
-        if (!player2.getDead()){
+        if (!player2.getDead()) {
           flag = 2;
           currPlayer = player2;
         }
@@ -158,7 +160,7 @@ public class MazeGameImpl implements MazeGame {
     int x = caveLst.get(randomInt)[0];
     int y = caveLst.get(randomInt)[1];
     Cell temp = maze[x][y];
-    while (temp.isWumpus || temp.isPit || temp.hasBat) {
+    while (temp.getIsWumpus() || temp.getIsPit() || temp.getHasBat()) {
       randomInt = random.nextInt(caveLst.size());
       x = caveLst.get(randomInt)[0];
       y = caveLst.get(randomInt)[1];
@@ -556,17 +558,17 @@ public class MazeGameImpl implements MazeGame {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Cell curr = maze[i][j];
-        if (curr.isRoom) {
-          if (curr.getUpCell() != null && curr.getUpCell().isTunnel) {
+        if (curr.getIsRoom()) {
+          if (curr.getUpCell() != null && curr.getUpCell().getIsTunnel()) {
             linkTunnelHelper(curr, curr.getUpCell(), 0);
           }
-          if (curr.getDownCell() != null && curr.getDownCell().isTunnel) {
+          if (curr.getDownCell() != null && curr.getDownCell().getIsTunnel()) {
             linkTunnelHelper(curr, curr.getDownCell(), 1);
           }
-          if (curr.getLeftCell() != null && curr.getLeftCell().isTunnel) {
+          if (curr.getLeftCell() != null && curr.getLeftCell().getIsTunnel()) {
             linkTunnelHelper(curr, curr.getLeftCell(), 2);
           }
-          if (curr.getRightCell() != null && curr.getRightCell().isTunnel) {
+          if (curr.getRightCell() != null && curr.getRightCell().getIsTunnel()) {
             linkTunnelHelper(curr, curr.getRightCell(), 3);
           }
         }
@@ -579,7 +581,7 @@ public class MazeGameImpl implements MazeGame {
    */
   private void linkTunnelHelper(Cell curr, Cell next, int flag) {
     int originFlag = flag;
-    while (next.isTunnel) {
+    while (next.getIsTunnel()) {
       if (next.getDownCell() != null && flag != 0) {
         next = curr.getDownCell();
         flag = 1;
@@ -743,16 +745,14 @@ public class MazeGameImpl implements MazeGame {
     alert = "Whoa -- you successfully duck superbats that try to grab you!";
     System.out.println(alert);
     Random random = new Random();
-    int playerPosX = currPlayer.getPlayerLocation()[0];
-    int playerPosY = currPlayer.getPlayerLocation()[1];
     int index = random.nextInt(caveLst.size());
-    playerPosX = caveLst.get(index)[0];
-    playerPosY = caveLst.get(index)[1];
-    if (maze[playerPosX][playerPosY].isWumpus) {
+    int playerPosX = caveLst.get(index)[0];
+    int playerPosY = caveLst.get(index)[1];
+    if (maze[playerPosX][playerPosY].getIsWumpus()) {
       getInWumpus();
-    } else if (maze[playerPosX][playerPosY].hasBat) {
+    } else if (maze[playerPosX][playerPosY].getHasBat()) {
       getInBats();
-    } else if (maze[playerPosX][playerPosY].isPit) {
+    } else if (maze[playerPosX][playerPosY].getIsPit()) {
       getInPits();
     }
   }
@@ -825,7 +825,8 @@ public class MazeGameImpl implements MazeGame {
         System.out.println(alert);
       }
     } else {
-      throw new IllegalArgumentException("The direction string is invalid!");
+      alert = "The direction input is incorrect";
+      System.out.println("The direction string is invalid!");
     }
     playerPosX = currPlayer.getPlayerLocation()[0];
     playerPosY = currPlayer.getPlayerLocation()[1];
@@ -845,34 +846,35 @@ public class MazeGameImpl implements MazeGame {
     queue.offer(wumpus);
     while (!queue.isEmpty()) {
       Cell curr = queue.poll();
-      curr.couldReachToWumpus = true;
+      curr.setReachToWumpus();
       visited.add(curr);
       if (curr.getUpCell() != null && !visited.contains(curr.getUpCell()) &&
-              (!curr.getUpCell().isPit || curr.getUpCell().isPit && curr.getUpCell().hasBat)) {
+              (!curr.getUpCell().getIsPit() || curr.getUpCell().getIsPit() &&
+                      curr.getUpCell().getHasBat())) {
         queue.offer(curr.getUpCell());
       }
       if (curr.getDownCell() != null && !visited.contains(curr.getDownCell()) &&
-              (!curr.getDownCell().isPit || curr.getDownCell().isPit &&
-                      curr.getDownCell().hasBat)) {
+              (!curr.getDownCell().getIsPit() || curr.getDownCell().getIsPit() &&
+                      curr.getDownCell().getHasBat())) {
         queue.offer(curr.getDownCell());
       }
       if (curr.getLeftCell() != null && !visited.contains(curr.getLeftCell()) &&
-              (!curr.getLeftCell().isPit || curr.getLeftCell().isPit &&
-                      curr.getLeftCell().hasBat)) {
+              (!curr.getLeftCell().getIsPit() || curr.getLeftCell().getIsPit() &&
+                      curr.getLeftCell().getHasBat())) {
         queue.offer(curr.getLeftCell());
       }
       if (curr.getRightCell() != null && !visited.contains(curr.getRightCell()) &&
-              (!curr.getRightCell().isPit || curr.getRightCell().isPit
-                      && curr.getRightCell().hasBat)) {
+              (!curr.getRightCell().getIsPit() || curr.getRightCell().getIsPit()
+                      && curr.getRightCell().getHasBat())) {
         queue.offer(curr.getRightCell());
       }
     }
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        if (maze[i][j].isRoom && !maze[i][j].couldReachToWumpus &&
+        if (maze[i][j].getIsRoom() && !maze[i][j].getReachToWumpus() &&
                 i == player1.getPlayerStartLocation()[0] &&
-                j == player1.getPlayerStartLocation()[1] || maze[i][j].isRoom &&
-                !maze[i][j].couldReachToWumpus && i == player2.getPlayerStartLocation()[0] &&
+                j == player1.getPlayerStartLocation()[1] || maze[i][j].getIsRoom() &&
+                !maze[i][j].getReachToWumpus() && i == player2.getPlayerStartLocation()[0] &&
                 j == player2.getPlayerStartLocation()[1]) {
           return true;
         }
@@ -906,7 +908,8 @@ public class MazeGameImpl implements MazeGame {
     if (isShootSuccess) {
       return "You shooted to the wumpus successfully!";
     }
-    return "You didn't shooted to the wumpus, and you have " + arrows + " arrows remains.";
+    return "You didn't shooted to the wumpus, and you have " + currPlayer.getArrows() +
+            " arrows remains.";
   }
 
   /**
@@ -917,20 +920,20 @@ public class MazeGameImpl implements MazeGame {
    */
   private void movehelper(Cell curr, int flag) {
     walkedCells.add(curr);
-    if (curr.closeToWumpus) {
+    if (curr.getCloseToWumpus()) {
       alert = "You smell a Wumpus!";
       System.out.println(alert);
-    } else if (curr.closeToPit) {
+    } else if (curr.getCloseToPit()) {
       alert = "You smell something terrible nearby.";
       System.out.println(alert);
-    } else if (curr.isWumpus) {
+    } else if (curr.getIsWumpus()) {
       getInWumpus();
-    } else if (curr.hasBat) {
+    } else if (curr.getHasBat()) {
       getInBats();
       getPlayerLocation();
-    } else if (curr.isPit) {
+    } else if (curr.getIsPit()) {
       getInPits();
-    } else if (curr.isTunnel) {
+    } else if (curr.getIsTunnel()) {
       moveInTunnel(flag);
     } else {
       alert = "You feel a draft.";
@@ -967,18 +970,18 @@ public class MazeGameImpl implements MazeGame {
     if (curr == null) {
       alert = "You didn't shoot to the wumpus!";
       System.out.println(alert);
-    } else if (curr.isWumpus) {
+    } else if (curr.getIsWumpus()) {
       isGameOver = true;
       alert = "Player " + getPlayerRound() + "wins!";
       isShootSuccess = true;
-      arrows--;
+      currPlayer.setArrows(currPlayer.getArrows() - 1);
       alert = "Hee hee hee, you got the wumpus! Next time you won't be so lucky!";
       System.out.println(alert);
     } else {
       alert = "You didn't shoot to the wumpus!";
       System.out.println(alert);
-      arrows--;
-      if (arrows <= 0) {
+      currPlayer.setArrows(currPlayer.getArrows() - 1);
+      if (currPlayer.getArrows() <= 0) {
         lives--;
         currPlayer.setDead();
         if (lives == 0) {
@@ -993,9 +996,10 @@ public class MazeGameImpl implements MazeGame {
   /**
    * A helper method for shoot that get the target cell to shoot after assigning a distance and
    * direction.
+   *
    * @param distance Number of caves.
-   * @param curr The current cell.
-   * @param flag The direction flag.
+   * @param curr     The current cell.
+   * @param flag     The direction flag.
    * @return The target cell to shoot.
    */
   private Cell goShootByDistance(int distance, Cell curr, int flag) {
@@ -1003,28 +1007,28 @@ public class MazeGameImpl implements MazeGame {
       Cell prev = curr;
       if (flag == 1) {
         if (curr.getDownCell() == null) {
-          arrows--;
+          currPlayer.setArrows(currPlayer.getArrows() - 1);
           return null;
         }
         curr = curr.getDownCell();
         flag = getFlag(prev, curr);
       } else if (flag == 0) {
         if (curr.getUpCell() == null) {
-          arrows--;
+          currPlayer.setArrows(currPlayer.getArrows() - 1);
           return null;
         }
         curr = curr.getUpCell();
         flag = getFlag(prev, curr);
       } else if (flag == 2) {
         if (curr.getLeftCell() == null) {
-          arrows--;
+          currPlayer.setArrows(currPlayer.getArrows() - 1);
           return null;
         }
         curr = curr.getLeftCell();
         flag = getFlag(prev, curr);
       } else if (flag == 3) {
         if (curr.getRightCell() == null) {
-          arrows--;
+          currPlayer.setArrows(currPlayer.getArrows() - 1);
           return null;
         }
         curr = curr.getRightCell();
@@ -1036,6 +1040,7 @@ public class MazeGameImpl implements MazeGame {
 
   /**
    * Get the direction flag by moving from the last cell to the current cell.
+   *
    * @param prev The cell in the last step.
    * @param curr The current cell.
    * @return The flag indicates direction.
@@ -1064,7 +1069,7 @@ public class MazeGameImpl implements MazeGame {
   private void moveInTunnel(int flag) {
     int playerPosX = currPlayer.getPlayerLocation()[0];
     int playerPosY = currPlayer.getPlayerLocation()[1];
-    while (maze[playerPosX][playerPosY].isTunnel) {
+    while (maze[playerPosX][playerPosY].getIsTunnel()) {
       if (maze[playerPosX][playerPosY].getDownCell() != null && flag != 0) {
         goDown();
         flag = 1;
@@ -1087,10 +1092,12 @@ public class MazeGameImpl implements MazeGame {
     movehelper(maze[playerPosX][playerPosY], flag);
   }
 
+  @Override
   public String getAlert() {
     return alert;
   }
 
+  @Override
   public int[] getPlayerPosition(int flag) {
     Player player = null;
     if (flag == 1) {
@@ -1105,11 +1112,6 @@ public class MazeGameImpl implements MazeGame {
   }
 
   @Override
-  public Cell getCurrCell() {
-    int[] pos = currPlayer.getPlayerLocation();
-    return maze[pos[0]][pos[1]];
-  }
-
   public List<Cell> getWalkedCells() {
     return walkedCells;
   }

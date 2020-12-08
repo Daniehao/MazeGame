@@ -72,9 +72,10 @@ public interface GameView {
    * Change the alert message.
    *
    * @param alert The alert message.
+   * @param location The location message.
    * @param flag  The player in the following
    */
-  void changeAlertPanel(String alert, int flag);
+  void changeAlertPanel(String alert, String location, int flag);
 
   /**
    * Set listeners for all of the components in the frame.

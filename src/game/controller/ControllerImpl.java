@@ -7,7 +7,7 @@ import java.util.Scanner;
 import game.model.MazeGame;
 
 /**
- * A game.controller for the maze game. This game.controller works with a Readable and Appendable object. It
+ * This controller works with a Readable and Appendable object. It
  * has been designed to accept a sequence of multiple inputs from the Readable object.
  */
 public class ControllerImpl implements Controller {

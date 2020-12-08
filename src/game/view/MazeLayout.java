@@ -1,25 +1,30 @@
 package game.view;
 
-import java.awt.*;
+import game.model.Cell;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.*;
-
-import game.model.Cell;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
- * The class for the game.view of the MazeGame.
+ * The class for showing view of the maze game which implements the GameView interface, and it
+ * includes operations to set the panels and liseners on the graphical interface.
  */
 public class MazeLayout extends JFrame implements GameView {
-  private MazePanel alertPanel;
   private MazePanel mazePanel;
-  private MazePanel controlPanel;
-  private JScrollPane scrollPane;
   private JButton quitButton;
   private JButton startSameButton;
   private JButton moveUp;
@@ -37,6 +42,7 @@ public class MazeLayout extends JFrame implements GameView {
   private String shootDirection;
   private Label currRoundLabel;
   private Label alertLabel;
+  private Label positionLabel;
   private JLabel[][] labelArray;
   private int rows;
   private int cols;
@@ -64,11 +70,11 @@ public class MazeLayout extends JFrame implements GameView {
     mazePanel.setPreferredSize(new Dimension(500, 500));
     mazePanel.setLayout(new GridLayout(rows, cols));
     initImageArray();
-    scrollPane = new JScrollPane(mazePanel);
+    JScrollPane scrollPane = new JScrollPane(mazePanel);
     this.add(scrollPane, BorderLayout.CENTER);
 
     // move
-    controlPanel = new MazePanel();
+    MazePanel controlPanel = new MazePanel();
     controlPanel.setLayout(new GridLayout(4, 6));
     controlPanel.add(new Label("Move Direction: "));
     controlPanel.add(moveUp);
@@ -113,6 +119,9 @@ public class MazeLayout extends JFrame implements GameView {
     this.add(controlPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * initialize the empty maze.
+   */
   private void initImageArray() {
     labelArray = new JLabel[rows][cols];
     for (int i = 0; i < rows; i++) {
@@ -126,20 +135,23 @@ public class MazeLayout extends JFrame implements GameView {
 
   @Override
   public void setAlertPanel(String alert, int flag) {
-    alertPanel = new MazePanel();
-    alertPanel.setLayout(new GridLayout(2, 1));
+    MazePanel alertPanel = new MazePanel();
+    alertPanel.setLayout(new GridLayout(3, 1));
     alertPanel.setPreferredSize(new Dimension(200, 80));
     alertLabel = new Label(alert);
     alertPanel.add(alertLabel);
+    positionLabel = new Label();
+    alertPanel.add(positionLabel);
     currRoundLabel = new Label("Next: Player " + flag + "'s Round");
     alertPanel.add(currRoundLabel);
     this.add(alertPanel, BorderLayout.NORTH);
   }
 
   @Override
-  public void changeAlertPanel(String alert, int flag) {
+  public void changeAlertPanel(String alert, String location, int flag) {
     currRoundLabel.setText("Next: Player " + flag + "'s Round");
     alertLabel.setText(alert);
+    positionLabel.setText(location);
   }
 
   @Override
@@ -172,7 +184,7 @@ public class MazeLayout extends JFrame implements GameView {
 
   @Override
   public void changeViewByMove(List<Cell> getWalkedCells, int[] newPos, int flag) {
-    for (Cell cell: getWalkedCells) {
+    for (Cell cell : getWalkedCells) {
       ImageIcon icon = new ImageIcon(statusPicMap.get(cell.getCurrCellStatus()));
       labelArray[cell.getCellPos()[0]][cell.getCellPos()[1]].setIcon(icon);
     }
@@ -192,6 +204,9 @@ public class MazeLayout extends JFrame implements GameView {
     }
   }
 
+  /**
+   * Init components in the control panel.
+   */
   private void initGaps() {
     moveUp = new JButton("Up");
     moveDown = new JButton("Down");
@@ -234,6 +249,9 @@ public class MazeLayout extends JFrame implements GameView {
     return shootDirection;
   }
 
+  /**
+   * Generate the map of the image string key label with the image routine.
+   */
   private void generateAlertPicMap() {
     statusPicMap.put("is tunnel vertical", "images/hallway-v.png");
     statusPicMap.put("is tunnel horizontal", "images/hallway-h.png");

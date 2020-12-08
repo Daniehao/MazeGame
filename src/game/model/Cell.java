@@ -11,20 +11,22 @@ import java.util.Map;
 public class Cell {
   //string is the direction, cell is the next cell.
   Map<String, Cell> cellMap;
-  boolean isTunnel;
-  boolean isRoom;
-  boolean closeToWumpus;
-  boolean isWumpus;
-  boolean isPit;
-  boolean closeToPit;
-  boolean hasBat;
-  boolean couldReachToWumpus;
-  boolean isTarget;
-  int x;
-  int y;
+  private boolean isTunnel;
+  private boolean isRoom;
+  private boolean closeToWumpus;
+  private boolean isWumpus;
+  private boolean isPit;
+  private boolean closeToPit;
+  private boolean hasBat;
+  private boolean couldReachToWumpus;
+  private int x;
+  private int y;
 
   /**
-   * The constructor for Cell class.
+   * Constructor.
+   *
+   * @param x The cell's horizontal position in the maze.
+   * @param y The cell's vertical position in the maze.
    */
   public Cell(int x, int y) {
     cellMap = new HashMap<>();
@@ -196,15 +198,27 @@ public class Cell {
     return closeToPit;
   }
 
+  /**
+   * Get whether the cell is a room.
+   * @return True/False.
+   */
   public boolean getIsRoom() {
     return isRoom;
   }
 
+  /**
+   * Get whether the cell is a tunnel.
+   * @return True/False.
+   */
   public boolean getIsTunnel() {
     return isTunnel;
   }
 
-  public int geRoomDoors() {
+  /**
+   * Get the number of doors for the cell.
+   * @return Number of doors.
+   */
+  public int getRoomDoors() {
     int count = 0;
     if (getUpCell() != null) {
       count++;
@@ -221,10 +235,20 @@ public class Cell {
     return count;
   }
 
+  /**
+   * Get the position of the current cell.
+   *
+   * @return The position array.
+   */
   public int[] getCellPos() {
     return new int[]{x, y};
   }
 
+  /**
+   * Get the cell type string to mark which image is corresponding to the cell.
+   *
+   * @return The string of cell indicator.
+   */
   public String getCurrCellStatus() {
     if (this.isTunnel) {
       if (getLeftCell() != null && getRightCell() != null) {
@@ -246,7 +270,7 @@ public class Cell {
         return "is tunnel 4";
       }
     } else if (this.isRoom) {
-      int roomNum = geRoomDoors();
+      int roomNum = getRoomDoors();
       if (roomNum == 1) {
         if (getUpCell() != null) {
           return "is room 1 up";
@@ -278,5 +302,21 @@ public class Cell {
       }
     }
     return "";
+  }
+
+  /**
+   * Set is the cell could reach to wumpus.
+   */
+  public void setReachToWumpus() {
+    couldReachToWumpus = true;
+  }
+
+  /**
+   * Get if the cell could reach to wumpus or not.
+   *
+   * @return True/False.
+   */
+  public boolean getReachToWumpus() {
+    return couldReachToWumpus;
   }
 }

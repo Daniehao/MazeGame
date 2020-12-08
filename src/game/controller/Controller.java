@@ -5,8 +5,7 @@ import java.io.IOException;
 import game.model.MazeGame;
 
 /**
- * The game.controller for the MazeGame interface, which enables users to do the move operation to move
- * in the maze as well as the shoot operation to shoot towards to a cave that may have.
+ * The controller class for the text version of maze game.
  */
 public interface Controller {
   /**

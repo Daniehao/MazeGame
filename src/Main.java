@@ -1,5 +1,10 @@
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
+import game.controller.ControllerImpl;
 import game.controller.GameGuiController;
 import game.model.MazeGame;
 import game.model.MazeGameImpl;
@@ -21,12 +26,9 @@ public class Main {
   public static void main(String[] args) {
 //    List<String> lst = Arrays.asList(args);
 //    if (lst.stream().anyMatch("--gui"::equals)) {
-      // Create the game.model
       MazeGame model = new MazeGameImpl();
-      // Create the game.view
       MenuView view = new MazeMenu();
       GameView mazeView = new MazeLayout();
-      // Create the game.controller with the game.model and the game.view
       new GameGuiController(model, view, mazeView);
 //    } else if (lst.stream().anyMatch("--text"::equals)) {
 //      MazeGame game = createMaze();

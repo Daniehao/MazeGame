@@ -71,8 +71,8 @@ public interface MazeGame {
    * Reset the player's starting point for testing.
    *
    * @param x The horizontal location of the starting point.
-   * @param y The vertical location of the starting point.
-//   */
+   * @param y The vertical location of the starting point. //
+   */
   public void setPlayerStartLocation(int x, int y);
 
   /**
@@ -84,17 +84,35 @@ public interface MazeGame {
 
   /**
    * Return the alert message.
+   *
    * @return The alert message of the game.
    */
   public String getAlert();
 
+  /**
+   * Change the player flag to the other player indicator.
+   */
   public void changePlayerFlag();
 
+  /**
+   * Get the player indicator of the current round.
+   *
+   * @return The player indicator.
+   */
   public int getPlayerRound();
 
+  /**
+   * Get the player's current position.
+   *
+   * @param flag The indicator of player.
+   * @return The player's current position.
+   */
   public int[] getPlayerPosition(int flag);
 
-  public Cell getCurrCell();
-
+  /**
+   * Get the list of cells which saves the cells that player has walked and passed.
+   *
+   * @return The list of cells the player passed in the current round.
+   */
   public List<Cell> getWalkedCells();
 }
