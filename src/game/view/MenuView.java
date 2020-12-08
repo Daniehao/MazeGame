@@ -10,7 +10,7 @@ public interface MenuView {
 
   /**
    * Set listeners on the buttons of the menu.
-   * @param listener
+   * @param listener The ActionListener.
    */
   public void setListener(ActionListener listener);
 

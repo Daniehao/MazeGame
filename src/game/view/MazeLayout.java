@@ -55,6 +55,7 @@ public class MazeLayout extends JFrame implements GameView {
     resetFocus();
   }
 
+  @Override
   public void addComponents(int rows, int cols, int playerNum) {
     this.rows = rows;
     this.cols = cols;
@@ -123,6 +124,7 @@ public class MazeLayout extends JFrame implements GameView {
     }
   }
 
+  @Override
   public void setAlertPanel(String alert, int flag) {
     alertPanel = new MazePanel();
     alertPanel.setLayout(new GridLayout(2, 1));
@@ -134,6 +136,7 @@ public class MazeLayout extends JFrame implements GameView {
     this.add(alertPanel, BorderLayout.NORTH);
   }
 
+  @Override
   public void changeAlertPanel(String alert, int flag) {
     currRoundLabel.setText("Next: Player " + flag + "'s Round");
     alertLabel.setText(alert);
@@ -231,14 +234,6 @@ public class MazeLayout extends JFrame implements GameView {
     return shootDirection;
   }
 
-
-  @Override
-  public void showErrorMessage(String error) {
-    JOptionPane.showMessageDialog(this, error, "Error",
-            JOptionPane.ERROR_MESSAGE);
-
-  }
-
   private void generateAlertPicMap() {
     statusPicMap.put("is tunnel vertical", "images/hallway-v.png");
     statusPicMap.put("is tunnel horizontal", "images/hallway-h.png");
@@ -265,11 +260,9 @@ public class MazeLayout extends JFrame implements GameView {
     this.requestFocus();
   }
 
-  public void createAndShowGUI() {
-    //Create and set up the window.
+  @Override
+  public void createAndShowGui() {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //Set up the content pane.
-    //Display the window.
     this.pack();
     this.setVisible(true);
   }

@@ -13,7 +13,7 @@ import game.view.MenuView;
 /**
  * Implementation of the game.controller for the Maze Game.
  */
-public class ActionController implements ActionListener, KeyListener {
+public class GameGuiController implements ActionListener, KeyListener {
   private MazeGame game;
   private MenuView menuView;
   private GameView mazeView;
@@ -25,7 +25,7 @@ public class ActionController implements ActionListener, KeyListener {
    * @param menuView
    * @param mazeView
    */
-  public ActionController(MazeGame game, MenuView menuView, GameView mazeView) {
+  public GameGuiController(MazeGame game, MenuView menuView, GameView mazeView) {
     this.game = game;
     this.menuView = menuView;
     this.mazeView = mazeView;
@@ -78,7 +78,7 @@ public class ActionController implements ActionListener, KeyListener {
                   pitPercent, arrows, players);
           startNewGame(info);
         }
-        mazeView.createAndShowGUI();
+        mazeView.createAndShowGui();
         mazeView.resetFocus();
         return;
       case "Start Same Game":
@@ -191,7 +191,7 @@ public class ActionController implements ActionListener, KeyListener {
       int[] pos2 = game.getPlayerPosition(2);
       mazeView.showPlayer(2, pos2[0], pos2[1]);
     }
-    mazeView.createAndShowGUI();
+    mazeView.createAndShowGui();
   }
 
   @Override

@@ -1,11 +1,6 @@
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-import game.controller.ActionController;
-import game.controller.ControllerImpl;
+import game.controller.GameGuiController;
 import game.model.MazeGame;
 import game.model.MazeGameImpl;
 import game.view.GameView;
@@ -32,7 +27,7 @@ public class Main {
       MenuView view = new MazeMenu();
       GameView mazeView = new MazeLayout();
       // Create the game.controller with the game.model and the game.view
-      new ActionController(model, view, mazeView);
+      new GameGuiController(model, view, mazeView);
 //    } else if (lst.stream().anyMatch("--text"::equals)) {
 //      MazeGame game = createMaze();
 //      System.out.println(game.getPlayerLocation());

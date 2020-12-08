@@ -3,11 +3,13 @@ package game.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.function.Consumer;
 
 import javax.swing.*;
 
-
+/**
+ * The class implements the MenuView interface, which shows the menu panel and fetch the game
+ * setting options that are chosen by the user.
+ */
 public class MazeMenu extends JFrame implements MenuView {
   static final String gapPlayerList[] = {"1", "2"};
   static final String gapDiffList[] = {"easy mode", "medium mode", "hard mode"};
@@ -20,8 +22,7 @@ public class MazeMenu extends JFrame implements MenuView {
   JComboBox playersComboBox;
   JComboBox wrappingComboBox;
   JComboBox difficultyComboBox;
-  Button startButton;
-  private transient Consumer<String> commandCallback;
+  JButton startButton;
 
   /**
    * Default constructor.
@@ -41,7 +42,7 @@ public class MazeMenu extends JFrame implements MenuView {
     JPanel controls = new JPanel();
     controls.setPreferredSize(new Dimension(500, 300));
 
-    controls.setLayout(new GridLayout(6,2));
+    controls.setLayout(new GridLayout(6, 2));
     controls.add(new Label("Input maze rows: "));
     controls.add(rowsTextBox);
     controls.add(new Label("Input maze columns: "));
@@ -57,7 +58,7 @@ public class MazeMenu extends JFrame implements MenuView {
     this.add(controls, BorderLayout.CENTER);
 
     JPanel commendPanel = new JPanel();
-    startButton = new Button("Start New");
+    startButton = new JButton("Start New");
     commendPanel.add(startButton);
     startButton.setActionCommand("Start New");
     quitButton = new JButton("Quit");
@@ -69,12 +70,16 @@ public class MazeMenu extends JFrame implements MenuView {
     this.add(commendPanel, BorderLayout.SOUTH);
   }
 
-  public void msgbox(){
+  @Override
+  public void msgbox() {
     JOptionPane.showMessageDialog(this, "The input of remaining walls " +
             "is incorrect. Please choose a valid number");
   }
 
-  public void initGaps() {
+  /**
+   * Initialize the components from users' input.
+   */
+  private void initGaps() {
     rowsTextBox = new JTextField(5);
     colsTextBox = new JTextField(5);
     wallsTextBox = new JTextField(5);
@@ -83,35 +88,35 @@ public class MazeMenu extends JFrame implements MenuView {
     wrappingComboBox = new JComboBox(wrappingList);
   }
 
+  /**
+   * Get the array of user's input on the maze game.
+   *
+   * @return The array of user's input.
+   */
   public int[] getMazeInput() {
     int[] info = new int[4];
     info[0] = Integer.valueOf(rowsTextBox.getText());
     info[1] = Integer.valueOf(colsTextBox.getText());
     info[2] = Integer.valueOf(wallsTextBox.getText());
-    info[3] = Integer.valueOf((String)playersComboBox.getSelectedItem());
+    info[3] = Integer.valueOf((String) playersComboBox.getSelectedItem());
     return info;
   }
 
+  @Override
   public boolean getWrapping() {
-    boolean rst = wrappingComboBox.getSelectedItem() == "Yes"? true: false;
+    boolean rst = wrappingComboBox.getSelectedItem() == "Yes" ? true : false;
     return rst;
   }
 
+  @Override
   public String getDifficulty() {
-    return (String)difficultyComboBox.getSelectedItem();
+    return (String) difficultyComboBox.getSelectedItem();
   }
 
-  public String getTest(String location) {
-    return location;
-  }
-
-  private static void createAndShowGUI() {
+  private static void createAndShowGui() {
     //Create and set up the window.
     MazeMenu frame = new MazeMenu();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //Set up the content pane.
-//    frame.addComponentsToPane(frame.getContentPane());
-    //Display the window.
     frame.pack();
     frame.setVisible(true);
   }
