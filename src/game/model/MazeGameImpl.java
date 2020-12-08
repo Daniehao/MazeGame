@@ -722,6 +722,7 @@ public class MazeGameImpl implements MazeGame {
     int num = random.nextInt(2);
     int playerPosX = currPlayer.getPlayerLocation()[0];
     int playerPosY = currPlayer.getPlayerLocation()[1];
+    currPlayer.setPlayerLocation(playerPosX, playerPosY);
     //both bats and pits
     if (maze[playerPosX][playerPosY].getIsPit()) {
       //50% possibility to pits
@@ -748,6 +749,7 @@ public class MazeGameImpl implements MazeGame {
     int index = random.nextInt(caveLst.size());
     int playerPosX = caveLst.get(index)[0];
     int playerPosY = caveLst.get(index)[1];
+    currPlayer.setPlayerLocation(playerPosX, playerPosY);
     if (maze[playerPosX][playerPosY].getIsWumpus()) {
       getInWumpus();
     } else if (maze[playerPosX][playerPosY].getHasBat()) {

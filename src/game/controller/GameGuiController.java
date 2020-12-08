@@ -274,6 +274,7 @@ public class GameGuiController implements ActionListener, KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
+    //Nothing needs to do.
   }
 }
 
