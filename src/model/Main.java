@@ -48,8 +48,10 @@ public class Main {
     double pitPercent = Double.parseDouble(scan.next());
     System.out.println("Input the number of arrows: ");
     int arrows = scan.nextInt();
+    System.out.println("Input the number of players(1 or 2): ");
+    int players = scan.nextInt();
     MazeGame game = new MazeGameImpl(rows, cols, remains, isPerfect, isWrapping, batPercent,
-            pitPercent, arrows, 1);
+            pitPercent, arrows, players);
     return game;
   }
 }
