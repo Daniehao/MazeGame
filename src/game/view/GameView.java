@@ -1,15 +1,14 @@
-package view;
+package game.view;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.List;
-import java.util.function.Consumer;
 
-import model.Cell;
+import game.model.Cell;
 
 /**
- * The view interface for the maze game and it includes all of the operations that the controller
- * would need to invoke on the view.
+ * The game.view interface for the maze game and it includes all of the operations that the game.controller
+ * would need to invoke on the game.view.
  *
  */
 public interface GameView {
@@ -19,7 +18,7 @@ public interface GameView {
   void addComponents(int rows, int cols, int playerNum);
 
   /**
-   * Transmit an error message to the view, in case the command could not be
+   * Transmit an error message to the game.view, in case the command could not be
    * processed correctly.
    *
    * @param error the message

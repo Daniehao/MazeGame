@@ -1,13 +1,13 @@
-package controller;
+package game.controller;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import model.MazeGame;
+import game.model.MazeGame;
 
 /**
- * A controller for the maze game. This controller works with a Readable and Appendable object. It
+ * A game.controller for the maze game. This game.controller works with a Readable and Appendable object. It
  * has been designed to accept a sequence of multiple inputs from the Readable object.
  */
 public class ControllerImpl implements Controller {

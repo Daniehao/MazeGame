@@ -1,4 +1,4 @@
-package view;
+package game.view;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,10 +10,10 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import model.Cell;
+import game.model.Cell;
 
 /**
- * The class for the view of the MazeGame.
+ * The class for the game.view of the MazeGame.
  */
 public class MazeLayout extends JFrame implements GameView {
   private MazePanel alertPanel;

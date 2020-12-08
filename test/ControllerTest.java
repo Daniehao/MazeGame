@@ -3,14 +3,14 @@ import org.junit.Test;
 import java.io.Reader;
 import java.io.StringReader;
 
-import controller.Controller;
-import controller.ControllerImpl;
-import model.MazeGameImpl;
+import game.controller.Controller;
+import game.controller.ControllerImpl;
+import game.model.MazeGameImpl;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test for the Controller interface which checks if the controller could successfully execute the
+ * Test for the Controller interface which checks if the game.controller could successfully execute the
  * operations when player moves in the maze or shoot at a wumpus.
  */
 public class ControllerTest {

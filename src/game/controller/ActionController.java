@@ -1,17 +1,17 @@
-package controller;
+package game.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import model.MazeGame;
-import model.MazeGameImpl;
-import view.GameView;
-import view.MenuView;
+import game.model.MazeGame;
+import game.model.MazeGameImpl;
+import game.view.GameView;
+import game.view.MenuView;
 
 /**
- * Implementation of the controller for the Maze Game.
+ * Implementation of the game.controller for the Maze Game.
  */
 public class ActionController implements ActionListener, KeyListener {
   private MazeGame game;
@@ -78,6 +78,7 @@ public class ActionController implements ActionListener, KeyListener {
                   pitPercent, arrows, players);
           startNewGame(info);
         }
+        mazeView.createAndShowGUI();
         mazeView.resetFocus();
         return;
       case "Start Same Game":

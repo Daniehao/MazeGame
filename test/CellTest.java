@@ -1,7 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Cell;
+import game.model.Cell;
 
 import static org.junit.Assert.assertEquals;
 

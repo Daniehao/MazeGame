@@ -4,35 +4,44 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import controller.ActionController;
-import controller.ControllerImpl;
-import model.MazeGame;
-import model.MazeGameImpl;
-import view.GameView;
-import view.MazeLayout;
-import view.MazeMenu;
-import view.MenuView;
+import game.controller.ActionController;
+import game.controller.ControllerImpl;
+import game.model.MazeGame;
+import game.model.MazeGameImpl;
+import game.view.GameView;
+import game.view.MazeLayout;
+import game.view.MazeMenu;
+import game.view.MenuView;
 
+/**
+ * The driver class for running two versions of the maze games. One version is text input only, and
+ * the other version includes a graphical interface.
+ */
 public class Main {
+  /**
+   * The main method is used to start either version of the maze game by input arguments.
+   *
+   * @param args The input type of game version.
+   */
   public static void main(String[] args) {
-    List<String> lst = Arrays.asList(args);
-    if (lst.stream().anyMatch("--gui"::equals)) {
-      // Create the model
+//    List<String> lst = Arrays.asList(args);
+//    if (lst.stream().anyMatch("--gui"::equals)) {
+      // Create the game.model
       MazeGame model = new MazeGameImpl();
-      // Create the view
+      // Create the game.view
       MenuView view = new MazeMenu();
       GameView mazeView = new MazeLayout();
-      // Create the controller with the model and the view
+      // Create the game.controller with the game.model and the game.view
       new ActionController(model, view, mazeView);
-    } else if (lst.stream().anyMatch("--text"::equals)) {
-      MazeGame game = createMaze();
-      System.out.println(game.getPlayerLocation());
-      try {
-        new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
+//    } else if (lst.stream().anyMatch("--text"::equals)) {
+//      MazeGame game = createMaze();
+//      System.out.println(game.getPlayerLocation());
+//      try {
+//        new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
+//      } catch (IOException e) {
+//        e.printStackTrace();
+//      }
+//    }
   }
 
   /**
