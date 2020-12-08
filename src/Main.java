@@ -24,21 +24,21 @@ public class Main {
    * @param args The input type of game version.
    */
   public static void main(String[] args) {
-//    List<String> lst = Arrays.asList(args);
-//    if (lst.stream().anyMatch("--gui"::equals)) {
+    List<String> lst = Arrays.asList(args);
+    if (lst.stream().anyMatch("--gui"::equals)) {
       MazeGame model = new MazeGameImpl();
       MenuView view = new MazeMenu();
       GameView mazeView = new MazeLayout();
       new GameGuiController(model, view, mazeView);
-//    } else if (lst.stream().anyMatch("--text"::equals)) {
-//      MazeGame game = createMaze();
-//      System.out.println(game.getPlayerLocation());
-//      try {
-//        new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
-//      } catch (IOException e) {
-//        e.printStackTrace();
-//      }
-//    }
+    } else if (lst.stream().anyMatch("--text"::equals)) {
+      MazeGame game = createMaze();
+      System.out.println(game.getPlayerLocation());
+      try {
+        new ControllerImpl(new InputStreamReader(System.in), System.out).start(game);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   /**
