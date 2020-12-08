@@ -116,7 +116,7 @@ public class MazeLayout extends JFrame implements GameView {
     labelArray = new JLabel[rows][cols];
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        ImageIcon icon = new ImageIcon("res/images/empty.png");
+        ImageIcon icon = new ImageIcon("images/empty.png");
         labelArray[i][j] = new JLabel(icon);
         mazePanel.add(labelArray[i][j]);
       }
@@ -160,9 +160,9 @@ public class MazeLayout extends JFrame implements GameView {
   public void showPlayer(int flag, int x, int y) {
     String source = "";
     if (flag == 1) {
-      source = "res/images/player.png";
+      source = "images/player.png";
     } else {
-      source = "res/images/player2.png";
+      source = "images/player2.png";
     }
     labelArray[x][y].setIcon(new ImageIcon(source));
   }
@@ -184,7 +184,7 @@ public class MazeLayout extends JFrame implements GameView {
   public void clearPanels() {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        labelArray[i][j].setIcon(new ImageIcon("res/images/empty.png"));
+        labelArray[i][j].setIcon(new ImageIcon("images/empty.png"));
       }
     }
   }
@@ -240,23 +240,23 @@ public class MazeLayout extends JFrame implements GameView {
   }
 
   private void generateAlertPicMap() {
-    statusPicMap.put("is tunnel vertical", "res/images/hallway-v.png");
-    statusPicMap.put("is tunnel horizontal", "res/images/hallway-h.png");
-    statusPicMap.put("is tunnel 1", "res/images/hallway-up-left.png");
-    statusPicMap.put("is tunnel 2", "res/images/hallway-down-left.png");
-    statusPicMap.put("is tunnel 3", "res/images/hallway-down-right.png");
-    statusPicMap.put("is tunnel 4", "res/images/hallway-up-right.png");
-    statusPicMap.put("is room 1 up", "res/images/roombase-1-up.png");
-    statusPicMap.put("is room 1 down", "res/images/roombase-1-down.png");
-    statusPicMap.put("is room 1 left", "res/images/roombase-1-left.png");
-    statusPicMap.put("is room 1 right", "res/images/roombase-1-right.png");
-    statusPicMap.put("is room 3 1", "res/images/roombase-3-up-down-left.png");
-    statusPicMap.put("is room 3 2", "res/images/roombase-3-up-left-right.png");
-    statusPicMap.put("is room 3 3", "res/images/roombase-up-down-right.png");
-    statusPicMap.put("is room 3 4", "res/images/roombase-down-left-right.png");
-    statusPicMap.put("is room 4", "res/images/roombase-4.png");
-    statusPicMap.put("player 1", "res/images/player.png");
-    statusPicMap.put("player 2", "res/images/player2.png");
+    statusPicMap.put("is tunnel vertical", "images/hallway-v.png");
+    statusPicMap.put("is tunnel horizontal", "images/hallway-h.png");
+    statusPicMap.put("is tunnel 1", "images/hallway-up-left.png");
+    statusPicMap.put("is tunnel 2", "images/hallway-down-left.png");
+    statusPicMap.put("is tunnel 3", "images/hallway-down-right.png");
+    statusPicMap.put("is tunnel 4", "images/hallway-up-right.png");
+    statusPicMap.put("is room 1 up", "images/roombase-1-up.png");
+    statusPicMap.put("is room 1 down", "images/roombase-1-down.png");
+    statusPicMap.put("is room 1 left", "images/roombase-1-left.png");
+    statusPicMap.put("is room 1 right", "images/roombase-1-right.png");
+    statusPicMap.put("is room 3 1", "images/roombase-3-up-down-left.png");
+    statusPicMap.put("is room 3 2", "images/roombase-3-up-left-right.png");
+    statusPicMap.put("is room 3 3", "images/roombase-up-down-right.png");
+    statusPicMap.put("is room 3 4", "images/roombase-down-left-right.png");
+    statusPicMap.put("is room 4", "images/roombase-4.png");
+    statusPicMap.put("player 1", "images/player.png");
+    statusPicMap.put("player 2", "images/player2.png");
   }
 
   @Override
