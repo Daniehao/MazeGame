@@ -225,6 +225,7 @@ public class MazeLayout extends JFrame implements GameView {
     generateAlertPicMap();
   }
 
+  @Override
   public String getShootDistance() {
     return shootDistance.getText();
   }

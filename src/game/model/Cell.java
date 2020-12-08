@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Cell {
   //string is the direction, cell is the next cell.
-  Map<String, Cell> cellMap;
+  private Map<String, Cell> cellMap;
   private boolean isTunnel;
   private boolean isRoom;
   private boolean closeToWumpus;
