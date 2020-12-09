@@ -338,6 +338,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/test/GameGuiControllerTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/test/MazeGameImplTest.java">
           <value>
             <set />

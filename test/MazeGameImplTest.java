@@ -16,6 +16,7 @@ public class MazeGameImplTest {
   private MazeGame game2;
   private MazeGame game3;
   private MazeGame game4;
+  private MazeGame game5;
 
   /**
    * Create objects for the following tests.
@@ -30,6 +31,8 @@ public class MazeGameImplTest {
             0.2, 0.3, 3, 1);
     game4 = new MazeGameImpl(3, 4, 6, false, true,
             0.2, 0.2, 3, 1);
+    game5 = new MazeGameImpl(3, 4, 5, false, false,
+            0.1, 0.1, 3, 2);
   }
 
   @Test
@@ -333,5 +336,35 @@ public class MazeGameImplTest {
     game1.setPlayerStartLocation(0, 0);
     assertEquals(true, game1.checkUnwinnable());
     assertEquals(false, game4.checkUnwinnable());
+  }
+
+  @Test
+  public void testMoveTwoPlayer() {
+    game5.move("E");
+    assertEquals(game5.getPlayerLocation(), "You are in cave (2, 3). Tunnels lead to the W");
+    assertEquals(game5.getAlert(), "You feel a draft.");
+    game5.move("S");
+    assertEquals(game5.getPlayerLocation(), "You are in cave (2, 3). Tunnels lead to the W");
+    assertEquals(game5.getAlert(), "Player is running out of bound! Please re-input " +
+            "direction.");
+    game5.changePlayerFlag();
+    game5.move("N");
+    assertEquals(game5.getPlayerLocation(), "You are in cave (0, 1). Tunnels lead to the " +
+            "E, W, S");
+    game5.move("E");
+    assertEquals(game5.getPlayerLocation(), "You are in cave (1, 1). " +
+            "Tunnels lead to the E, W, N, S");
+  }
+
+  @Test
+  public void testShootTwoPlayer() {
+    game5.shoot("N", 1);
+    assertEquals(game5.getAlert(), "You didn't shoot to the wumpus!");
+    assertEquals(game5.getGameEnd(), false);
+    game5.changePlayerFlag();
+    game5.shoot("W", 1);
+    assertEquals(game5.getAlert(), "Hee hee hee, you got the wumpus! Next time you won't " +
+            "be so lucky!");
+    assertEquals(game5.getGameEnd(), true);
   }
 }
